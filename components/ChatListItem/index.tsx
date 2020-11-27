@@ -17,7 +17,6 @@ export type ChatListItemProps = {
   chatRoom: ChatRoom;
 }
 
-
 const ChatListItem = (props: ChatListItemProps) => {
   const { chatRoom } = props;
   const [ otherUser, setOtherUser] = useState(null);

@@ -1,4 +1,4 @@
-{
+{  
   "features": {
     "graphqltransformer": {
       "addmissingownerfields": true,

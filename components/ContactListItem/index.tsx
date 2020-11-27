@@ -31,7 +31,6 @@ const ContactListItem = (props: ContactListItemProps) => {
   const onClick = async () => {
     try {
 
-      
       //  1. Create a new Chat Room
       const newChatRoomData = await API.graphql(
         graphqlOperation(
@@ -40,13 +39,13 @@ const ContactListItem = (props: ContactListItemProps) => {
           }
         )
       )
+
       if (!newChatRoomData.data) {
         console.log(" Failed to create a chat room");
         return;
       }
 
       const newChatRoom = newChatRoomData.data.createChatRoom;
-      console.log("newChatRoom ===>",newChatRoom)
 
       // 2. Add `user` to the Chat Room
       await API.graphql(
@@ -79,7 +78,7 @@ const ContactListItem = (props: ContactListItemProps) => {
       })
 
     } catch (e) {
-      console.log("Error--->",e);
+      console.log(e);
     }
   }
 
