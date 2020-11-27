@@ -1,20 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-
+import { withAuthenticator } from 'aws-amplify-react-native'
 import {
   Auth,
   API,
   graphqlOperation,
 } from 'aws-amplify';
-import { getUser } from './graphql/queries';
-import { createUser } from './graphql/mutations';
+import { getUser } from "./graphql/queries";
+import { createUser } from "./graphql/mutations";
 
-import { withAuthenticator } from 'aws-amplify-react-native'
+
 import Amplify from 'aws-amplify'
 import config from './aws-exports'
 Amplify.configure(config)
@@ -30,46 +30,54 @@ function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
+
   const getRandomImage = () => {
     return randomImages[Math.floor(Math.random() * randomImages.length)];
   }
 
-  // run this snippet only when App is first mounted
-  useEffect( () => {
-    const fetchUser = async () => {
+  useEffect(()=>{
+    const fetchUser= async() =>{
+      //get authenticated user
       const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
-
-      if (userInfo) {
+      console.log("UserInfo ---> ",userInfo)
+      
+      //get that user from backend with userId from Auth 
+      if(userInfo){
         const userData = await API.graphql(
           graphqlOperation(
             getUser,
             { id: userInfo.attributes.sub }
             )
         )
+      
+      if (userData.data.getUser) {
+         console.log("User is already registered in database");
+         return;
+       }
+   // If no user with that id then create one 
 
-        if (userData.data.getUser) {
-          console.log("User is already registered in database");
-          return;
-        }
-
-        const newUser = {
-          id: userInfo.attributes.sub,
-          name: userInfo.username,
-          imageUri: getRandomImage(),
-          status: 'Hey, I am using WhatsApp',
-        }
-
-        await API.graphql(
-          graphqlOperation(
-            createUser,
-            { input: newUser }
-          )
-        )
+       const newUser = {
+        id: userInfo.attributes.sub,
+        name: userInfo.attributes.phone_number,
+        imageUri: getRandomImage(),
+        status: 'Hey, I am using JUSTCHAT',
       }
-    }
+      //console.log("Userdata ---> ",userData)
+      await API.graphql(
+        graphqlOperation(
+          createUser,
+          { input: newUser }
+        )
 
-    fetchUser();
-  }, [])
+      )
+
+      }
+
+
+    }
+    fetchUser()
+
+  },[])
 
   if (!isLoadingComplete) {
     return null;

@@ -19,6 +19,7 @@ export default function ContactsScreen() {
             listUsers
           )
         )
+        console.log("userdata from constactScreen -->",usersData)
         setUsers(usersData.data.listUsers.items);
       } catch (e) {
         console.log(e);
