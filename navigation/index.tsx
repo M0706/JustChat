@@ -51,7 +51,7 @@ function RootNavigator() {
         name="Root"
         component={MainTabNavigator}
         options={{
-          title: "JustChat",
+          title: "BHC-Chat",
           headerRight: () => (
             <View style={{
               flexDirection: 'row',

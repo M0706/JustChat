@@ -1,37 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, Text, ImageBackground } from 'react-native';
 
 import { useRoute } from '@react-navigation/native';
+import {
+  API,
+  graphqlOperation,
+  Auth,
+} from 'aws-amplify';
 
-import chatRoomData from '../data/Chats';
+import { messagesByChatRoom } from '../graphql/queries';
+
 import ChatMessage from "../components/ChatMessage";
 import BG from '../assets/images/BG.png';
 import InputBox from "../components/InputBox";
-import { API, graphqlOperation, Auth } from "aws-amplify";
-import { messagesByChatRoom } from "../graphql/queries";
 
 const ChatRoomScreen = () => {
 
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([]);
   const [myId, setMyId] = useState(null);
-  const route = useRoute();
-  //console.log("Route:",route);
 
-  useEffect(()=>{
-    const fetchMessages = async()=>{
+  const route = useRoute();
+  console.log(route.params.id)
+
+  useEffect(() => {
+    const fetchMessages = async () => {
       const messagesData = await API.graphql(
         graphqlOperation(
-          messagesByChatRoom,{
-            chatRoomID:route.params.id,
-            sortDirection: "DESC"
+          messagesByChatRoom, {
+            chatRoomID: route.params.id,
+            sortDirection: "DESC",
           }
         )
       )
-      //console.log("MessagesData ====>", messagesData)
+
       setMessages(messagesData.data.messagesByChatRoom.items);
     }
     fetchMessages();
-  },[])
+  }, [])
 
   useEffect(() => {
     const getMyId = async () => {
@@ -55,15 +60,3 @@ const ChatRoomScreen = () => {
 }
 
 export default ChatRoomScreen;
-
-
-
-
-
-
-
-
-
-
-
-
