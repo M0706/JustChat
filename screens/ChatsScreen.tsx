@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import { View } from '../components/Themed';
-import ChatListItem from '../components/ChatListItem';
+import ChatListItem from '../components/chatListItem';
 import {
   API,
   graphqlOperation,
   Auth,
 } from 'aws-amplify';
 
-import chatRooms from '../data/ChatRooms';
+import chatRooms from '../data/Chatrooms';
 import NewMessageButton from "../components/NewMessageButton";
 import {useEffect, useState} from "react";
 
@@ -32,7 +32,7 @@ export default function ChatsScreen() {
         )
 
         setChatRooms(userData.data.getUser.chatRoomUser.items)
-        console.log(userData.data.getUser.chatRoomUser.items);
+        //console.log(userData.data.getUser.chatRoomUser.items);
 
       } catch (e) {
         console.log(e);

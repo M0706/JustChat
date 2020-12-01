@@ -35,7 +35,9 @@ const ContactListItem = (props: ContactListItemProps) => {
       const newChatRoomData = await API.graphql(
         graphqlOperation(
           createChatRoom, {
-            input: { }
+            input: {
+              lastMessageID: "zz753fca-e8c3-473b-8e85-b14196e84e16"
+            }
           }
         )
       )
@@ -90,7 +92,9 @@ const ContactListItem = (props: ContactListItemProps) => {
 
           <View style={styles.midContainer}>
             <Text style={styles.username}>{user.name}</Text>
-            <Text numberOfLines={2} style={styles.status}>{user.status}</Text>
+            <Text 
+            numberOfLines={2} 
+            style={styles.status}>{user.status}</Text>
           </View>
         </View>
       </View>

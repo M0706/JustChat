@@ -8,7 +8,7 @@ import {
   graphqlOperation,
 } from 'aws-amplify';
 
-import { createMessage } from '../../graphql/mutations';
+import { createMessage, updateChatRoom } from '../../graphql/mutations';
 
 import {
   MaterialCommunityIcons,
@@ -36,11 +36,25 @@ const InputBox = (props) => {
   const onMicrophonePress = () => {
     console.warn('Microphone')
   }
+  const updateChatRoomLastMessage = async(messageId:string)=>{
+    try{
+      await API.graphql(graphqlOperation(
+        updateChatRoom,{
+          input:{
+            id: chatRoomID,
+            lastMessageID: messageId
+          }
+        }
+      ))
+    }catch(e){
+      console.log(e);
+    }
 
+  }
   const onSendPress = async () => {
 
     try {
-      await API.graphql(
+      const newMessageData = await API.graphql(
         graphqlOperation(
           createMessage, {
             input: {
@@ -51,10 +65,11 @@ const InputBox = (props) => {
           }
         )
       )
+      await updateChatRoomLastMessage(newMessageData.data.createMessage.id)
     } catch (e) {
-      console.log(e);
+      console.log("Input Box Error----->",e);
     }
-
+    
     setMessage('');
   }
 
