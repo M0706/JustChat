@@ -61,7 +61,7 @@ const ChatRoomScreen = () => {
           return;
         }
 
-        fetchMessages(); //Temporary method ==> Need to improve this
+        fetchMessages();
         // setMessages([newMessage, ...messages]);
       }
     });
@@ -83,6 +83,5 @@ const ChatRoomScreen = () => {
     </ImageBackground>
   );
 }
-
 
 export default ChatRoomScreen;
