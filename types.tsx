@@ -23,7 +23,7 @@ export type TabTwoParamList = {
 export type User = {
   id: String;
   name: String;
-  imageUri: String;
+  imageUri: string;
   status: String;
 }
 
