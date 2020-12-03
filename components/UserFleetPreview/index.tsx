@@ -8,8 +8,8 @@ import {
 import styles from './styles';
 
 import { useNavigation } from '@react-navigation/native';
-import { User } from "../../../types";
-import ProfilePicture from "../../ProfilePicture";
+import { User } from "../../types";
+import ProfilePicture from "../ProfilePicture";
 
 export type UserFleetPreviewProps= {
     user: User;
