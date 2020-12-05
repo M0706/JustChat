@@ -105,7 +105,7 @@ const InputBox = (props) => {
         />
         <Entypo name="attachment" size={24} color="grey" style={styles.icon} />
         {!message && <Fontisto name="camera" size={24} color="grey" style={styles.icon} />}
-      </View>
+        </View>
       <TouchableOpacity onPress={onPress}>
         <View style={styles.buttonContainer}>
           {!message

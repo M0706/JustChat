@@ -16,14 +16,26 @@ export type UserFleetPreviewProps= {
 }
 
 const UserFleetPreview = (props: UserFleetPreviewProps) =>{
-    const {user: {name, imageUri}} = props
+    const {user: {id, name, imageUri}} = props
+
+    const navigation = useNavigation();
+
+    const onPress = () =>{
+        //console.warn("Hey you pressed to see my story")
+        navigation.navigate('Fleet',{userId: id});
+    }
+
     return(
+        <TouchableWithoutFeedback onPress={onPress}>
         <View style = {styles.container}>
             <View style={styles.image}>
             <ProfilePicture image= {imageUri} size={70} /> 
             <Text style={styles.username}> {name } </Text>
+            </View>
         </View>
-        </View>
+
+        </TouchableWithoutFeedback>
+   
     )
 }
 export default UserFleetPreview;
