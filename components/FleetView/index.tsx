@@ -3,7 +3,7 @@ import { Row } from "native-base";
 import React from "react";
 
 import { 
-    Text, View, Image
+    Text, View, Image,TouchableOpacity
  } from "react-native";
 
 import {User,FleetType} from '../../types'
@@ -13,10 +13,12 @@ import styles from './styles';
 export type FleetViewProps={
     user: User;
     fleet: FleetType;
+    goToNextFleet: Function;
+    goToPrevFleet: Function;
 }
 
 const FleetView = (props: FleetViewProps) =>{
-    const {user,fleet} = props
+    const {user,fleet,goToNextFleet,goToPrevFleet} = props
     return( 
       <View style={styles.container}>
 
@@ -34,6 +36,10 @@ const FleetView = (props: FleetViewProps) =>{
                     </Text> 
                 </View>
              </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={{flex: 1}} onPress={() => goToPrevFleet()} />
+        <TouchableOpacity style={{flex: 1}} onPress={() => goToNextFleet()} />
+      </View>
 
           </View>
 

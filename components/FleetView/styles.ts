@@ -48,9 +48,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    height: '100%',
+    height: '1500%',
     position: 'absolute',
-    top: 0,
+    
     flexDirection: 'row'
   }
 });
