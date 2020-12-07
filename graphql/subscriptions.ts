@@ -19,6 +19,18 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      fleets {
+        items {
+          id
+          type
+          text
+          image
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -36,6 +48,18 @@ export const onUpdateUser = /* GraphQL */ `
           id
           userID
           chatRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      fleets {
+        items {
+          id
+          type
+          text
+          image
+          userID
           createdAt
           updatedAt
         }
@@ -63,6 +87,18 @@ export const onDeleteUser = /* GraphQL */ `
         }
         nextToken
       }
+      fleets {
+        items {
+          id
+          type
+          text
+          image
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -80,6 +116,9 @@ export const onCreateChatRoomUser = /* GraphQL */ `
         imageUri
         status
         chatRoomUser {
+          nextToken
+        }
+        fleets {
           nextToken
         }
         createdAt
@@ -124,6 +163,9 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
         chatRoomUser {
           nextToken
         }
+        fleets {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -164,6 +206,9 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
         imageUri
         status
         chatRoomUser {
+          nextToken
+        }
+        fleets {
           nextToken
         }
         createdAt
@@ -369,6 +414,9 @@ export const onCreateMessage = /* GraphQL */ `
         chatRoomUser {
           nextToken
         }
+        fleets {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -410,6 +458,9 @@ export const onUpdateMessage = /* GraphQL */ `
         imageUri
         status
         chatRoomUser {
+          nextToken
+        }
+        fleets {
           nextToken
         }
         createdAt
@@ -455,6 +506,9 @@ export const onDeleteMessage = /* GraphQL */ `
         chatRoomUser {
           nextToken
         }
+        fleets {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -478,6 +532,87 @@ export const onDeleteMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      updatedAt
+    }
+  }
+`;
+export const onCreateFleet = /* GraphQL */ `
+  subscription OnCreateFleet {
+    onCreateFleet {
+      id
+      type
+      text
+      image
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFleet = /* GraphQL */ `
+  subscription OnUpdateFleet {
+    onUpdateFleet {
+      id
+      type
+      text
+      image
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFleet = /* GraphQL */ `
+  subscription OnDeleteFleet {
+    onDeleteFleet {
+      id
+      type
+      text
+      image
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
       updatedAt
     }
   }

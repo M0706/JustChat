@@ -4,7 +4,8 @@ type User @model {
   imageUri: String
   status: String
   chatRoomUser: [ChatRoomUser] @connection(keyName: "byUser", fields: ["id"])
-}
+  fleets: [Fleet] @connection(keyName: "byUser", fields: ["id"])
+  }
 
 type ChatRoomUser
 @model
@@ -30,7 +31,8 @@ type Message
 @key(
   name: "byChatRoom",
   fields: ["chatRoomID", "createdAt"],
-  queryField: "messagesByChatRoom") {
+  queryField: "messagesByChatRoom")
+ {
   id: ID!
   createdAt: String!
   content: String!
@@ -38,6 +40,15 @@ type Message
   chatRoomID: ID!
   user: User @connection(fields: ["userID"])
   chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
+}
+
+type Fleet @model @key(name: "byUser", fields: ["userID"]) {
+  id: ID!
+  type: String!
+  text: String
+  image: String
+  userID: ID!
+  user: User @connection(fields: ["userID"])
 }
 
 

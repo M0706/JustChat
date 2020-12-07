@@ -19,6 +19,18 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      fleets {
+        items {
+          id
+          type
+          text
+          image
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -37,6 +49,9 @@ export const listUsers = /* GraphQL */ `
         imageUri
         status
         chatRoomUser {
+          nextToken
+        }
+        fleets {
           nextToken
         }
         createdAt
@@ -58,6 +73,9 @@ export const getChatRoomUser = /* GraphQL */ `
         imageUri
         status
         chatRoomUser {
+          nextToken
+        }
+        fleets {
           nextToken
         }
         createdAt
@@ -220,6 +238,9 @@ export const getMessage = /* GraphQL */ `
         chatRoomUser {
           nextToken
         }
+        fleets {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -274,6 +295,61 @@ export const listMessages = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getFleet = /* GraphQL */ `
+  query GetFleet($id: ID!) {
+    getFleet(id: $id) {
+      id
+      type
+      text
+      image
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFleets = /* GraphQL */ `
+  query ListFleets(
+    $filter: ModelFleetFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFleets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        type
+        text
+        image
+        userID
+        user {
+          id
+          name
+          imageUri
+          status
+          createdAt
+          updatedAt
+        }
+        createdAt
         updatedAt
       }
       nextToken

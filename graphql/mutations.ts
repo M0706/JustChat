@@ -22,6 +22,18 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
+      fleets {
+        items {
+          id
+          type
+          text
+          image
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -42,6 +54,18 @@ export const updateUser = /* GraphQL */ `
           id
           userID
           chatRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      fleets {
+        items {
+          id
+          type
+          text
+          image
+          userID
           createdAt
           updatedAt
         }
@@ -72,6 +96,18 @@ export const deleteUser = /* GraphQL */ `
         }
         nextToken
       }
+      fleets {
+        items {
+          id
+          type
+          text
+          image
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -92,6 +128,9 @@ export const createChatRoomUser = /* GraphQL */ `
         imageUri
         status
         chatRoomUser {
+          nextToken
+        }
+        fleets {
           nextToken
         }
         createdAt
@@ -139,6 +178,9 @@ export const updateChatRoomUser = /* GraphQL */ `
         chatRoomUser {
           nextToken
         }
+        fleets {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -182,6 +224,9 @@ export const deleteChatRoomUser = /* GraphQL */ `
         imageUri
         status
         chatRoomUser {
+          nextToken
+        }
+        fleets {
           nextToken
         }
         createdAt
@@ -399,6 +444,9 @@ export const createMessage = /* GraphQL */ `
         chatRoomUser {
           nextToken
         }
+        fleets {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -443,6 +491,9 @@ export const updateMessage = /* GraphQL */ `
         imageUri
         status
         chatRoomUser {
+          nextToken
+        }
+        fleets {
           nextToken
         }
         createdAt
@@ -491,6 +542,9 @@ export const deleteMessage = /* GraphQL */ `
         chatRoomUser {
           nextToken
         }
+        fleets {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -514,6 +568,96 @@ export const deleteMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      updatedAt
+    }
+  }
+`;
+export const createFleet = /* GraphQL */ `
+  mutation CreateFleet(
+    $input: CreateFleetInput!
+    $condition: ModelFleetConditionInput
+  ) {
+    createFleet(input: $input, condition: $condition) {
+      id
+      type
+      text
+      image
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFleet = /* GraphQL */ `
+  mutation UpdateFleet(
+    $input: UpdateFleetInput!
+    $condition: ModelFleetConditionInput
+  ) {
+    updateFleet(input: $input, condition: $condition) {
+      id
+      type
+      text
+      image
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFleet = /* GraphQL */ `
+  mutation DeleteFleet(
+    $input: DeleteFleetInput!
+    $condition: ModelFleetConditionInput
+  ) {
+    deleteFleet(input: $input, condition: $condition) {
+      id
+      type
+      text
+      image
+      userID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
       updatedAt
     }
   }
