@@ -87,5 +87,3 @@ const ChatRoomScreen = () => {
 export default ChatRoomScreen;
 
 
-// userId : 00cc2565-abfe-425b-b0b8-88faaadcce6b
-// chatroom ID: b8325286-a770-4830-bf3b-dc9e050f10eb
