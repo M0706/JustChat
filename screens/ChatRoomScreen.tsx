@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Text, ImageBackground, KeyboardAvoidingView } from 'react-native';
+import DoubleClick from 'react-native-double-click';
 
 import { useRoute } from '@react-navigation/native';
 import {
@@ -71,16 +72,32 @@ const ChatRoomScreen = () => {
 
   //console.log(`messages in state: ${messages.length}`)
 
+  const doubleClick=()=>{
+    console.warn("Double Clicked")
+  }
+
   return (
     <ImageBackground style={{width: '100%', height: '100%'}} source={BG}>
       <FlatList
         data={messages}
-        renderItem={({ item }) => <ChatMessage myId={myId} message={item} />}
+        renderItem={({ item }) => (
+          <DoubleClick onClick={doubleClick}>
+              <ChatMessage myId={myId} message={item}/>
+          </DoubleClick>
+       )}
         inverted
+        
       />
+       <DoubleClick onClick={doubleClick}>
 
+
+       </DoubleClick>
       <InputBox chatRoomID={route.params.id} />
+
+
     </ImageBackground>
+
+
   );
 }
 

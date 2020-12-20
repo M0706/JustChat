@@ -5,6 +5,7 @@ type User @model {
   status: String
   chatRoomUser: [ChatRoomUser] @connection(keyName: "byUser", fields: ["id"])
   fleets: [Fleet] @connection(keyName: "byUser", fields: ["id"])
+
   }
 
 type ChatRoomUser
@@ -40,6 +41,7 @@ type Message
   chatRoomID: ID!
   user: User @connection(fields: ["userID"])
   chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
+  likes: [Like] @connection(keyName:"toMessage", fields:["id"])
 }
 
 type Fleet @model @key(name: "byUser", fields: ["userID"]) {
@@ -51,8 +53,16 @@ type Fleet @model @key(name: "byUser", fields: ["userID"]) {
   user: User @connection(fields: ["userID"])
 }
 
-
-
+type Like
+  @model(queries:null)
+  @key(name: "byUser", fields: ["userID","messageID"])
+  @key(name: "toMessage", fields:["messageID","userID"]) {
+  id: ID!
+  userID: ID!
+  messageID: ID!
+  user: User! @connection(fields: ["userID"])
+  message: Message! @connection(fields: ["messageID"])
+}
 
 
 

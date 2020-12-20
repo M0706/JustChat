@@ -53,6 +53,7 @@
         "DeleteUserResolver": "User",
         "GetAttUserTableStreamArn": "User",
         "GetAttUserDataSourceName": "User",
-        "GetAttUserTableName": "User"
+        "GetAttUserTableName": "User",
+        "ChatRoomlastMessageResolver": "ConnectionStack"
     }
 }
