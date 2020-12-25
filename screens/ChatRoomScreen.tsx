@@ -88,10 +88,7 @@ const ChatRoomScreen = () => {
         inverted
         
       />
-       <DoubleClick onClick={doubleClick}>
 
-
-       </DoubleClick>
       <InputBox chatRoomID={route.params.id} />
 
 

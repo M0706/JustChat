@@ -1,32 +1,72 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import {ColorSchemeName, View} from 'react-native';
+import {ColorSchemeName, View,Text} from 'react-native';
 import {
   Octicons,
   MaterialCommunityIcons,
   MaterialIcons,
   FontAwesome5,
 } from '@expo/vector-icons';
-
+import { Ionicons } from '@expo/vector-icons';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import ChatRoomScreen from '../screens/chatRoomScreen';
 import { RootStackParamList } from '../types';
 import MainTabNavigator from './MainTabNavigator';
+import BottomTabNavigator from './BottomTabNavigator';
+
 import LinkingConfiguration from './LinkingConfiguration';
 import Colors from "../constants/Colors";
 import ContactsScreen from "../screens/ContactsScreen";
 import FleetScreen from "../screens/FleetScreen";
 import NewFleetScreen from "../screens/NewFleetScreen";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
+
+const Tab = createBottomTabNavigator();
+
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
+        <Tab.Navigator screenOptions={({ route }) => ({
+          tabBarIcon: ({color, size }) => {
+            let iconName;
+
+            if (route.name === 'Chats') {
+              iconName = "chat-outline";
+            } 
+            else if (route.name === 'feed') {
+              iconName = 'seed';
+            }
+            else if (route.name === 'Calls') {
+              iconName = 'phone';
+            }
+            else if (route.name === 'account') {
+              iconName = 'account-box';
+            } 
+
+            // You can return any component that you like here!
+            return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: '#347deb',
+          inactiveTintColor: 'gray',
+        }}
+      >
+        <Tab.Screen name="Chats" component={RootNavigator} />
+        <Tab.Screen name="feed" component={BottomTabNavigator}/>
+        <Tab.Screen name="Calls" component={BottomTabNavigator}/>
+        <Tab.Screen name="account" component={BottomTabNavigator}/>
+
+        </Tab.Navigator>
+    
+        
     </NavigationContainer>
   );
 }
@@ -67,6 +107,7 @@ function RootNavigator() {
           )
         }}
       />
+      
       <Stack.Screen
         name="ChatRoom"
         component={ChatRoomScreen}
@@ -91,13 +132,15 @@ function RootNavigator() {
         component={ContactsScreen}
       />
 
-<Stack.Screen
+    <Stack.Screen
         name="Fleet"
         component={FleetScreen} />
 
-<Stack.Screen
+    <Stack.Screen
         name="NewFleet"
         component={NewFleetScreen} />
+
+
 
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>

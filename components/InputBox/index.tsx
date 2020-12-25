@@ -28,6 +28,7 @@ const InputBox = (props) => {
   const [message, setMessage] = useState('');
   const [myUserId, setMyUserId] = useState(null);
 
+
   useEffect(() => {
     const fetchUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser();
@@ -37,7 +38,17 @@ const InputBox = (props) => {
   }, [])
 
   const onMicrophonePress = () => {
-    console.warn('Microphone')
+        console.warn("Microphone pressed")
+
+
+    }
+  
+
+  const onCameraPress=()=>{
+    console.warn("Camera pressed")
+
+ 
+  
   }
 
   const updateChatRoomLastMessage = async (messageId: string) => {
@@ -103,8 +114,14 @@ const InputBox = (props) => {
           value={message}
           onChangeText={setMessage}
         />
+      
         <Entypo name="attachment" size={24} color="grey" style={styles.icon} />
-        {!message && <Fontisto name="camera" size={24} color="grey" style={styles.icon} />}
+        {!message && 
+        <Fontisto name="camera" 
+                  size={24} color="grey" 
+                  style={styles.icon}
+                  onPress={onCameraPress}
+                  />}
         </View>
       <TouchableOpacity onPress={onPress}>
         <View style={styles.buttonContainer}>

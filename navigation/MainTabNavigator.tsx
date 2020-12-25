@@ -42,15 +42,15 @@ export default function MainTabNavigator() {
         }}
       />
       <MainTab.Screen
-        name="Chats"
+        name="Personal"
         component={ChatsScreen}
       />
       <MainTab.Screen
-        name="Status"
-        component={TabTwoNavigator}
+        name="Work"
+        component={ChatsScreen}
       />
       <MainTab.Screen
-        name="Calls"
+        name="Stories"
         component={TabTwoNavigator}
       />
     </MainTab.Navigator>
