@@ -8,8 +8,9 @@ import { Fontisto } from "@expo/vector-icons";
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ChatsScreen from '../screens/ChatsScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { MainTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import Stories from '../screens/Stories';
+import Camera from '../screens/Camera'
+import { MainTabParamList, ChatScreenList, StoriesScreenList,CameraScreenList } from '../types';
 
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
@@ -18,7 +19,7 @@ export default function MainTabNavigator() {
 
   return (
     <MainTab.Navigator
-      initialRouteName="Chats"
+      initialRouteName="Personal"
       tabBarOptions={{
         activeTintColor: Colors[colorScheme].background,
         style: {
@@ -35,7 +36,7 @@ export default function MainTabNavigator() {
       }}>
       <MainTab.Screen
         name="Camera"
-        component={TabOneNavigator}
+        component={TabThreeNavigator}
         options={{
           tabBarIcon: ({ color }) => <Fontisto name="camera" color={color} size={18} />,
           tabBarLabel: () => null
@@ -43,11 +44,11 @@ export default function MainTabNavigator() {
       />
       <MainTab.Screen
         name="Personal"
-        component={ChatsScreen}
+        component={TabOneNavigator}
       />
       <MainTab.Screen
         name="Work"
-        component={ChatsScreen}
+        component={TabOneNavigator}
       />
       <MainTab.Screen
         name="Stories"
@@ -65,30 +66,47 @@ function TabBarIcon(props: { name: string; color: string }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const TabChatsStack = createStackNavigator<ChatScreenList>();
 
 function TabOneNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
+    <TabChatsStack.Navigator>
+      <TabChatsStack.Screen
+        name="ChatScreen"
         component={ChatsScreen}
         options={{ headerTitle: 'Tab One Title' }}
       />
-    </TabOneStack.Navigator>
+    </TabChatsStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const TabStoriesStack = createStackNavigator<StoriesScreenList>();
 
 function TabTwoNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
+    <TabStoriesStack.Navigator>
+      <TabStoriesStack.Screen
+        name="Stories"
+        component={Stories}
         options={{ headerTitle: 'Tab Two Title' }}
       />
-    </TabTwoStack.Navigator>
+    </TabStoriesStack.Navigator>
   );
 }
+
+const CameraTabStack = createStackNavigator<CameraScreenList>();
+
+function TabThreeNavigator() {
+  return (
+   <CameraTabStack.Navigator>
+     <CameraTabStack.Screen
+     name="Camera"
+     component={Camera}
+     />
+   </CameraTabStack.Navigator> 
+  )
+}
+
+
+
+
