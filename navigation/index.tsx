@@ -13,7 +13,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import ChatRoomScreen from '../screens/chatRoomScreen';
 import { RootStackParamList } from '../types';
 import MainTabNavigator from './MainTabNavigator';
-import BottomTabNavigator from './BottomTabNavigator';
+import UnderDevelopment from './UnderDevelopment';
 
 import LinkingConfiguration from './LinkingConfiguration';
 import Colors from "../constants/Colors";
@@ -33,6 +33,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+
         <Tab.Navigator screenOptions={({ route }) => ({
           tabBarIcon: ({color, size }) => {
             let iconName;
@@ -61,9 +62,9 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
         }}
       >
         <Tab.Screen name="Chats" component={RootNavigator} />
-        <Tab.Screen name="feed" component={BottomTabNavigator}/>
-        <Tab.Screen name="Calls" component={BottomTabNavigator}/>
-        <Tab.Screen name="account" component={BottomTabNavigator}/>
+        <Tab.Screen name="feed" component={UnderDevelopment}/>
+        <Tab.Screen name="Calls" component={UnderDevelopment}/>
+        <Tab.Screen name="account" component={UnderDevelopment}/>
 
         </Tab.Navigator>
     
