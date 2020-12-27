@@ -7,12 +7,14 @@ import {
 	StyleSheet,
 	TouchableOpacity
 } from "react-native";
+import * as FaceDetector from 'expo-face-detector';
 
 import { Camera as CameraView } from "expo-camera";
 import { Ionicons as Icon } from "@expo/vector-icons";
 
 import CameraButton from "../../components/CameraScreen/CameraButton";
 import DoubleTapHandler from "../../components/CameraScreen/DoubleTapHandler";
+import { useNavigation } from '@react-navigation/native';
 
 const Camera = props => {
 	const [hasPermission, setHasPermission] = useState(null);
@@ -21,14 +23,15 @@ const Camera = props => {
 	const [flashMode, setFlashMode] = useState(
 		CameraView.Constants.FlashMode.auto
     );
-    const [autoFocusMode, setAutoFocusMode]=useState(CameraView.Constants.AutoFocus)
+    //const [autoFocusMode, setAutoFocusMode]=useState(CameraView.Constants.AutoFocus)
 
+	const navigation = useNavigation();
 	var camera: CameraView;
 
 	useEffect(() => {
 		(async () => {
 			const { status } = await CameraView.requestPermissionsAsync();
-			setHasPermission(status === "granted");
+            setHasPermission(status === "granted");
 		})();
 	}, []);
 
@@ -68,7 +71,10 @@ const Camera = props => {
 	};
 
 	const takePicture = async () => {
-		const picture = await camera.takePictureAsync();
+        const picture = await camera.takePictureAsync();
+		//console.log(picture);
+		navigation.navigate('ContentDisplay',{photo:picture})
+		
 	};
     
     const CameraControls = () => {
@@ -119,7 +125,9 @@ const Camera = props => {
 				style={{ flex: 1 }}
 				type={type}
                 flashMode={flashMode}
-			>
+                autoFocus={CameraView.Constants.AutoFocus.on}
+                whiteBalance={CameraView.Constants.WhiteBalance.auto}
+                >
 				<View
 					style={{
 						...styles.Overlay,
@@ -154,8 +162,6 @@ const styles = StyleSheet.create({
 		backgroundColor: "transparent"
 	}
 });
-
-
 
 export default Camera;
 

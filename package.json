@@ -25,6 +25,7 @@
     "expo-asset": "~8.2.0",
     "expo-camera": "^9.1.1",
     "expo-constants": "~9.2.0",
+    "expo-face-detector": "^8.4.0",
     "expo-font": "~8.3.0",
     "expo-image-picker": "^9.1.1",
     "expo-linking": "^1.0.1",

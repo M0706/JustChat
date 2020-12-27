@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform,} from "react-native";
 import styles from './styles';
-
+import {useNavigation} from '@react-navigation/native'
 import {
   API,
   Auth,
@@ -27,7 +27,7 @@ const InputBox = (props) => {
 
   const [message, setMessage] = useState('');
   const [myUserId, setMyUserId] = useState(null);
-
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -45,10 +45,8 @@ const InputBox = (props) => {
   
 
   const onCameraPress=()=>{
-    console.warn("Camera pressed")
-
- 
-  
+    //console.warn("Camera pressed")
+    navigation.navigate("Camera")
   }
 
   const updateChatRoomLastMessage = async (messageId: string) => {
