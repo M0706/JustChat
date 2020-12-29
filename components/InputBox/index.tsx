@@ -6,6 +6,7 @@ import {
   API,
   Auth,
   graphqlOperation,
+  Storage
 } from 'aws-amplify';
 
 import {
@@ -21,12 +22,19 @@ import {
   Fontisto,
 } from '@expo/vector-icons';
 
+import Attachment from "./Attachment";
+import * as ImagePicker from 'expo-image-picker';
+import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid/async/index.native'
+
 const InputBox = (props) => {
 
   const { chatRoomID } = props;
 
   const [message, setMessage] = useState('');
   const [myUserId, setMyUserId] = useState(null);
+  const [image, setImage] = useState(null);
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -37,10 +45,20 @@ const InputBox = (props) => {
     fetchUser();
   }, [])
 
+  useEffect(() => {
+    (async () => {
+        if (Platform.OS !== 'web') {
+          const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+          if (status !== 'granted') {
+            askpermission(null);
+            alert('Sorry, we need camera roll permissions to make this work!');
+          }
+        }
+     })();
+  }, []);
+
   const onMicrophonePress = () => {
         console.warn("Microphone pressed")
-
-
     }
   
 
@@ -67,12 +85,13 @@ const InputBox = (props) => {
   }
 
   const onSendPress = async () => {
-    try {
+     try {
       const newMessageData = await API.graphql(
         graphqlOperation(
           createMessage, {
             input: {
               content: message,
+              media:image,
               userID: myUserId,
               chatRoomID
             }
@@ -86,6 +105,27 @@ const InputBox = (props) => {
     }
 
     setMessage('');
+    setImage('')
+  }
+
+  const uploadImage = async () => {
+    try {
+      const response = await fetch(image);
+      const blob = await response.blob();
+      const urlParts = image.split('.');
+      const extension = urlParts[urlParts.length - 1];
+    
+
+      const key = `FirstImage.${extension}`;
+
+      await Storage.put(key, blob);
+
+      return key;
+
+    } catch (e) {
+      console.log(e);
+    }
+    return '';
   }
 
   const onPress = () => {
@@ -95,6 +135,33 @@ const InputBox = (props) => {
       onSendPress();
     }
   }
+
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    //console.log(result);
+
+    if (!result.cancelled) {
+    //console.log(result)
+      setImage(result.uri);
+    }
+  };
+
+  const onPressAttachment=async ()=>{
+    //console.warn("Send Attachment")
+    let content;
+    await pickImage();
+    content = await uploadImage();
+    console.log(content);
+    
+
+}
 
   return (
     <KeyboardAvoidingView
@@ -113,7 +180,11 @@ const InputBox = (props) => {
           onChangeText={setMessage}
         />
       
-        <Entypo name="attachment" size={24} color="grey" style={styles.icon} />
+        <Entypo name="attachment" 
+        size={24} color="grey" 
+        style={styles.icon} 
+        onPress={onPressAttachment}/>
+
         {!message && 
         <Fontisto name="camera" 
                   size={24} color="grey" 

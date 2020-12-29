@@ -137,6 +137,7 @@ export const onCreateChatRoomUser = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
@@ -182,6 +183,7 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
@@ -227,6 +229,7 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
@@ -258,6 +261,7 @@ export const onCreateChatRoom = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
@@ -269,6 +273,7 @@ export const onCreateChatRoom = /* GraphQL */ `
         id
         createdAt
         content
+        media
         userID
         chatRoomID
         user {
@@ -284,6 +289,9 @@ export const onCreateChatRoom = /* GraphQL */ `
           lastMessageID
           createdAt
           updatedAt
+        }
+        likes {
+          nextToken
         }
         updatedAt
       }
@@ -311,6 +319,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
@@ -322,6 +331,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
         id
         createdAt
         content
+        media
         userID
         chatRoomID
         user {
@@ -337,6 +347,9 @@ export const onUpdateChatRoom = /* GraphQL */ `
           lastMessageID
           createdAt
           updatedAt
+        }
+        likes {
+          nextToken
         }
         updatedAt
       }
@@ -364,6 +377,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
@@ -375,6 +389,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
         id
         createdAt
         content
+        media
         userID
         chatRoomID
         user {
@@ -391,6 +406,9 @@ export const onDeleteChatRoom = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        likes {
+          nextToken
+        }
         updatedAt
       }
       createdAt
@@ -404,6 +422,7 @@ export const onCreateMessage = /* GraphQL */ `
       id
       createdAt
       content
+      media
       userID
       chatRoomID
       user {
@@ -433,12 +452,23 @@ export const onCreateMessage = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
         }
         createdAt
         updatedAt
+      }
+      likes {
+        items {
+          id
+          userID
+          messageID
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       updatedAt
     }
@@ -450,6 +480,7 @@ export const onUpdateMessage = /* GraphQL */ `
       id
       createdAt
       content
+      media
       userID
       chatRoomID
       user {
@@ -479,12 +510,23 @@ export const onUpdateMessage = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
         }
         createdAt
         updatedAt
+      }
+      likes {
+        items {
+          id
+          userID
+          messageID
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       updatedAt
     }
@@ -496,6 +538,7 @@ export const onDeleteMessage = /* GraphQL */ `
       id
       createdAt
       content
+      media
       userID
       chatRoomID
       user {
@@ -525,12 +568,23 @@ export const onDeleteMessage = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
         }
         createdAt
         updatedAt
+      }
+      likes {
+        items {
+          id
+          userID
+          messageID
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       updatedAt
     }
@@ -610,6 +664,159 @@ export const onDeleteFleet = /* GraphQL */ `
           nextToken
         }
         createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateLike = /* GraphQL */ `
+  subscription OnCreateLike {
+    onCreateLike {
+      id
+      userID
+      messageID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message {
+        id
+        createdAt
+        content
+        media
+        userID
+        chatRoomID
+        user {
+          id
+          name
+          imageUri
+          status
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        likes {
+          nextToken
+        }
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateLike = /* GraphQL */ `
+  subscription OnUpdateLike {
+    onUpdateLike {
+      id
+      userID
+      messageID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message {
+        id
+        createdAt
+        content
+        media
+        userID
+        chatRoomID
+        user {
+          id
+          name
+          imageUri
+          status
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        likes {
+          nextToken
+        }
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteLike = /* GraphQL */ `
+  subscription OnDeleteLike {
+    onDeleteLike {
+      id
+      userID
+      messageID
+      user {
+        id
+        name
+        imageUri
+        status
+        chatRoomUser {
+          nextToken
+        }
+        fleets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      message {
+        id
+        createdAt
+        content
+        media
+        userID
+        chatRoomID
+        user {
+          id
+          name
+          imageUri
+          status
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        likes {
+          nextToken
+        }
         updatedAt
       }
       createdAt

@@ -94,6 +94,7 @@ export const getChatRoomUser = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
@@ -157,6 +158,7 @@ export const getChatRoom = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
@@ -168,6 +170,7 @@ export const getChatRoom = /* GraphQL */ `
         id
         createdAt
         content
+        media
         userID
         chatRoomID
         user {
@@ -183,6 +186,9 @@ export const getChatRoom = /* GraphQL */ `
           lastMessageID
           createdAt
           updatedAt
+        }
+        likes {
+          nextToken
         }
         updatedAt
       }
@@ -211,6 +217,7 @@ export const listChatRooms = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
@@ -228,6 +235,7 @@ export const getMessage = /* GraphQL */ `
       id
       createdAt
       content
+      media
       userID
       chatRoomID
       user {
@@ -257,12 +265,23 @@ export const getMessage = /* GraphQL */ `
           id
           createdAt
           content
+          media
           userID
           chatRoomID
           updatedAt
         }
         createdAt
         updatedAt
+      }
+      likes {
+        items {
+          id
+          userID
+          messageID
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       updatedAt
     }
@@ -279,6 +298,7 @@ export const listMessages = /* GraphQL */ `
         id
         createdAt
         content
+        media
         userID
         chatRoomID
         user {
@@ -294,6 +314,9 @@ export const listMessages = /* GraphQL */ `
           lastMessageID
           createdAt
           updatedAt
+        }
+        likes {
+          nextToken
         }
         updatedAt
       }
@@ -377,6 +400,7 @@ export const messagesByChatRoom = /* GraphQL */ `
         id
         createdAt
         content
+        media
         userID
         chatRoomID
         user {
@@ -392,6 +416,9 @@ export const messagesByChatRoom = /* GraphQL */ `
           lastMessageID
           createdAt
           updatedAt
+        }
+        likes {
+          nextToken
         }
         updatedAt
       }

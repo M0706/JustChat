@@ -37,6 +37,7 @@ type Message
   id: ID!
   createdAt: String!
   content: String!
+  media: String
   userID: ID!
   chatRoomID: ID!
   user: User @connection(fields: ["userID"])
@@ -63,11 +64,3 @@ type Like
   user: User! @connection(fields: ["userID"])
   message: Message! @connection(fields: ["messageID"])
 }
-
-
-
-
-
-
-
-
