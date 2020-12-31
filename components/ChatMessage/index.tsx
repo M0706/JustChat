@@ -3,6 +3,7 @@ import {Text, View} from 'react-native';
 import { Message } from "../../types";
 import moment from "moment";
 import styles from './styles';
+import {S3image} from "aws-amplify-react-native";
 
 export type ChatMessageProps = {
   message: Message;

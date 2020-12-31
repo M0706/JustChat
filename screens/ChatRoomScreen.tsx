@@ -35,6 +35,7 @@ const ChatRoomScreen = () => {
     )
 
     //console.log("FETCH MESSAGES")
+    //console.log("messagesData --->",messagesData.data.messagesByChatRoom.items);
     setMessages(messagesData.data.messagesByChatRoom.items);
   }
 
@@ -65,6 +66,7 @@ const ChatRoomScreen = () => {
         fetchMessages(); //issue here 
         //setMessages([newMessage, ...messages]);
       }
+      
     });
 
     return () => subscription.unsubscribe();

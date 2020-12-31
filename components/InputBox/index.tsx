@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform,} from "react-native";
+import {View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform,Image} from "react-native";
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native'
 import {
@@ -34,6 +34,7 @@ const InputBox = (props) => {
   const [message, setMessage] = useState('');
   const [myUserId, setMyUserId] = useState(null);
   const [image, setImage] = useState(null);
+  const [key,setImagekey] = useState('');
 
   const navigation = useNavigation();
 
@@ -85,27 +86,28 @@ const InputBox = (props) => {
   }
 
   const onSendPress = async () => {
+
      try {
       const newMessageData = await API.graphql(
         graphqlOperation(
           createMessage, {
             input: {
               content: message,
-              media:image,
+              media:key,
               userID: myUserId,
               chatRoomID
             }
           }
         )
       )
-
+      console.log(newMessageData)
       await updateChatRoomLastMessage(newMessageData.data.createMessage.id)
     } catch (e) {
       console.log(e);
     }
 
     setMessage('');
-    setImage('')
+    setImagekey('');
   }
 
   const uploadImage = async () => {
@@ -114,12 +116,13 @@ const InputBox = (props) => {
       const blob = await response.blob();
       const urlParts = image.split('.');
       const extension = urlParts[urlParts.length - 1];
-    
 
       const key = `FirstImage.${extension}`;
 
-      await Storage.put(key, blob);
-
+      await Storage.put(key, blob).then(result=>{
+        console.log("Uploaded image to S3")
+      });
+      
       return key;
 
     } catch (e) {
@@ -153,14 +156,13 @@ const InputBox = (props) => {
     }
   };
 
-  const onPressAttachment=async ()=>{
+  const onPressAttachment= async ()=>{
     //console.warn("Send Attachment")
-    let content;
+    let key;
     await pickImage();
-    content = await uploadImage();
-    console.log(content);
-    
-
+    key = await uploadImage();
+    setImagekey(key);
+    onSendPress();
 }
 
   return (
@@ -179,11 +181,14 @@ const InputBox = (props) => {
           value={message}
           onChangeText={setMessage}
         />
-      
+        
         <Entypo name="attachment" 
         size={24} color="grey" 
         style={styles.icon} 
-        onPress={onPressAttachment}/>
+        onPress={onPressAttachment}
+        />
+        
+        
 
         {!message && 
         <Fontisto name="camera" 
