@@ -34,7 +34,7 @@ const InputBox = (props) => {
   const [message, setMessage] = useState('');
   const [myUserId, setMyUserId] = useState(null);
   const [image, setImage] = useState(null);
-  const [key,setImagekey] = useState('');
+  //const [key,setImagekey] = useState('');
 
   const navigation = useNavigation();
 
@@ -85,29 +85,28 @@ const InputBox = (props) => {
     }
   }
 
-  const onSendPress = async () => {
-
+  const onSendPress = async (Imagekey: string) => {
+    //console.log("key in onSendPress ==>",Imagekey)
      try {
       const newMessageData = await API.graphql(
         graphqlOperation(
           createMessage, {
             input: {
               content: message,
-              media:key,
+              media:Imagekey,
               userID: myUserId,
               chatRoomID
             }
           }
         )
       )
-      console.log(newMessageData)
+      //console.log("NewMessage Data --->",newMessageData)
       await updateChatRoomLastMessage(newMessageData.data.createMessage.id)
     } catch (e) {
       console.log(e);
     }
 
     setMessage('');
-    setImagekey('');
   }
 
   const uploadImage = async () => {
@@ -135,7 +134,7 @@ const InputBox = (props) => {
     if (!message) {
       onMicrophonePress();
     } else {
-      onSendPress();
+      onSendPress("");
     }
   }
 
@@ -158,11 +157,10 @@ const InputBox = (props) => {
 
   const onPressAttachment= async ()=>{
     //console.warn("Send Attachment")
-    let key;
     await pickImage();
-    key = await uploadImage();
-    setImagekey(key);
-    onSendPress();
+    const imagekey = await uploadImage();
+    //console.log("Image key in OnpressAttachment -->",imagekey);
+    onSendPress(imagekey);
 }
 
   return (

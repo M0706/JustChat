@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import { Message } from "../../types";
 import moment from "moment";
 import styles from './styles';
-import {S3image} from "aws-amplify-react-native";
+import {S3Image} from "aws-amplify-react-native";
 
 export type ChatMessageProps = {
   message: Message;
@@ -26,8 +26,11 @@ const ChatMessage = (props: ChatMessageProps) => {
           marginRight: isMyMessage() ? 0 : 50,
         }
       ]}>
+
         {!isMyMessage() && <Text style={styles.name}>{message.user.name}</Text>}
-        <Text style={styles.message}>{message.content}</Text>
+
+        {message.media===null ? <S3Image imgKey={message.media} level="public" style={{ width: 100, height: 100 }} />:
+                 <Text style={styles.message}>{message.content}</Text>}
         <Text style={styles.time}>{moment(message.createdAt).fromNow()}</Text>
       </View>
     </View>
