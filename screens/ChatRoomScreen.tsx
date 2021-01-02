@@ -11,8 +11,6 @@ import {
 
 import { messagesByChatRoom } from '../graphql/queries';
 import { onCreateMessage } from '../graphql/subscriptions';
-
-
 import ChatMessage from "../components/ChatMessage";
 import BG from '../assets/images/BG.png';
 import InputBox from "../components/InputBox";
@@ -57,7 +55,7 @@ const ChatRoomScreen = () => {
     ).subscribe({
       next: (data) => {
         const newMessage = data.value.data.onCreateMessage;
-
+        console.log("NewMessage -->",newMessage)
         if (newMessage.chatRoomID !== route.params.id) {
           //console.log("Message is in another room!")
           return;
@@ -65,8 +63,7 @@ const ChatRoomScreen = () => {
         //console.log(newMessage)
         fetchMessages(); //issue here 
         //setMessages([newMessage, ...messages]);
-      }
-      
+      }      
     });
 
     return () => subscription.unsubscribe();
@@ -92,7 +89,6 @@ const ChatRoomScreen = () => {
       />
 
       <InputBox chatRoomID={route.params.id} />
-
 
     </ImageBackground>
 

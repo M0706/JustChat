@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View,Image} from 'react-native';
 import { Message } from "../../types";
 import moment from "moment";
 import styles from './styles';
@@ -11,7 +11,7 @@ export type ChatMessageProps = {
 }
 
 const ChatMessage = (props: ChatMessageProps) => {
-  const { message, myId } = props;
+  const { message, myId } = props
 
   const isMyMessage = () => {
     return message.user.id === myId;
@@ -29,8 +29,9 @@ const ChatMessage = (props: ChatMessageProps) => {
 
         {!isMyMessage() && <Text style={styles.name}>{message.user.name}</Text>}
 
-        {message.media===null ? <S3Image imgKey={message.media} level="public" style={{ width: 100, height: 100 }} />:
-                 <Text style={styles.message}>{message.content}</Text>}
+        {message.media==="" ? <Text style={styles.message}>{message.content}</Text>
+           :<Image source={{uri: message.media}} style={{ width: 100, height: 100 }} />
+                 }
         <Text style={styles.time}>{moment(message.createdAt).fromNow()}</Text>
       </View>
     </View>

@@ -85,7 +85,7 @@ const InputBox = (props) => {
     }
   }
 
-  const onSendPress = async (Imagekey: string) => {
+  const onSendPress = async (Imagekey:object) => {
     //console.log("key in onSendPress ==>",Imagekey)
      try {
       const newMessageData = await API.graphql(
@@ -115,9 +115,10 @@ const InputBox = (props) => {
       const blob = await response.blob();
       const urlParts = image.split('.');
       const extension = urlParts[urlParts.length - 1];
-
-      const key = `FirstImage.${extension}`;
-
+      const uniqueId= uuidv4();
+      console.log(uniqueId)
+      const key = `${uniqueId}.${extension}`;
+      console.log("Key -->",key)
       await Storage.put(key, blob).then(result=>{
         console.log("Uploaded image to S3")
       });
@@ -160,7 +161,9 @@ const InputBox = (props) => {
     await pickImage();
     const imagekey = await uploadImage();
     //console.log("Image key in OnpressAttachment -->",imagekey);
-    onSendPress(imagekey);
+    const signedUrl = await Storage.get(imagekey)
+    //console.log("Signed Url --->",signedUrl);
+    //onSendPress(signedUrl); 
 }
 
   return (
