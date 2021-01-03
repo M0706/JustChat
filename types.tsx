@@ -3,7 +3,7 @@ export type RootStackParamList = {
   NotFound: undefined;
 };
 
-export type BottomTabParamList = {
+export type MainTabParamList = {
   TabOne: undefined;
   TabTwo: undefined;
 };
