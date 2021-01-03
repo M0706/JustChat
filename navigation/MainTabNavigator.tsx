@@ -1,44 +1,60 @@
-import { Ionicons } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { Fontisto } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { MainTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { MainTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../types';
 
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
-export default function MainTabNavigator() {
+const MainTabNavigator: React.FC = () => {
   const colorScheme = useColorScheme();
 
   return (
     <MainTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Chats"
+      tabBarOptions={{
+        activeTintColor: Colors[colorScheme].background,
+        style: {
+          backgroundColor: Colors[colorScheme].tint
+        },
+        indicatorStyle: {
+          backgroundColor: Colors[colorScheme].background,
+          height: 3
+        },
+        labelStyle: {
+          fontWeight: 'bold'
+        },
+        showIcon: true
+      }}>
       <MainTab.Screen
-        name="TabOne"
+        name="Camera"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <Fontisto name="camera" size={18} color={color} />,
+          tabBarLabel: () => null
         }}
       />
       <MainTab.Screen
-        name="TabTwo"
+        name="Chats"
         component={TabTwoNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
+      />
+      <MainTab.Screen
+        name="Status"
+        component={TabThreeNavigator}
+      />
+      <MainTab.Screen
+        name="Calls"
+        component={TabThreeNavigator}
       />
     </MainTab.Navigator>
   );
-}
+};
 
-function TabBarIcon(props: { name: string; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
+export default MainTabNavigator;
 
 const TabOneStack = createStackNavigator<TabOneParamList>();
 function TabOneNavigator() {
@@ -60,9 +76,23 @@ function TabTwoNavigator() {
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
         name="TabTwoScreen"
-        component={TabTwoScreen}
+        component={TabOneScreen}
         options={{ headerShown: false }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+const TabThreeStack = createStackNavigator<TabThreeParamList>();
+
+function TabThreeNavigator() {
+  return (
+    <TabThreeStack.Navigator>
+      <TabThreeStack.Screen
+        name="TabThreeScreen"
+        component={TabOneScreen}
+        options={{ headerShown: false }}
+      />
+    </TabThreeStack.Navigator>
   );
 }

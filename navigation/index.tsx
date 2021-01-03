@@ -26,7 +26,9 @@ function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: Colors.light.tint
+        backgroundColor: Colors.light.tint,
+        shadowOpacity: 0,
+        elevation: 0
       },
       headerTintColor: Colors.light.background,
       headerTitleAlign: 'left',
@@ -40,7 +42,6 @@ function RootNavigator() {
         options={{
           title: 'WhatsApp',
           headerRight: () => (
-            // TODO: Move to header componenet
             <View
               style={{
                 flexDirection: 'row',
