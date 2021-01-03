@@ -1,12 +1,14 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 import { ColorSchemeName } from 'react-native';
+import { View } from 'react-native';
 
 import Colors from '../constants/Colors';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
+import MainTabNavigator from './MainTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -34,14 +36,29 @@ function RootNavigator() {
     }}>
       <Stack.Screen
         name="Root"
-        component={BottomTabNavigator}
+        component={MainTabNavigator}
         options={{
-          title: 'WhatsApp'
+          title: 'WhatsApp',
+          headerRight: () => (
+            // TODO: Move to header componenet
+            <View
+              style={{
+                flexDirection: 'row',
+                width: 60,
+                justifyContent: 'space-between',
+                marginRight: 10
+              }}
+            >
+              <Octicons name="search" size={22} color={Colors.light.background} />
+              <MaterialCommunityIcons name="dots-vertical" size={22} color={Colors.light.background} />
+            </View>
+          )
         }}
       />
       <Stack.Screen
         name="NotFound"
-        component={NotFoundScreen} options={{ title: 'Oops!' }}
+        component={NotFoundScreen}
+        options={{ title: 'Oops!' }}
       />
     </Stack.Navigator>
   );
