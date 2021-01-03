@@ -31,7 +31,7 @@ module.exports = {
     'no-multi-spaces': 'error',
     'no-trailing-spaces': 'error',
     'indent': ['error', 2 ],
-    'linebreak-style': [ 'error', 'unix' ],
+    'linebreak-style': [ 'error', 'windows' ],
     'quotes': [ 'error', 'single' ],
     'semi': [ 'error', 'always' ],
     'react-native/no-unused-styles': 2,
