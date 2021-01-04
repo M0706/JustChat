@@ -25,17 +25,17 @@ export type TabThreeParamList = {
 export type User = {
   id: string;
   name: string;
-  image: string;
+  imageUri: string;
 }
 
 export type Message = {
   id: string;
   content: string;
-  createdAt: number;
+  createdAt: string;
 }
 
 export type ChatRoom = {
   id: string;
-  users: [User];
+  users: User[];
   lastMessage: Message
 }

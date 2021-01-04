@@ -40,7 +40,7 @@ function RootNavigator() {
         name="Root"
         component={MainTabNavigator}
         options={{
-          title: 'WhatsApp Clone',
+          title: 'WhatsApp',
           headerRight: () => (
             <View
               style={{
