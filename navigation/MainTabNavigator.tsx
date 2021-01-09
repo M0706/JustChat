@@ -6,7 +6,10 @@ import { Fontisto } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ChatScreen from '../screens/ChatScreen';
-import { MainTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from '../types';
+import CameraScreen from '../screens/CameraScreen';
+import StatusScreen from '../screens/StatusScreen';
+import CallsScreen from '../screens/CallsScreen';
+import { MainTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from '../types';
 
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
@@ -48,7 +51,7 @@ const MainTabNavigator: React.FC = () => {
       />
       <MainTab.Screen
         name="Calls"
-        component={TabThreeNavigator}
+        component={TabFourNavigator}
       />
     </MainTab.Navigator>
   );
@@ -61,8 +64,8 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="ChatScreen"
-        component={ChatScreen}
+        name="CameraScreen"
+        component={CameraScreen}
         options={{ headerShown: false }}
       />
     </TabOneStack.Navigator>
@@ -75,7 +78,7 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="TabTwoScreen"
+        name="ChatScreen"
         component={ChatScreen}
         options={{ headerShown: false }}
       />
@@ -89,10 +92,24 @@ function TabThreeNavigator() {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
-        name="TabThreeScreen"
-        component={ChatScreen}
+        name="StatusScreen"
+        component={StatusScreen}
         options={{ headerShown: false }}
       />
     </TabThreeStack.Navigator>
+  );
+}
+
+const TabFourStack = createStackNavigator<TabFourParamList>();
+
+function TabFourNavigator() {
+  return (
+    <TabFourStack.Navigator>
+      <TabFourStack.Screen
+        name="CallsScreen"
+        component={CallsScreen}
+        options={{ headerShown: false }}
+      />
+    </TabFourStack.Navigator>
   );
 }

@@ -12,15 +12,19 @@ export type MainTabParamList = {
 };
 
 export type TabOneParamList = {
-  ChatScreen: undefined;
+  CameraScreen: undefined;
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  ChatScreen: undefined;
 };
 
 export type TabThreeParamList = {
-  TabThreeScreen: undefined;
+  StatusScreen: undefined;
+}
+
+export type TabFourParamList = {
+  CallsScreen: undefined;
 }
 
 export type User = {
