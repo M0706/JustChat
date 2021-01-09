@@ -29,7 +29,7 @@ export default [{
   users: users,
   lastMessage: {
     id: 'm4',
-    content: 'Can you review my last merge',
+    content: 'Can you review my last mergeCan you review my last mergeCan you review my last merge',
     createdAt: '2020-09-29T14:48:00.000Z',
   }
 }, {
@@ -70,6 +70,38 @@ export default [{
   lastMessage: {
     id: 'm9',
     content: 'Meet me at the same place',
+    createdAt: '2020-09-25T15:40:00.000Z',
+  },
+}, {
+  id: '10',
+  users: users,
+  lastMessage: {
+    id: 'm10',
+    content: 'Meet me at the same place',
+    createdAt: '2020-09-25T15:40:00.000Z',
+  },
+}, {
+  id: '11',
+  users: users,
+  lastMessage: {
+    id: 'm11',
+    content: 'Meet me at the same place',
+    createdAt: '2020-09-25T15:40:00.000Z',
+  },
+}, {
+  id: '12',
+  users: users,
+  lastMessage: {
+    id: 'm12',
+    content: 'Meet me at the same place',
+    createdAt: '2020-09-25T15:40:00.000Z',
+  },
+}, {
+  id: '13',
+  users: users,
+  lastMessage: {
+    id: 'm13',
+    content: 'Meet me at the same placeplaceplaceplaceplaceplace',
     createdAt: '2020-09-25T15:40:00.000Z',
   },
 }];

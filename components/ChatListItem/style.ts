@@ -4,7 +4,7 @@ const style = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     padding: 10
   },
 
@@ -13,7 +13,8 @@ const style = StyleSheet.create({
   },
 
   midContainer: {
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    width: '65%',
   },
 
   userName: {
@@ -23,18 +24,21 @@ const style = StyleSheet.create({
 
   lastMessage: {
     fontSize: 16,
-    color: 'grey'
+    color: 'grey',
   },
 
   time: {
-    fontSize: 16,
-    color: 'grey'
+    fontSize: 14,
+    color: 'grey',
+    paddingTop: 5,
+    marginRight: 10,
   },
 
   avatar: {
     width: 60,
     height: 60,
-    marginRight: 15,
+    marginLeft: 5,
+    marginRight: 10,
     borderRadius: 60
   }
 });
