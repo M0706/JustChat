@@ -1,6 +1,5 @@
 import users from './Users';
 
-
 export default {
   id: '1',
   users: [users],
@@ -11,6 +10,7 @@ export default {
     user: {
       id: 'u1',
       name: 'Vadim',
+      imageUri: 'https://i.imgur.com/yfo3bV2.jpg',
     },
   }, {
     id: 'm2',
@@ -19,6 +19,7 @@ export default {
     user: {
       id: 'u2',
       name: 'Lukas',
+      imageUri: 'https://i.imgur.com/lqVriaO.jpg',
     },
   }, {
     id: 'm3',
@@ -27,6 +28,7 @@ export default {
     user: {
       id: 'u2',
       name: 'Lukas',
+      imageUri: 'https://i.imgur.com/lqVriaO.jpg',
     },
   }, {
     id: 'm4',
@@ -35,6 +37,7 @@ export default {
     user: {
       id: 'u1',
       name: 'Vadim',
+      imageUri: 'https://i.imgur.com/yfo3bV2.jpg',
     },
   }, {
     id: 'm5',
@@ -43,6 +46,7 @@ export default {
     user: {
       id: 'u1',
       name: 'Vadim',
+      imageUri: 'https://i.imgur.com/yfo3bV2.jpg',
     },
   }, {
     id: 'm6',
@@ -51,6 +55,7 @@ export default {
     user: {
       id: 'u2',
       name: 'Lukas',
+      imageUri: 'https://i.imgur.com/lqVriaO.jpg',
     },
   }, {
     id: 'm7',
@@ -59,6 +64,7 @@ export default {
     user: {
       id: 'u1',
       name: 'Vadim',
+      imageUri: 'https://i.imgur.com/yfo3bV2.jpg',
     },
   }]
 };
