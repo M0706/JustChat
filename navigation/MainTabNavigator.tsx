@@ -5,7 +5,7 @@ import { Fontisto } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ChatScreen from '../screens/ChatScreen';
+import ChatScreen from '../screens/ChatsScreen';
 import CameraScreen from '../screens/CameraScreen';
 import StatusScreen from '../screens/StatusScreen';
 import CallsScreen from '../screens/CallsScreen';
@@ -78,7 +78,7 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="ChatScreen"
+        name="ChatsScreen"
         component={ChatScreen}
         options={{ headerShown: false }}
       />
