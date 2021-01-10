@@ -1,4 +1,5 @@
-type User @model {
+type User
+@model {
   id: ID!
   name: String!
   imageUri: String
@@ -17,7 +18,25 @@ type ChatRoomUser
   chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
 }
 
-type ChatRoom @model {
+type ChatRoom 
+@model {
   id: ID!
   chatRoomUsers: [ChatRoomUser] @connection(keyName: "byChatRoom", fields: ["id"])
+  messages: [Message] @connection(keyName: "byChatRoom", fields: ["id"])
+}
+
+type Message 
+@model
+@key(
+  name: "byChatRoom", 
+  fields: ["chatRoomID", "createdAt"], 
+  queryField: "messagesByChatRoom"
+) {
+  id: ID!
+  createdAt: String!
+  content: String!
+  userID: ID!
+  chatRoomID: ID!
+  user: User @connection(fields: ["userID"])
+  chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
 }

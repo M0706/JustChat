@@ -7,13 +7,14 @@ import { Message } from '../../types';
 
 export type ChatMessageProps = {
   message: Message
+  currentUserId: string
 };
 
 const ChatMessage = (props: ChatMessageProps) => {
-  const { message } = props;
+  const { message, currentUserId } = props;
 
   const isMyMessage = () => {
-    return message.user.id === 'u1';
+    return message.user.id === currentUserId;
   };
 
   return (
