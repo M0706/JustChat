@@ -47,7 +47,7 @@ const ChatRoomScreen = () => {
     >
       <FlatList
         data={messages}
-        renderItem={({ item }) => <ChatMessage message={item} currentUserId={currentUserId }/>}
+        renderItem={({ item }) => <ChatMessage message={item} currentUserId={currentUserId}/>}
         inverted
       />
       <InputBox chatRoomID={route.params.id} />
