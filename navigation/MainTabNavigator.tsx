@@ -14,16 +14,18 @@ import { MainTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, 
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
 const MainTabNavigator: React.FC = () => {
+  const colorScheme = useColorScheme();
+
   return (
     <MainTab.Navigator
       initialRouteName="Chats"
       tabBarOptions={{
-        activeTintColor: Colors.light.background,
+        activeTintColor: Colors[colorScheme].background,
         style: {
-          backgroundColor: Colors.light.tint
+          backgroundColor: Colors[colorScheme].tint
         },
         indicatorStyle: {
-          backgroundColor: Colors.light.background,
+          backgroundColor: Colors[colorScheme].background,
           height: 3
         },
         labelStyle: {
