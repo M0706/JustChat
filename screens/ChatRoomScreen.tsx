@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, ImageBackground } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
 
 import ChatMessage from '../components/ChatMessage';
 import BG from '../assets/images/BG.png';
 import InputBox from '../components/InputBox';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { messagesByChatRoom } from '../graphql/queries';
+import { onCreateMessage } from '../graphql/subscriptions';
 
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
-  const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState('');
   const route = useRoute();
 
   useEffect(() => {
@@ -24,7 +25,6 @@ const ChatRoomScreen = () => {
           }
         )
       );
-
       setMessages(messages.data.messagesByChatRoom.items);
     };
 
@@ -39,6 +39,25 @@ const ChatRoomScreen = () => {
 
     fetchUserId();
   }, []);
+
+  useEffect(() => {
+    const subscription = API.graphql(
+      graphqlOperation(onCreateMessage)
+    ).subscribe({
+      next: async (data) => {
+        const newMessage = data.value.data.onCreateMessage;
+
+        if (newMessage.chatRoomID !== route.params.id) {
+          console.log('Message is in another room');
+          return;
+        }
+
+        setMessages([ newMessage, ...messages ]);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [messages]);
 
   return (
     <ImageBackground
