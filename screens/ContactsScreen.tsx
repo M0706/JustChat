@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 import { View } from '../components/Themed';
 import ContactListItem from '../components/ContactListItem';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { listUsers } from '../graphql/queries';
+import { User } from '../types';
 
 export default function ContactsScreen() {
   const [users, setUsers] = useState([]);
+  const route = useRoute();
 
   useEffect(() => {
     const fetchUsers = async () => {
