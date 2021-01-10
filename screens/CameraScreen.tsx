@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const CameraScreen = () => {
   return (
-    <View>
+    <View style={{ backgroundColor: '#fff', width: '100%', height: '100%' }}>
       <Text>Camera Screen</Text>
     </View>
   );
