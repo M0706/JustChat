@@ -3,7 +3,7 @@ import { StyleSheet, FlatList } from 'react-native';
 
 import { View } from '../components/Themed';
 import ContactListItem from '../components/ContactListItem';
-import { API, graphqlOperation } from 'aws-amplify';
+import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { listUsers } from '../graphql/queries';
 
 export default function ContactsScreen() {
@@ -13,8 +13,9 @@ export default function ContactsScreen() {
     const fetchUsers = async () => {
       try {
         const usersData = await API.graphql(graphqlOperation(listUsers));
-
-        setUsers(usersData.data.listUsers.items);
+        const currentUser = await Auth.currentAuthenticatedUser();
+        const filteredUsers = usersData.data.listUsers.items.filter((i) => i.id !== currentUser.attributes.sub);
+        setUsers(filteredUsers);
       } catch(err) {
         console.warn(err);
       }
