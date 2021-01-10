@@ -40,6 +40,8 @@ const ChatListItem = (props: ChatListItemProps) => {
     );
   };
 
+  console.log(chatRoom);
+
   if (!otherUser) return null;
 
   return (
