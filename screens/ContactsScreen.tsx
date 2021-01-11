@@ -18,7 +18,7 @@ export default function ContactsScreen() {
       return null;
     }
 
-    const chatRoom = chatRooms.find(cr => cr.chatRoomUsers.items.some(u => u.user.id === user.id));
+    const chatRoom = chatRooms.find(cr => cr.chatRoomUsers.items.some((i) => i.user.id === user.id));
     if (chatRoom) {
       return {
         ...user,
@@ -35,7 +35,6 @@ export default function ContactsScreen() {
         const usersData = await API.graphql(graphqlOperation(listUsers));
         const currentUser = await Auth.currentAuthenticatedUser();
         const filteredUsers = usersData.data.listUsers.items.map((i: User) => mapUsers(i, currentUser.attributes.sub)).filter(Boolean);
-        console.log(filteredUsers);
         setUsers(filteredUsers);
       } catch(err) {
         console.warn(err);
