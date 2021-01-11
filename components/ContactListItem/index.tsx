@@ -22,45 +22,48 @@ const ContactListItem = (props: ContactListItemProps) => {
 
   const onClick = async () => {
     try {
-      const newChatRoomData = await API.graphql(
-        graphqlOperation(
-          createChatRoom,
-          { input: { lastMessageID: '' } }
-        )
-      );
+      let newChatRoomData;
+      if (!user.previousChatID) {
+        newChatRoomData = await API.graphql(
+          graphqlOperation(
+            createChatRoom,
+            { input: { lastMessageID: '' } }
+          )
+        );
 
-      if(!newChatRoomData.data) {
-        console.log('Failed to create chat room');
-        return;
+        if(!newChatRoomData.data) {
+          console.log('Failed to create chat room');
+          return;
+        }
+
+        await API.graphql(
+          graphqlOperation(
+            createChatRoomUser,
+            {
+              input: {
+                userID: user.id,
+                chatRoomID: newChatRoomData.data.createChatRoom.id
+              }
+            }
+          )
+        );
+
+        const userInfo = await Auth.currentAuthenticatedUser();
+        await API.graphql(
+          graphqlOperation(
+            createChatRoomUser,
+            {
+              input: {
+                userID: userInfo.attributes.sub,
+                chatRoomID: newChatRoomData.data.createChatRoom.id
+              }
+            }
+          )
+        );
       }
 
-      await API.graphql(
-        graphqlOperation(
-          createChatRoomUser,
-          {
-            input: {
-              userID: user.id,
-              chatRoomID: newChatRoomData.data.createChatRoom.id
-            }
-          }
-        )
-      );
-
-      const userInfo = await Auth.currentAuthenticatedUser();
-      await API.graphql(
-        graphqlOperation(
-          createChatRoomUser,
-          {
-            input: {
-              userID: userInfo.attributes.sub,
-              chatRoomID: newChatRoomData.data.createChatRoom.id
-            }
-          }
-        )
-      );
-
       navigation.navigate('ChatRoom', {
-        id: newChatRoomData.data.createChatRoom.id,
+        id: user.previousChatID ? user.previousChatID : (newChatRoomData?.data.createChatRoom.id || ''),
         name: user.name
       });
 

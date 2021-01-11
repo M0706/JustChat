@@ -33,6 +33,7 @@ export type User = {
   name: string;
   imageUri: string;
   status: string;
+  previousChatID: string;
 }
 
 export type Message = {

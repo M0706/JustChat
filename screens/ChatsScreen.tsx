@@ -7,6 +7,7 @@ import NewMessageButton from '../components/NewMessageButton';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from '../graphqlCustom/queries';
 import { onUpdateChatRoom, onCreateChatRoom } from '../graphql/subscriptions';
+import { ChatRoom } from '../types';
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
@@ -22,7 +23,7 @@ export default function ChatsScreen() {
         )
       );
 
-      setChatRooms(userData.data.getUser.chatRoomUser.items);
+      setChatRooms(userData.data.getUser.chatRoomUser.items.map(i => ({ ...i.chatRoom })));
     } catch(err) {
       console.log(err);
     }
@@ -70,8 +71,8 @@ export default function ChatsScreen() {
             <FlatList
               style={styles.list}
               data={chatRooms}
-              renderItem={({ item }) => <ChatListItem chatRoom={item.chatRoom} />}
-              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <ChatListItem chatRoom={item} />}
+              keyExtractor={(item: ChatRoom) => item.id}
             />
           )
       }
