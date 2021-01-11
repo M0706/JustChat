@@ -40,16 +40,14 @@ const ChatListItem = (props: ChatListItemProps) => {
     );
   };
 
-  console.log(chatRoom);
-
   if (!otherUser) return null;
 
   return (
     <TouchableWithoutFeedback onPress={onClick}>
       <View style={styles.container}>
-        <View style={styles.leftContainer}>
-          <Image style={styles.avatar} source={{ uri: otherUser.imageUri }} />
+        <Image style={styles.avatar} source={{ uri: otherUser.imageUri }} />
 
+        <View style={styles.rightContainer}>
           <View style={styles.midContainer}>
             <Text style={styles.userName}>{otherUser.name}</Text>
             <Text
@@ -63,9 +61,9 @@ const ChatListItem = (props: ChatListItemProps) => {
               }
             </Text>
           </View>
-        </View>
 
-        <Text style={styles.time}>{chatRoom.lastMessage && moment(chatRoom.lastMessage.createdAt).format('DD/MM/YYYY')}</Text>
+          <Text style={styles.time}>{chatRoom.lastMessage && moment(chatRoom.lastMessage.createdAt).format('DD/MM/YYYY')}</Text>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );

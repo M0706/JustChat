@@ -8,18 +8,24 @@ const style = StyleSheet.create({
     padding: 10
   },
 
-  leftContainer: {
-    flexDirection: 'row'
+  rightContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 8,
+    paddingBottom: 25,
+    borderBottomColor: 'lightgrey',
+    borderBottomWidth: 1
   },
 
   midContainer: {
-    justifyContent: 'space-around',
     width: '65%',
   },
 
   userName: {
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 16,
+    paddingBottom: 8
   },
 
   lastMessage: {
@@ -38,9 +44,9 @@ const style = StyleSheet.create({
     width: 60,
     height: 60,
     marginLeft: 5,
-    marginRight: 10,
+    marginRight: 5,
+    marginTop: 3,
     borderRadius: 60
   }
 });
-
 export default style;

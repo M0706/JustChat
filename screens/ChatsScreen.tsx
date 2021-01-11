@@ -6,30 +6,43 @@ import ChatListItem from '../components/ChatListItem';
 import NewMessageButton from '../components/NewMessageButton';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from '../graphqlCustom/queries';
+import { onUpdateChatRoom } from '../graphql/subscriptions';
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
 
+  const fetchChatRooms = async () => {
+    try {
+      const currentUser = await Auth.currentAuthenticatedUser();
+
+      const userData = await API.graphql(
+        graphqlOperation(
+          getUser,
+          { id: currentUser.attributes.sub }
+        )
+      );
+
+      setChatRooms(userData.data.getUser.chatRoomUser.items);
+    } catch(err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchChatRooms = async () => {
-      try {
-        const currentUser = await Auth.currentAuthenticatedUser();
-
-        const userData = await API.graphql(
-          graphqlOperation(
-            getUser,
-            { id: currentUser.attributes.sub }
-          )
-        );
-
-        setChatRooms(userData.data.getUser.chatRoomUser.items);
-      } catch(err) {
-        console.log(err);
-      }
-    };
-
     fetchChatRooms();
   }, []);
+
+  useEffect(() => {
+    const subscription = API.graphql(
+      graphqlOperation(onUpdateChatRoom)
+    ).subscribe({
+      next: (data) => {
+        fetchChatRooms();
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [chatRooms]);
 
   return (
     <View style={styles.container}>
