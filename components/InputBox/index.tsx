@@ -8,7 +8,9 @@ import {
 } from '@expo/vector-icons';
 import {
   TextInput,
-  View
+  View,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import {
   TouchableOpacity
@@ -93,29 +95,35 @@ const InputBox = (props: InputBoxProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.mainContainer}>
-        <FontAwesome5 name="laugh-beam" size={24} color="grey" />
-        <TextInput
-          placeholder="Type a message"
-          style={styles.textInput}
-          multiline
-          value={message}
-          onChangeText={setMessage}
-        />
-        <Entypo name="attachment" size={24} color="grey" style={styles.icon} />
-        { !message && <Fontisto name="camera" size={24} color="grey" style={styles.icon} /> }
-      </View>
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.buttonContainer}>
-          {
-            !message
-              ? <MaterialCommunityIcons name="microphone" size={24} color="white" />
-              : <MaterialIcons name="send" size={24} color="white" />
-          }
+    <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={100}
+      style={{ width: '100%' }}
+    >
+      <View style={styles.container}>
+        <View style={styles.mainContainer}>
+          <FontAwesome5 name="laugh-beam" size={24} color="grey" />
+          <TextInput
+            placeholder="Type a message"
+            style={styles.textInput}
+            multiline
+            value={message}
+            onChangeText={setMessage}
+          />
+          <Entypo name="attachment" size={24} color="grey" style={styles.icon} />
+          { !message && <Fontisto name="camera" size={24} color="grey" style={styles.icon} /> }
         </View>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity onPress={onPress}>
+          <View style={styles.buttonContainer}>
+            {
+              !message
+                ? <MaterialCommunityIcons name="microphone" size={24} color="white" />
+                : <MaterialIcons name="send" size={24} color="white" />
+            }
+          </View>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 

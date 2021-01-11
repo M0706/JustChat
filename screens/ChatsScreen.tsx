@@ -6,7 +6,7 @@ import ChatListItem from '../components/ChatListItem';
 import NewMessageButton from '../components/NewMessageButton';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from '../graphqlCustom/queries';
-import { onUpdateChatRoom } from '../graphql/subscriptions';
+import { onUpdateChatRoom, onCreateChatRoom } from '../graphql/subscriptions';
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
@@ -33,8 +33,20 @@ export default function ChatsScreen() {
   }, []);
 
   useEffect(() => {
-    const subscription = API.graphql(
+    const onUpdateChatRoomSubscription = API.graphql(
       graphqlOperation(onUpdateChatRoom)
+    ).subscribe({
+      next: (data) => {
+        fetchChatRooms();
+      }
+    });
+
+    return () => onUpdateChatRoomSubscription.unsubscribe();
+  }, [chatRooms]);
+
+  useEffect(() => {
+    const subscription = API.graphql(
+      graphqlOperation(onCreateChatRoom)
     ).subscribe({
       next: (data) => {
         fetchChatRooms();
