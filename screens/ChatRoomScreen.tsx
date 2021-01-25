@@ -18,7 +18,7 @@ import InputBox from "../components/InputBox";
 const ChatRoomScreen = () => {
 
   const [messages, setMessages] = useState([]);
-  const [myId, setMyId] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState('');
 
   const route = useRoute();
 
@@ -38,36 +38,52 @@ const ChatRoomScreen = () => {
   }
 
   useEffect(() => {
+    const fetchMessages = async () => {
+      const messages = await API.graphql(
+        graphqlOperation(
+          messagesByChatRoom,
+          {
+            chatRoomID: route.params.id,
+            sortDirection: 'DESC'
+          }
+        )
+      );
+      setMessages(messages.data.messagesByChatRoom.items);
+    };
+
     fetchMessages();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const getMyId = async () => {
-      const userInfo = await Auth.currentAuthenticatedUser();
-      setMyId(userInfo.attributes.sub);
-    }
-    getMyId();
-  }, [])
+    const fetchUserId = async () => {
+      const currentUser = await Auth.currentAuthenticatedUser();
+      setCurrentUserId(currentUser.attributes.sub);
+    };
 
-  useEffect(() => {
-    const subscription = API.graphql(
+    fetchUserId();
+  }, []);
+
+
+  useEffect(() => {    const subscription = API.graphql(
       graphqlOperation(onCreateMessage)
     ).subscribe({
-      next: (data) => {
+      next: async (data) => {
         const newMessage = data.value.data.onCreateMessage;
-        console.log("NewMessage -->",newMessage)
+
         if (newMessage.chatRoomID !== route.params.id) {
-          //console.log("Message is in another room!")
+          console.log('Message is in another room');
           return;
         }
-        //console.log(newMessage)
-        fetchMessages(); //issue here 
-        //setMessages([newMessage, ...messages]);
-      }      
+
+        setMessages([ newMessage, ...messages ]);
+        console.log(messages);
+      }
     });
 
     return () => subscription.unsubscribe();
-  }, [])
+  }, [messages])
+
+
 
   //console.log(`messages in state: ${messages.length}`)
 
