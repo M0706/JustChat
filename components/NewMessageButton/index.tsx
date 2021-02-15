@@ -3,8 +3,14 @@ import {TouchableOpacity, View} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import styles from "./styles";
 import { useNavigation } from '@react-navigation/native';
+import { ChatRoom } from '../../types';
 
-const NewMessageButton = () => {
+
+export type NewMessageButtonProps = {
+  chatRooms: ChatRoom[],
+}
+
+const NewMessageButton = (props:NewMessageButtonProps) => {
 
   const navigation = useNavigation();
 

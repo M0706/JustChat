@@ -22,20 +22,6 @@ const ChatRoomScreen = () => {
 
   const route = useRoute();
 
-  const fetchMessages = async () => {
-    const messagesData = await API.graphql(
-      graphqlOperation(
-        messagesByChatRoom, {
-          chatRoomID: route.params.id,
-          sortDirection: "DESC",
-        }
-      )
-    )
-
-    //console.log("FETCH MESSAGES")
-    //console.log("messagesData --->",messagesData.data.messagesByChatRoom.items);
-    setMessages(messagesData.data.messagesByChatRoom.items);
-  }
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -76,7 +62,7 @@ const ChatRoomScreen = () => {
         }
 
         setMessages([ newMessage, ...messages ]);
-        console.log(messages);
+        //console.log(messages);
       }
     });
 
@@ -97,7 +83,7 @@ const ChatRoomScreen = () => {
         data={messages}
         renderItem={({ item }) => (
           <DoubleClick onClick={doubleClick}>
-              <ChatMessage myId={myId} message={item}/>
+              <ChatMessage myId={currentUserId} message={item}/>
           </DoubleClick>
        )}
         inverted

@@ -38,6 +38,7 @@ export type User = {
   name: String;
   imageUri: string;
   status: String;
+  previousChatID: string;
 }
 
 export type Message = {

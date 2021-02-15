@@ -6,11 +6,13 @@ import ContactListItem from '../components/ContactListItem';
 
 import { listUsers }  from '../graphql/queries';
 import {useEffect, useState} from "react";
-
+import { useRoute } from '@react-navigation/native';
 export default function ContactsScreen() {
 
   const [users, setUsers] = useState([]);
-
+  const route = useRoute();
+  console.log(route);
+  
   useEffect(() => {
     const fetchUsers = async () => {
       try {

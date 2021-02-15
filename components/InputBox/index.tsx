@@ -70,6 +70,7 @@ const InputBox = (props) => {
 
   const updateChatRoomLastMessage = async (messageId: string) => {
     try {
+      //console.log("LastmessageId -->",messageId)
       await API.graphql(
         graphqlOperation(
           updateChatRoom, {

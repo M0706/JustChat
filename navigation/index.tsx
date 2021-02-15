@@ -10,7 +10,7 @@ import {
 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import ChatRoomScreen from '../screens/chatRoomScreen';
+import ChatRoomScreen from '../screens/ChatRoomScreen';
 import { RootStackParamList } from '../types';
 import MainTabNavigator from './MainTabNavigator';
 import UnderDevelopment from './UnderDevelopment';
