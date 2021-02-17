@@ -33,54 +33,49 @@ const ContactListItem = (props: ContactListItemProps) => {
       
       //  1. Create a new Chat Room
       let newChatRoomData;
-      if(!user.previousChatID){
+      if (!user.previousChatID) {
         newChatRoomData = await API.graphql(
           graphqlOperation(
-            createChatRoom, {
+            createChatRoom,
+            { input: { lastMessageID: '' } }
+          )
+        );
+
+        if(!newChatRoomData.data) {
+          console.log('Failed to create chat room');
+          return;
+        }
+
+        await API.graphql(
+          graphqlOperation(
+            createChatRoomUser,
+            {
               input: {
-                lastMessageID: "zz753fca-e8c3-473b-8e85-b14196e84e16"
+                userID: user.id,
+                chatRoomID: newChatRoomData.data.createChatRoom.id
               }
             }
           )
-        )
-      }
-     
+        );
 
-      if (!newChatRoomData.data) {
-        console.log(" Failed to create a chat room");
-        return;
-      }
-
-
-      // 2. Add `user` to the Chat Room
-      await API.graphql(
-        graphqlOperation(
-          createChatRoomUser, {
-            input: {
-              userID: user.id,
-              chatRoomID: newChatRoomData.data.createChatRoom.id,
+        const userInfo = await Auth.currentAuthenticatedUser();
+        await API.graphql(
+          graphqlOperation(
+            createChatRoomUser,
+            {
+              input: {
+                userID: userInfo.attributes.sub,
+                chatRoomID: newChatRoomData.data.createChatRoom.id
+              }
             }
-          }
-        )
-      )
-
-      //  3. Add authenticated user to the Chat Room
-      const userInfo = await Auth.currentAuthenticatedUser();
-      await API.graphql(
-        graphqlOperation(
-          createChatRoomUser, {
-            input: {
-              userID: userInfo.attributes.sub,
-              chatRoomID: newChatRoomData.data.createChatRoom.id,
-            }
-          }
-        )
-      )
+          )
+        );
+      }
 
       navigation.navigate('ChatRoom', {
         id: user.previousChatID ? user.previousChatID : (newChatRoomData?.data.createChatRoom.id || ''),
-        name: user.name,
-      })
+        name: user.name
+      });
 
     } catch (e) {
       console.log(e);

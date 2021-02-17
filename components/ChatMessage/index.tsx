@@ -28,24 +28,24 @@ const ChatMessage = (props: ChatMessageProps) => {
     return message.user.id === myId;
   }
 
-  const messageDelete=async()=>{
-    try{
-      const deletedmessageData = await API.graphql(
-        graphqlOperation(
-          deleteMessage, {
-            input: {
-              id:myId
-            }
-          }
-        )
-      )
-      console.log("Deletemessage===>",deletedmessageData)
+  // const messageDelete=async()=>{
+  //   try{
+  //     const deletedmessageData = await API.graphql(
+  //       graphqlOperation(
+  //         deleteMessage, {
+  //           input: {
+  //             id:myId
+  //           }
+  //         }
+  //       )
+  //     )
+  //     console.log("Deletemessage===>",deletedmessageData)
 
-    }
-    catch(e){ 
-      console.log("Message cannot be deleted")
-    }
-  }
+  //   }
+  //   catch(e){ 
+  //     console.log("Message cannot be deleted")
+  //   }
+  // }
   
 
   return (

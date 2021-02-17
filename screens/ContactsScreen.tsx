@@ -1,33 +1,65 @@
 import * as React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import { API, graphqlOperation } from 'aws-amplify';
+import {Auth, API, graphqlOperation } from 'aws-amplify';
 import { View } from '../components/Themed';
 import ContactListItem from '../components/ContactListItem';
 
 import { listUsers }  from '../graphql/queries';
 import {useEffect, useState} from "react";
 import { useRoute } from '@react-navigation/native';
+import { User } from '../types';
+
 export default function ContactsScreen() {
 
   const [users, setUsers] = useState([]);
   const route = useRoute();
-  console.log(route);
+  //console.log(route.params);
+  const chatRooms = route.params.chatRooms;
   
+  
+
+  const mapUsers = (user: User, currentAuthedUser: string) => {
+    if (user.id === currentAuthedUser) {
+      return null;
+    }
+    // console.log("hi")
+    let filterChatRoom = chatRooms.filter((room)=>{
+      if(room.chatRoomUsers===null){
+        return false;
+      }
+      return true
+    })
+
+    const chatRoom = filterChatRoom.find(cr =>{
+      cr.chatRoomUsers.items.some((i) => i.user.id === user.id)
+    });
+    if (chatRoom) {
+      return {
+        ...user,
+        previousChatID: chatRoom.id
+      };
+    }
+
+    return { ...user };
+  };
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersData = await API.graphql(
-          graphqlOperation(
-            listUsers
-          )
-        )
-        setUsers(usersData.data.listUsers.items);
-      } catch (e) {
-        console.log(e);
+        const usersData = await API.graphql(graphqlOperation(listUsers));
+        const currentUser = await Auth.currentAuthenticatedUser();
+        const filteredUsers = usersData.data.listUsers.items
+                .map((i: User) => 
+                mapUsers(i, currentUser.attributes.sub)).filter(Boolean);
+        console.log("Filtered users-->",filteredUsers);
+        setUsers(filteredUsers);
+      } catch(err) {
+        console.warn(err);
       }
-    }
+    };
+
     fetchUsers();
-  }, [])
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -48,3 +80,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
