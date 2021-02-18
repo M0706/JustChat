@@ -1,55 +1,82 @@
-import * as React from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, FlatList, Text } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { View } from '../components/Themed';
 import ChatListItem from '../components/chatListItem';
-import {
-  API,
-  graphqlOperation,
-  Auth,
-} from 'aws-amplify';
-
-import chatRooms from '../data/Chatrooms';
-import NewMessageButton from "../components/NewMessageButton";
-import {useEffect, useState} from "react";
-
+import NewMessageButton from '../components/NewMessageButton';
+import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from './queries';
+import { onUpdateChatRoom, onCreateChatRoom } from '../graphql/subscriptions';
+import { ChatRoom } from '../types';
 
 export default function ChatsScreen() {
-
   const [chatRooms, setChatRooms] = useState([]);
 
-  useEffect(() => {
-    const fetchChatRooms = async () => {
-      try {
-        const userInfo = await Auth.currentAuthenticatedUser();
+  const fetchChatRooms = async () => {
+    try {
+      const currentUser = await Auth.currentAuthenticatedUser();
 
-        const userData = await API.graphql(
-          graphqlOperation(
-            getUser, {
-              id: userInfo.attributes.sub,
-            }
-          )
+      const userData = await API.graphql(
+        graphqlOperation(
+          getUser,
+          { id: currentUser.attributes.sub }
         )
+      );
 
-        setChatRooms(userData.data.getUser.chatRoomUser.items)
-        //console.log(userData.data.getUser.chatRoomUser.items);
-
-      } catch (e) {
-        console.log(e);
-      }
+      setChatRooms(userData.data.getUser.chatRoomUser.items.map(i => ({ ...i.chatRoom })));
+    } catch(err) {
+      console.log(err);
     }
+  };
+
+  useEffect(() => {
     fetchChatRooms();
   }, []);
 
+  useEffect(() => {
+    const onUpdateChatRoomSubscription = API.graphql(
+      graphqlOperation(onUpdateChatRoom)
+    ).subscribe({
+      next: (data) => {
+        fetchChatRooms();
+      }
+    });
+
+    return () => onUpdateChatRoomSubscription.unsubscribe();
+  }, [chatRooms]);
+
+  useEffect(() => {
+    const subscription = API.graphql(
+      graphqlOperation(onCreateChatRoom)
+    ).subscribe({
+      next: (data) => {
+        fetchChatRooms();
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [chatRooms]);
+
   return (
     <View style={styles.container}>
-      <FlatList
-        style={{width: '100%'}}
-        data={chatRooms}
-        renderItem={({ item }) => <ChatListItem chatRoom={item.chatRoom} />}
-        keyExtractor={(item) => item.id}
-      />
-      <NewMessageButton />
+      {
+        chatRooms.length === 0
+          ? (
+            <View>
+              <FontAwesome5 style={{ textAlign: 'center' }} name="rocketchat" size={100} color="black" />
+              <Text style={styles.mainActionText}>Create a new chat using</Text>
+              <Text style={styles.subMainActionText}>the bottom below</Text>
+            </View>
+          ) : (
+            <FlatList
+              style={styles.list}
+              data={chatRooms}
+              renderItem={({ item }) => <ChatListItem chatRoom={item} />}
+              keyExtractor={(item: ChatRoom) => item.id}
+            />
+          )
+      }
+      <NewMessageButton chatRooms={chatRooms} />
     </View>
   );
 }
@@ -59,6 +86,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'white'
   },
-
+  list: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'white'
+  },
+  mainActionText: {
+    textAlign: 'center',
+    fontSize: 20,
+    marginTop: 20
+  },
+  subMainActionText: {
+    textAlign: 'center',
+    fontSize: 18
+  }
 });
+
