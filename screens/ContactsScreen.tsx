@@ -23,22 +23,22 @@ export default function ContactsScreen() {
       return null;
     }
     // console.log("hi")
-    let filterChatRoom = chatRooms.filter((room)=>{
-      if(room.chatRoomUsers===null){
-        return false;
-      }
-      return true
-    })
+    // let filterChatRoom = chatRooms.filter((value: {}) => 
+    //                     Object.keys(value).length !== 0);
+    //console.log(filterChatRoom)
 
-    const chatRoom = filterChatRoom.find(cr =>{
-      cr.chatRoomUsers.items.some((i) => i.user.id === user.id)
-    });
+    const chatRoom = chatRooms.filter((value: {}) => 
+                        Object.keys(value).length !== 0).find(cr =>{
+                          cr.chatRoomUsers.items.some((i) => (i.user.id === user.id))
+                        });
+    //console.log("Hi")
     if (chatRoom) {
       return {
         ...user,
         previousChatID: chatRoom.id
       };
     }
+
 
     return { ...user };
   };

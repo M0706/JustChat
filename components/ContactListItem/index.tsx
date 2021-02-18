@@ -83,20 +83,19 @@ const ContactListItem = (props: ContactListItemProps) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={onClick}>
-      <View style={styles.container}>
-        <View style={styles.lefContainer}>
-          <Image source={{ uri: user.imageUri }} style={styles.avatar}/>
 
-          <View style={styles.midContainer}>
-            <Text style={styles.username}>{user.name}</Text>
-            <Text 
-            numberOfLines={2} 
-            style={styles.status}>{user.status}</Text>
-          </View>
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
+<TouchableWithoutFeedback onPress={onClick}>
+<View style={styles.container}>
+  <View style={styles.leftContainer}>
+    <Image style={styles.avatar} source={{ uri: user.imageUri }} />
+
+    <View style={styles.midContainer}>
+      <Text style={styles.userName}>{user.name}</Text>
+      <Text style={styles.status}>{user.status}</Text>
+    </View>
+  </View>
+</View>
+</TouchableWithoutFeedback>
   )
 };
 

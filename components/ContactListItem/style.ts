@@ -1,32 +1,37 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    width: "100%",
-    justifyContent: 'space-between',
-    padding: 10,
+    width: '100%',
+    padding: 10
   },
-  lefContainer: {
-    flexDirection: 'row',
+
+  leftContainer: {
+    flexDirection: 'row'
   },
+
   midContainer: {
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
+
+  userName: {
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+
+  status: {
+    fontSize: 16,
+    color: 'grey'
+  },
+
   avatar: {
     width: 60,
     height: 60,
-    borderRadius: 50,
-    marginRight: 15,
-  },
-  username: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  status: {
-    fontSize: 16,
-    color: 'grey',
-  },
+    marginLeft: 5,
+    marginRight: 10,
+    borderRadius: 60
+  }
 });
 
-export default styles;
+export default style;
