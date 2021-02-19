@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "justchat2eebe83b_identitypool_2eebe83b",
+    "identityPoolName": "justchat7ca93a4b_identitypool_7ca93a4b",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "justch2eebe83b",
-    "userPoolName": "justchat2eebe83b_userpool_2eebe83b",
+    "resourceNameTruncated": "justch7ca93a4b",
+    "userPoolName": "justchat7ca93a4b_userpool_7ca93a4b",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -20,7 +20,7 @@
     "requiredAttributes": [
         "email"
     ],
-    "userpoolClientGenerateSecret": true,
+    "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
         "email"
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "justch2eebe83b_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "justch7ca93a4b_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "2eebe83b",
-    "resourceName": "justchat2eebe83b",
+    "sharedId": "7ca93a4b",
+    "resourceName": "justchat7ca93a4b",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -46,10 +46,8 @@
         ]
     },
     "useDefault": "default",
-    "usernameAttributes": [
-        "phone_number"
-    ],
     "userPoolGroupList": [],
     "serviceName": "Cognito",
+    "usernameCaseSensitive": false,
     "dependsOn": []
 }

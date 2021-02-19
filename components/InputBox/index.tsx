@@ -29,6 +29,7 @@ import { nanoid } from 'nanoid/async/index.native'
 
 const InputBox = (props) => {
 
+  // Key
   const { chatRoomID } = props;
 
   const [message, setMessage] = useState('');
@@ -88,6 +89,7 @@ const InputBox = (props) => {
 
   const onSendPress = async (Imagekey:object) => {
     //console.log("key in onSendPress ==>",Imagekey)
+    // Message ko encode krdunga.
      try {
       const newMessageData = await API.graphql(
         graphqlOperation(

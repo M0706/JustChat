@@ -20,6 +20,8 @@ const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
   const [currentUserId, setCurrentUserId] = useState('');
 
+  // PUblic key routes
+
   const route = useRoute();
 
 
@@ -34,6 +36,7 @@ const ChatRoomScreen = () => {
           }
         )
       );
+      // Decode krke bhrunga
       setMessages(messages.data.messagesByChatRoom.items);
     };
 
@@ -57,7 +60,7 @@ const ChatRoomScreen = () => {
         const newMessage = data.value.data.onCreateMessage;
 
         if (newMessage.chatRoomID !== route.params.id) {
-          console.log('Message is in another room');
+          // console.log('Message is in another room');
           return;
         }
 
