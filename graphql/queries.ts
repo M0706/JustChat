@@ -9,6 +9,7 @@ export const getUser = /* GraphQL */ `
       name
       imageUri
       status
+      publicKey
       chatRoomUser {
         items {
           id
@@ -48,6 +49,7 @@ export const listUsers = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -72,6 +74,7 @@ export const getChatRoomUser = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -123,6 +126,7 @@ export const listChatRoomUsers = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }
@@ -178,6 +182,7 @@ export const getChatRoom = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }
@@ -243,6 +248,7 @@ export const getMessage = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -306,6 +312,7 @@ export const listMessages = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }
@@ -337,6 +344,7 @@ export const getFleet = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -369,6 +377,7 @@ export const listFleets = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }
@@ -408,6 +417,7 @@ export const messagesByChatRoom = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }

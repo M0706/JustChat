@@ -9,6 +9,7 @@ export const onCreateUser = /* GraphQL */ `
       name
       imageUri
       status
+      publicKey
       chatRoomUser {
         items {
           id
@@ -43,6 +44,7 @@ export const onUpdateUser = /* GraphQL */ `
       name
       imageUri
       status
+      publicKey
       chatRoomUser {
         items {
           id
@@ -77,6 +79,7 @@ export const onDeleteUser = /* GraphQL */ `
       name
       imageUri
       status
+      publicKey
       chatRoomUser {
         items {
           id
@@ -115,6 +118,7 @@ export const onCreateChatRoomUser = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -161,6 +165,7 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -207,6 +212,7 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -281,6 +287,7 @@ export const onCreateChatRoom = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }
@@ -339,6 +346,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }
@@ -397,6 +405,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }
@@ -430,6 +439,7 @@ export const onCreateMessage = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -488,6 +498,7 @@ export const onUpdateMessage = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -546,6 +557,7 @@ export const onDeleteMessage = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -603,6 +615,7 @@ export const onCreateFleet = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -630,6 +643,7 @@ export const onUpdateFleet = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -657,6 +671,7 @@ export const onDeleteFleet = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -682,6 +697,7 @@ export const onCreateLike = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -703,6 +719,7 @@ export const onCreateLike = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }
@@ -733,6 +750,7 @@ export const onUpdateLike = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -754,6 +772,7 @@ export const onUpdateLike = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }
@@ -784,6 +803,7 @@ export const onDeleteLike = /* GraphQL */ `
         name
         imageUri
         status
+        publicKey
         chatRoomUser {
           nextToken
         }
@@ -805,6 +825,7 @@ export const onDeleteLike = /* GraphQL */ `
           name
           imageUri
           status
+          publicKey
           createdAt
           updatedAt
         }

@@ -3,6 +3,7 @@ type User @model {
   name: String!
   imageUri: String
   status: String
+  publicKey: String
   chatRoomUser: [ChatRoomUser] @connection(keyName: "byUser", fields: ["id"])
   fleets: [Fleet] @connection(keyName: "byUser", fields: ["id"])
 }

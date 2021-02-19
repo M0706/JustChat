@@ -30,12 +30,15 @@ const ChatListItem = (props: ChatListItemProps) => {
     getOtherUser();
   }, []);
 
+  // Public Key aajaegi
+
   const onClick = () => {
     navigation.navigate(
       'ChatRoom',
       {
         id: chatRoom.id,
         name: otherUser.name
+        // Public key bhejdenge
       }
     );
   };
