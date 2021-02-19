@@ -46,6 +46,7 @@ export type Message = {
   content: string;
   createdAt: string;
   user: User;
+  media:String;
 }
 
 export type ChatRoom = {

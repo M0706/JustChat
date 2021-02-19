@@ -3,15 +3,15 @@ import {Text, View,Image, TouchableOpacity} from 'react-native';
 import { Message } from "../../types";
 import moment from "moment";
 import styles from './styles';
-import {
-  API,
-  Auth,
-  graphqlOperation,
-  Storage
-} from 'aws-amplify';
-import {
-  deleteMessage,
-} from '../../graphql/mutations';
+// import {
+//   API,
+//   Auth,
+//   graphqlOperation,
+//   Storage
+// } from 'aws-amplify';
+// import {
+//   deleteMessage,
+// } from '../../graphql/mutations';
 
 export type ChatMessageProps = {
   message: Message;
@@ -50,7 +50,7 @@ const ChatMessage = (props: ChatMessageProps) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={messageDelete}>
+      <TouchableOpacity>
       <View style={[
         styles.messageBox, {
           backgroundColor: isMyMessage() ? '#DCF8C5' : 'white',
