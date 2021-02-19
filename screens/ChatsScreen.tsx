@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList, Text } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { View } from '../components/Themed';
-import ChatListItem from '../components/chatListItem';
+import ChatListItem from '../components/ChatListItem';
 import NewMessageButton from '../components/NewMessageButton';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { getUser } from './queries';

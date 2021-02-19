@@ -50,7 +50,7 @@ const ChatMessage = (props: ChatMessageProps) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={messageDelete}>
+      <TouchableOpacity>
       <View style={[
         styles.messageBox, {
           backgroundColor: isMyMessage() ? '#DCF8C5' : 'white',
