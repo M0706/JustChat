@@ -15,7 +15,7 @@ export default function ContactsScreen() {
   const route = useRoute();
   //console.log(route.params);
   const chatRooms = route.params.chatRooms;
-  
+  //console.log("Chatrooms===>",chatRooms); 
   
 
   const mapUsers = (user: User, currentAuthedUser: string) => {
@@ -23,22 +23,22 @@ export default function ContactsScreen() {
       return null;
     }
     // console.log("hi")
-    // let filterChatRoom = chatRooms.filter((value: {}) => 
-    //                     Object.keys(value).length !== 0);
-    //console.log(filterChatRoom)
+    let filterChatRoom = chatRooms.filter((value: {}) => 
+                         Object.keys(value).length !== 0);
+    console.log("filterchatRoom--->",filterChatRoom)
 
-    const chatRoom = chatRooms.filter((value: {}) => 
-                        Object.keys(value).length !== 0).find(cr =>{
+    const chatRoom = filterChatRoom.find(cr =>{
                           cr.chatRoomUsers.items.some((i) => (i.user.id === user.id))
                         });
-    //console.log("Hi")
+    //console.log("chatRooms--->",chatRoom);
+    //console.log("User ID===>",user.id);
     if (chatRoom) {
       return {
         ...user,
         previousChatID: chatRoom.id
       };
     }
-
+    
 
     return { ...user };
   };
@@ -51,7 +51,7 @@ export default function ContactsScreen() {
         const filteredUsers = usersData.data.listUsers.items
                 .map((i: User) => 
                 mapUsers(i, currentUser.attributes.sub)).filter(Boolean);
-        console.log("Filtered users-->",filteredUsers);
+        //console.log("Filtered users-->",filteredUsers);
         setUsers(filteredUsers);
       } catch(err) {
         console.warn(err);

@@ -31,7 +31,9 @@ const ContactListItem = (props: ContactListItemProps) => {
   const onClick = async () => {
     try {
       
-      //  1. Create a new Chat Room
+      //  1. Create a new Chat Room 
+      console.log("Previous Chat Id--->",user);
+
       let newChatRoomData;
       if (!user.previousChatID) {
         newChatRoomData = await API.graphql(
