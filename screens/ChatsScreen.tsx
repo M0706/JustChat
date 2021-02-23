@@ -9,8 +9,15 @@ import { getUser } from "./queries";
 import { onUpdateChatRoom, onCreateChatRoom } from "../graphql/subscriptions";
 import { ChatRoom } from "../types";
 
+import { UserState } from "realm";
+import { updateUser } from "../graphql/mutations";
+import { RSA, RSAKey } from "../helpers/rsa";
+
+import AsyncStorage from "@react-native-community/async-storage";
+
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
+  const [user, setUser] = useState({});
 
   const fetchChatRooms = async () => {
     try {
@@ -20,8 +27,27 @@ export default function ChatsScreen() {
         graphqlOperation(getUser, { id: currentUser.attributes.sub })
       );
 
-      // userData public Key nhi aa rhi hai ---> public key add krdenge
-      console.log(Object.keys(userData.data.getUser));
+      if (!userData.data.getUser.publicKey) {
+        var key = new RSAKey(true);
+
+        key.setType("public");
+        const publicKeyS = JSON.stringify(key);
+        key.setType("private");
+        const privateKeyS = JSON.stringify(key);
+
+        // Save uski private key
+        AsyncStorage.setItem("privateKey", privateKeyS);
+        AsyncStorage.setItem("publicKey", publicKeyS);
+
+        await API.graphql(
+          graphqlOperation(updateUser, {
+            input: {
+              id: userData.data.getUser.id,
+              publicKey: publicKeyS,
+            },
+          })
+        );
+      }
 
       setChatRooms(
         userData.data.getUser.chatRoomUser.items.map((i) => ({ ...i.chatRoom }))

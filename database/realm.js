@@ -1,9 +1,9 @@
 import Realm from "realm";
 //models
-import { ChatRoom } from "./models";
+import { ChatRoom, UserData } from "./models";
 
 export default new Realm({
-  schema: [ChatRoom],
-  schemaVersion: 1, //add a version number
+  schema: [ChatRoom, UserData],
+  schemaVersion: 3, //add a version number
   migration: (oldRealm, newRealm) => {},
 });

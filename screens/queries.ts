@@ -38,6 +38,7 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      publicKey
       createdAt
       updatedAt
     }

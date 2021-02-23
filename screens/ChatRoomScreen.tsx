@@ -1,41 +1,68 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, Text, ImageBackground, KeyboardAvoidingView } from 'react-native';
-import DoubleClick from 'react-native-double-click';
-
-import { useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from "react";
 import {
-  API,
-  graphqlOperation,
-  Auth,
-} from 'aws-amplify';
+  FlatList,
+  Text,
+  ImageBackground,
+  KeyboardAvoidingView,
+} from "react-native";
+import DoubleClick from "react-native-double-click";
 
-import { messagesByChatRoom } from '../graphql/queries';
-import { onCreateMessage } from '../graphql/subscriptions';
+import { useRoute } from "@react-navigation/native";
+import { API, graphqlOperation, Auth } from "aws-amplify";
+
+import { getChatRoom, messagesByChatRoom } from "../graphql/queries";
+import { onCreateMessage } from "../graphql/subscriptions";
 import ChatMessage from "../components/ChatMessage";
-import BG from '../assets/images/BG.png';
+import BG from "../assets/images/BG.png";
 import InputBox from "../components/InputBox";
+import AsyncStorage from "@react-native-community/async-storage";
+import { RSA, RSAKey } from "../helpers/rsa";
+import { UserState } from "realm";
 
 const ChatRoomScreen = () => {
-
   const [messages, setMessages] = useState([]);
-  const [currentUserId, setCurrentUserId] = useState('');
+  const [currentUserId, setCurrentUserId] = useState("");
+  const [publicKeyOfOtherUser, setpublicKeyOfOtherUser] = useState("");
+  const [privateKeyOfThisUser, setprivateKeyOfThisUser] = useState("");
 
   // PUblic key routes
 
   const route = useRoute();
 
-
   useEffect(() => {
     const fetchMessages = async () => {
       const messages = await API.graphql(
-        graphqlOperation(
-          messagesByChatRoom,
-          {
-            chatRoomID: route.params.id,
-            sortDirection: 'DESC'
-          }
-        )
+        graphqlOperation(messagesByChatRoom, {
+          chatRoomID: route.params.id,
+          sortDirection: "DESC",
+        })
       );
+
+      const publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
+
+      const chatRoomObj = await API.graphql(
+        graphqlOperation(getChatRoom, {
+          id: route.params.id,
+        })
+      );
+
+      for (var userIndex in chatRoomObj.data.getChatRoom.chatRoomUsers.items) {
+        if (
+          chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
+            .publicKey != publicKeyOfThisUser
+        ) {
+          setpublicKeyOfOtherUser(
+            chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
+              .publicKey
+          );
+        }
+      }
+
+      const privateKeyOfThisUserString = await AsyncStorage.getItem(
+        "privateKey"
+      );
+      setprivateKeyOfThisUser(privateKeyOfThisUserString);
+
       // Decode krke bhrunga
       setMessages(messages.data.messagesByChatRoom.items);
     };
@@ -52,8 +79,8 @@ const ChatRoomScreen = () => {
     fetchUserId();
   }, []);
 
-
-  useEffect(() => {    const subscription = API.graphql(
+  useEffect(() => {
+    const subscription = API.graphql(
       graphqlOperation(onCreateMessage)
     ).subscribe({
       next: async (data) => {
@@ -64,43 +91,42 @@ const ChatRoomScreen = () => {
           return;
         }
 
-        setMessages([ newMessage, ...messages ]);
+        setMessages([newMessage, ...messages]);
         //console.log(messages);
-      }
+      },
     });
 
     return () => subscription.unsubscribe();
-  }, [messages])
-
-
+  }, [messages]);
 
   //console.log(`messages in state: ${messages.length}`)
 
-  const doubleClick=()=>{
-    console.warn("Double Clicked")
-  }
+  const doubleClick = () => {
+    console.warn("Double Clicked");
+  };
 
   return (
-    <ImageBackground style={{width: '100%', height: '100%'}} source={BG}>
+    <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
       <FlatList
         data={messages}
         renderItem={({ item }) => (
           <DoubleClick onClick={doubleClick}>
-              <ChatMessage myId={currentUserId} message={item}/>
+            <ChatMessage
+              myId={currentUserId}
+              message={item}
+              privateKeyOfThisUser={privateKeyOfThisUser}
+            />
           </DoubleClick>
-       )}
+        )}
         inverted
-        
       />
 
-      <InputBox chatRoomID={route.params.id} />
-
+      <InputBox
+        chatRoomID={route.params.id}
+        publicKeyOfOtherUser={publicKeyOfOtherUser}
+      />
     </ImageBackground>
-
-
   );
-}
+};
 
 export default ChatRoomScreen;
-
-

@@ -6,6 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import { createChatRoom, createChatRoomUser } from "../../graphql/mutations";
+import AsyncStorage from "@react-native-community/async-storage";
+import { getChatRoom } from "../../graphql/queries";
 
 export type ContactListItemProps = {
   user: User;
@@ -21,6 +23,14 @@ const ContactListItem = (props: ContactListItemProps) => {
       //  1. Create a new Chat Room
 
       let newChatRoomData;
+
+      const publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
+
+      // var oldChatRoom = await API.graphql(
+      //   graphqlOperation(getChatRoom, { id: user.previousChatID })
+      // );
+      // console.log("Inside Contact List Item -------> ", oldChatRoom);
+
       if (!user.previousChatID) {
         newChatRoomData = await API.graphql(
           graphqlOperation(createChatRoom, { input: { lastMessageID: "" } })
@@ -30,12 +40,12 @@ const ContactListItem = (props: ContactListItemProps) => {
           console.log("Failed to create chat room");
           return;
         }
-
         await API.graphql(
           graphqlOperation(createChatRoomUser, {
             input: {
               userID: user.id,
               chatRoomID: newChatRoomData.data.createChatRoom.id,
+              publicKey: user.publicKey,
             },
           })
         );
@@ -46,6 +56,7 @@ const ContactListItem = (props: ContactListItemProps) => {
             input: {
               userID: userInfo.attributes.sub,
               chatRoomID: newChatRoomData.data.createChatRoom.id,
+              publicKey: publicKeyOfThisUser,
             },
           })
         );

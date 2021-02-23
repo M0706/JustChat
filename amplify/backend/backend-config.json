@@ -1,6 +1,6 @@
 {
   "auth": {
-    "justchat7ca93a4b": {
+    "justchat518bbe1a": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authjustchat7ca93a4b"
+              "userPoolId": "authjustchat518bbe1a"
             }
           },
           "additionalAuthenticationProviders": []
@@ -24,15 +24,8 @@
       }
     }
   },
-  "function": {
-    "S3Triggerd71c124d": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true
-    }
-  },
   "storage": {
-    "s39658d4f0": {
+    "s328972039": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }

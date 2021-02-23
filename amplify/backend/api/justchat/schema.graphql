@@ -15,6 +15,7 @@ type ChatRoomUser
   id: ID!
   userID: ID!
   chatRoomID: ID!
+  publicKey: String
   user: User @connection(fields: ["userID"])
   chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
 }

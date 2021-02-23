@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "justchat7ca93a4b_identitypool_7ca93a4b",
+    "identityPoolName": "justchat518bbe1a_identitypool_518bbe1a",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "justch7ca93a4b",
-    "userPoolName": "justchat7ca93a4b_userpool_7ca93a4b",
+    "resourceNameTruncated": "justch518bbe1a",
+    "userPoolName": "justchat518bbe1a_userpool_518bbe1a",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "justch7ca93a4b_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "justch518bbe1a_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "7ca93a4b",
-    "resourceName": "justchat7ca93a4b",
+    "sharedId": "518bbe1a",
+    "resourceName": "justchat518bbe1a",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -48,6 +48,5 @@
     "useDefault": "default",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
-    "usernameCaseSensitive": false,
     "dependsOn": []
 }

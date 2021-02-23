@@ -3,8 +3,14 @@ const ChatRoom = {
   properties: {
     roomId: "string",
     messages: { type: "list", objectType: "Message" },
-    hashKey: "string",
   },
 };
 
-export { ChatRoom };
+const UserData = {
+  name: "UserData",
+  properties: {
+    privateKey: "String",
+  },
+};
+
+export { ChatRoom, UserData };

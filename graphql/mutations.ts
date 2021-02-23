@@ -18,6 +18,7 @@ export const createUser = /* GraphQL */ `
           id
           userID
           chatRoomID
+          publicKey
           createdAt
           updatedAt
         }
@@ -56,6 +57,7 @@ export const updateUser = /* GraphQL */ `
           id
           userID
           chatRoomID
+          publicKey
           createdAt
           updatedAt
         }
@@ -94,6 +96,7 @@ export const deleteUser = /* GraphQL */ `
           id
           userID
           chatRoomID
+          publicKey
           createdAt
           updatedAt
         }
@@ -125,6 +128,7 @@ export const createChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      publicKey
       user {
         id
         name
@@ -175,6 +179,7 @@ export const updateChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      publicKey
       user {
         id
         name
@@ -225,6 +230,7 @@ export const deleteChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      publicKey
       user {
         id
         name
@@ -278,6 +284,7 @@ export const createChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          publicKey
           createdAt
           updatedAt
         }
@@ -340,6 +347,7 @@ export const updateChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          publicKey
           createdAt
           updatedAt
         }
@@ -402,6 +410,7 @@ export const deleteChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          publicKey
           createdAt
           updatedAt
         }

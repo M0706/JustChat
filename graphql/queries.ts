@@ -15,6 +15,7 @@ export const getUser = /* GraphQL */ `
           id
           userID
           chatRoomID
+          publicKey
           createdAt
           updatedAt
         }
@@ -69,6 +70,7 @@ export const getChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      publicKey
       user {
         id
         name
@@ -121,6 +123,7 @@ export const listChatRoomUsers = /* GraphQL */ `
         id
         userID
         chatRoomID
+        publicKey
         user {
           id
           name
@@ -152,6 +155,7 @@ export const getChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          publicKey
           createdAt
           updatedAt
         }
