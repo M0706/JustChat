@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import { Message } from "../../types";
 import moment from "moment";
@@ -19,10 +19,15 @@ export type ChatMessageProps = {
   message: Message;
   myId: String;
   privateKeyOfThisUser: String;
+  userIndex: String;
 };
 
 const ChatMessage = (props: ChatMessageProps) => {
-  const { message, myId, privateKeyOfThisUser } = props;
+  const { message, myId, privateKeyOfThisUser, userIndex } = props;
+
+  useEffect(() => {
+    console.log("Messages  ------------------>>>>>>> ", props);
+  }, []);
 
   const isMyMessage = () => {
     return message.user.id === myId;
@@ -66,12 +71,12 @@ const ChatMessage = (props: ChatMessageProps) => {
 
           {message.media === "" ? (
             <Text style={styles.message}>
-              {/* {RSA.decryptWithKey(
-                message.content,
+              {RSA.decryptWithKey(
+                message.ciphers[userIndex],
                 JSON.parse(privateKeyOfThisUser)
-              )} */}
-              {privateKeyOfThisUser}
-              {message.content}
+              )}
+              {/* {privateKeyOfThisUser}
+              {message.content} */}
             </Text>
           ) : (
             <Image

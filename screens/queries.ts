@@ -26,7 +26,7 @@ export const getUser = /* GraphQL */ `
             }
             lastMessage{
               id
-              content
+              ciphers
               updatedAt
               user{
                 id

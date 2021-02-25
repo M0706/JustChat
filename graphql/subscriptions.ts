@@ -144,7 +144,7 @@ export const onCreateChatRoomUser = /* GraphQL */ `
         lastMessage {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -192,7 +192,7 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
         lastMessage {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -240,7 +240,7 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
         lastMessage {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -273,7 +273,7 @@ export const onCreateChatRoom = /* GraphQL */ `
         items {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -285,7 +285,7 @@ export const onCreateChatRoom = /* GraphQL */ `
       lastMessage {
         id
         createdAt
-        content
+        ciphers
         media
         userID
         chatRoomID
@@ -333,7 +333,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
         items {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -345,7 +345,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
       lastMessage {
         id
         createdAt
-        content
+        ciphers
         media
         userID
         chatRoomID
@@ -393,7 +393,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
         items {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -405,7 +405,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
       lastMessage {
         id
         createdAt
-        content
+        ciphers
         media
         userID
         chatRoomID
@@ -439,7 +439,7 @@ export const onCreateMessage = /* GraphQL */ `
     onCreateMessage {
       id
       createdAt
-      content
+      ciphers
       media
       userID
       chatRoomID
@@ -470,7 +470,7 @@ export const onCreateMessage = /* GraphQL */ `
         lastMessage {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -498,7 +498,7 @@ export const onUpdateMessage = /* GraphQL */ `
     onUpdateMessage {
       id
       createdAt
-      content
+      ciphers
       media
       userID
       chatRoomID
@@ -529,7 +529,7 @@ export const onUpdateMessage = /* GraphQL */ `
         lastMessage {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -557,7 +557,7 @@ export const onDeleteMessage = /* GraphQL */ `
     onDeleteMessage {
       id
       createdAt
-      content
+      ciphers
       media
       userID
       chatRoomID
@@ -588,7 +588,7 @@ export const onDeleteMessage = /* GraphQL */ `
         lastMessage {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -719,7 +719,7 @@ export const onCreateLike = /* GraphQL */ `
       message {
         id
         createdAt
-        content
+        ciphers
         media
         userID
         chatRoomID
@@ -772,7 +772,7 @@ export const onUpdateLike = /* GraphQL */ `
       message {
         id
         createdAt
-        content
+        ciphers
         media
         userID
         chatRoomID
@@ -825,7 +825,7 @@ export const onDeleteLike = /* GraphQL */ `
       message {
         id
         createdAt
-        content
+        ciphers
         media
         userID
         chatRoomID

@@ -38,7 +38,7 @@ type Message
   ) {
   id: ID!
   createdAt: String!
-  content: String
+  ciphers: [[String]]
   media: String
   userID: ID!
   chatRoomID: ID!

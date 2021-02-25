@@ -43,14 +43,10 @@ export type User = {
 
 export type Message = {
   id: String;
-  content: string;
+  ciphers: [[string]];
   createdAt: string;
   user: User;
-<<<<<<< HEAD
   media: String;
-=======
-  media:String;
->>>>>>> 52328f82a40e1473ad163f92b8d0a5cf93a75760
 }
 
 export type ChatRoom = {

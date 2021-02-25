@@ -98,7 +98,7 @@ export const getChatRoomUser = /* GraphQL */ `
         lastMessage {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -165,7 +165,7 @@ export const getChatRoom = /* GraphQL */ `
         items {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -177,7 +177,7 @@ export const getChatRoom = /* GraphQL */ `
       lastMessage {
         id
         createdAt
-        content
+        ciphers
         media
         userID
         chatRoomID
@@ -225,7 +225,7 @@ export const listChatRooms = /* GraphQL */ `
         lastMessage {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -243,7 +243,7 @@ export const getMessage = /* GraphQL */ `
     getMessage(id: $id) {
       id
       createdAt
-      content
+      ciphers
       media
       userID
       chatRoomID
@@ -274,7 +274,7 @@ export const getMessage = /* GraphQL */ `
         lastMessage {
           id
           createdAt
-          content
+          ciphers
           media
           userID
           chatRoomID
@@ -307,7 +307,7 @@ export const listMessages = /* GraphQL */ `
       items {
         id
         createdAt
-        content
+        ciphers
         media
         userID
         chatRoomID
@@ -412,7 +412,7 @@ export const messagesByChatRoom = /* GraphQL */ `
       items {
         id
         createdAt
-        content
+        ciphers
         media
         userID
         chatRoomID

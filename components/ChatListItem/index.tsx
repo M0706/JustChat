@@ -45,11 +45,11 @@ const ChatListItem = (props: ChatListItemProps) => {
         <View style={styles.rightContainer}>
           <View style={styles.midContainer}>
             <Text style={styles.userName}>{otherUser.name}</Text>
-            <Text numberOfLines={1} style={styles.lastMessage}>
+            {/* <Text numberOfLines={1} style={styles.lastMessage}>
               {chatRoom.lastMessage
                 ? `${chatRoom.lastMessage.user.name}: ${chatRoom.lastMessage.content}`
                 : ""}
-            </Text>
+            </Text> */}
           </View>
 
           <Text style={styles.time}>

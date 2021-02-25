@@ -18,12 +18,16 @@ import InputBox from "../components/InputBox";
 import AsyncStorage from "@react-native-community/async-storage";
 import { RSA, RSAKey } from "../helpers/rsa";
 import { UserState } from "realm";
+import { ContentInsetAdjustmentBehavior } from "react-native-webview/lib/WebViewTypes";
 
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
   const [currentUserId, setCurrentUserId] = useState("");
   const [publicKeyOfOtherUser, setpublicKeyOfOtherUser] = useState("");
   const [privateKeyOfThisUser, setprivateKeyOfThisUser] = useState("");
+  const [publicKeyOfThisUser, setpublicKeyOfThisUser] = useState("");
+  const [userIndex, setuserIndex] = useState("");
+  const [otherUserIndex, setotherUserIndex] = useState("");
 
   // PUblic key routes
 
@@ -38,7 +42,14 @@ const ChatRoomScreen = () => {
         })
       );
 
-      const publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
+      setMessages(messages.data.messagesByChatRoom.items);
+    };
+
+    const setKeys = async () => {
+      let publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
+      setpublicKeyOfThisUser(publicKeyOfThisUser);
+
+      // console.log("publicKeyOfThisUser", publicKeyOfThisUser);
 
       const chatRoomObj = await API.graphql(
         graphqlOperation(getChatRoom, {
@@ -46,7 +57,7 @@ const ChatRoomScreen = () => {
         })
       );
 
-      for (var userIndex in chatRoomObj.data.getChatRoom.chatRoomUsers.items) {
+      for (let userIndex in chatRoomObj.data.getChatRoom.chatRoomUsers.items) {
         if (
           chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
             .publicKey != publicKeyOfThisUser
@@ -55,6 +66,10 @@ const ChatRoomScreen = () => {
             chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
               .publicKey
           );
+          // console.log("publickeflkjasrkldfjdasf", publicKeyOfOtherUser);
+          setotherUserIndex(userIndex);
+        } else {
+          setuserIndex(userIndex);
         }
       }
 
@@ -63,11 +78,15 @@ const ChatRoomScreen = () => {
       );
       setprivateKeyOfThisUser(privateKeyOfThisUserString);
 
-      // Decode krke bhrunga
-      setMessages(messages.data.messagesByChatRoom.items);
+      console.log(
+        "Moment of Truth partIIII----------------->>>>>>>>>>>> ",
+        privateKeyOfThisUser
+      );
     };
 
     fetchMessages();
+    setKeys();
+
   }, []);
 
   useEffect(() => {
@@ -115,6 +134,7 @@ const ChatRoomScreen = () => {
               myId={currentUserId}
               message={item}
               privateKeyOfThisUser={privateKeyOfThisUser}
+              userIndex={userIndex}
             />
           </DoubleClick>
         )}
@@ -124,6 +144,8 @@ const ChatRoomScreen = () => {
       <InputBox
         chatRoomID={route.params.id}
         publicKeyOfOtherUser={publicKeyOfOtherUser}
+        otherUserIndex={otherUserIndex}
+        publicKeyOfThisUser={publicKeyOfThisUser}
       />
     </ImageBackground>
   );

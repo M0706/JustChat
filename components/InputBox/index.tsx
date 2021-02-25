@@ -31,7 +31,12 @@ import { nanoid } from "nanoid/async/index.native";
 
 const InputBox = (props) => {
   // Key
-  const { chatRoomID, publicKeyOfOtherUser } = props;
+  const {
+    chatRoomID,
+    publicKeyOfOtherUser,
+    otherUserIndex,
+    publicKeyOfThisUser,
+  } = props;
 
   const [message, setMessage] = useState("");
   const [myUserId, setMyUserId] = useState(null);
@@ -41,6 +46,7 @@ const InputBox = (props) => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    console.log("Props --------------------------->", props);
     const fetchUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser();
       setMyUserId(userInfo.attributes.sub);
@@ -91,10 +97,20 @@ const InputBox = (props) => {
     //console.log("key in onSendPress ==>",Imagekey)
     // Message ko encode krdunga.
     try {
+      var ciphers = [
+        RSA.encryptWithKey(message, JSON.parse(publicKeyOfThisUser)),
+        RSA.encryptWithKey(message, JSON.parse(publicKeyOfThisUser)),
+      ];
+
+      ciphers[otherUserIndex] = RSA.encryptWithKey(
+        message,
+        JSON.parse(publicKeyOfOtherUser)
+      );
+
       const newMessageData = await API.graphql(
         graphqlOperation(createMessage, {
           input: {
-            content: RSA.encryptWithKey(message, publicKeyOfOtherUser),
+            ciphers: ciphers,
             media: Imagekey,
             userID: myUserId,
             chatRoomID,
