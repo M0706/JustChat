@@ -29,6 +29,13 @@ import { v4 as uuidv4 } from "uuid";
 // import uuid from "uuid-random";
 import { nanoid } from "nanoid/async/index.native";
 
+export type InputBoxProps = {
+  chatRoomID: String;
+  publicKeyOfOtherUser: String;
+  otherUserIndex: String;
+  publicKeyOfThisUser: String;
+};
+
 const InputBox = (props) => {
   // Key
   const {
@@ -46,7 +53,7 @@ const InputBox = (props) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log("Props --------------------------->", props);
+    // console.log("PROPSPSFSD", props);
     const fetchUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser();
       setMyUserId(userInfo.attributes.sub);

@@ -26,7 +26,11 @@ const ChatMessage = (props: ChatMessageProps) => {
   const { message, myId, privateKeyOfThisUser, userIndex } = props;
 
   useEffect(() => {
-    console.log("Messages  ------------------>>>>>>> ", props);
+    console.log(
+      "Messages  ------------------>>>>>>> ",
+      message.ciphers[userIndex],
+      privateKeyOfThisUser
+    );
   }, []);
 
   const isMyMessage = () => {
@@ -75,8 +79,6 @@ const ChatMessage = (props: ChatMessageProps) => {
                 message.ciphers[userIndex],
                 JSON.parse(privateKeyOfThisUser)
               )}
-              {/* {privateKeyOfThisUser}
-              {message.content} */}
             </Text>
           ) : (
             <Image

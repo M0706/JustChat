@@ -23,11 +23,11 @@ import { ContentInsetAdjustmentBehavior } from "react-native-webview/lib/WebView
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
   const [currentUserId, setCurrentUserId] = useState("");
-  const [publicKeyOfOtherUser, setpublicKeyOfOtherUser] = useState("");
-  const [privateKeyOfThisUser, setprivateKeyOfThisUser] = useState("");
-  const [publicKeyOfThisUser, setpublicKeyOfThisUser] = useState("");
-  const [userIndex, setuserIndex] = useState("");
-  const [otherUserIndex, setotherUserIndex] = useState("");
+  const [publicKeyOfOtherUser, setPublicKeyOfOtherUser] = useState("");
+  const [privateKeyOfThisUser, setPrivateKeyOfThisUser] = useState("");
+  const [publicKeyOfThisUser, setPublicKeyOfThisUser] = useState("");
+  const [userIndex, setUserIndex] = useState("");
+  const [otherUserIndex, setOtherUserIndex] = useState("");
 
   // PUblic key routes
 
@@ -46,10 +46,8 @@ const ChatRoomScreen = () => {
     };
 
     const setKeys = async () => {
-      let publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
-      setpublicKeyOfThisUser(publicKeyOfThisUser);
-
-      // console.log("publicKeyOfThisUser", publicKeyOfThisUser);
+      const publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
+      setPublicKeyOfThisUser(publicKeyOfThisUser);
 
       const chatRoomObj = await API.graphql(
         graphqlOperation(getChatRoom, {
@@ -62,31 +60,24 @@ const ChatRoomScreen = () => {
           chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
             .publicKey != publicKeyOfThisUser
         ) {
-          setpublicKeyOfOtherUser(
+          setPublicKeyOfOtherUser(
             chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
               .publicKey
           );
-          // console.log("publickeflkjasrkldfjdasf", publicKeyOfOtherUser);
-          setotherUserIndex(userIndex);
+          setOtherUserIndex(userIndex);
         } else {
-          setuserIndex(userIndex);
+          setUserIndex(userIndex);
         }
       }
 
       const privateKeyOfThisUserString = await AsyncStorage.getItem(
         "privateKey"
       );
-      setprivateKeyOfThisUser(privateKeyOfThisUserString);
-
-      console.log(
-        "Moment of Truth partIIII----------------->>>>>>>>>>>> ",
-        privateKeyOfThisUser
-      );
+      setPrivateKeyOfThisUser(privateKeyOfThisUserString);
     };
 
     fetchMessages();
     setKeys();
-
   }, []);
 
   useEffect(() => {
