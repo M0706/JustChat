@@ -53,7 +53,7 @@ export default function ContactsScreen() {
         const filteredUsers = usersData.data.listUsers.items
           .map((i: User) => mapUsers(i, currentUser.attributes.sub))
           .filter(Boolean);
-        console.log("Filtered users-->",filteredUsers);
+        // console.log("Filtered users-->",filteredUsers);
         setUsers(filteredUsers);
       } catch (err) {
         console.warn(err);

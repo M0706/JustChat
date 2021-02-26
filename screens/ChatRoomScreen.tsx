@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, userRef, useRef } from "react";
 import {
   FlatList,
   Text,
@@ -22,6 +22,7 @@ import { ContentInsetAdjustmentBehavior } from "react-native-webview/lib/WebView
 
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
+  // const currentUserId = useRef("");
   const [currentUserId, setCurrentUserId] = useState("");
   const [publicKeyOfOtherUser, setPublicKeyOfOtherUser] = useState("");
   const [privateKeyOfThisUser, setPrivateKeyOfThisUser] = useState("");
@@ -41,7 +42,6 @@ const ChatRoomScreen = () => {
           sortDirection: "DESC",
         })
       );
-
       setMessages(messages.data.messagesByChatRoom.items);
     };
 
@@ -64,6 +64,7 @@ const ChatRoomScreen = () => {
             chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
               .publicKey
           );
+
           setOtherUserIndex(userIndex);
         } else {
           setUserIndex(userIndex);
@@ -85,7 +86,6 @@ const ChatRoomScreen = () => {
       const currentUser = await Auth.currentAuthenticatedUser();
       setCurrentUserId(currentUser.attributes.sub);
     };
-
     fetchUserId();
   }, []);
 
@@ -131,7 +131,6 @@ const ChatRoomScreen = () => {
         )}
         inverted
       />
-
       <InputBox
         chatRoomID={route.params.id}
         publicKeyOfOtherUser={publicKeyOfOtherUser}

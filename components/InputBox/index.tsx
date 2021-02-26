@@ -37,29 +37,34 @@ export type InputBoxProps = {
 };
 
 const InputBox = (props) => {
-  // Key
-  const {
-    chatRoomID,
-    publicKeyOfOtherUser,
-    otherUserIndex,
-    publicKeyOfThisUser,
-  } = props;
-
   const [message, setMessage] = useState("");
   const [myUserId, setMyUserId] = useState(null);
   const [image, setImage] = useState(null);
   //const [key,setImagekey] = useState('');
+  const [publicKeyOfOtherUser, setPublicKeyOfOtherUser] = useState("");
+  const [chatRoomID, setChatRoomID] = useState("");
+  const [otherUserIndex, setOtherUserIndex] = useState("");
+  const [publicKeyOfThisUser, setPublicKeyOfThisUser] = useState("");
 
   const navigation = useNavigation();
 
   useEffect(() => {
-    // console.log("PROPSPSFSD", props);
+    setPublicKeyOfOtherUser(props.publicKeyOfOtherUser);
+    setChatRoomID(props.chatRoomID);
+    setOtherUserIndex(props.otherUserIndex);
+    setPublicKeyOfThisUser(props.publicKeyOfThisUser);
+
     const fetchUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser();
       setMyUserId(userInfo.attributes.sub);
     };
     fetchUser();
-  }, []);
+  }, [
+    props.publicKeyOfOtherUser,
+    props.chatRoomID,
+    props.otherUserIndex,
+    props.publicKeyOfThisUser,
+  ]);
 
   useEffect(() => {
     (async () => {

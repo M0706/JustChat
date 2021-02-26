@@ -23,15 +23,18 @@ export type ChatMessageProps = {
 };
 
 const ChatMessage = (props: ChatMessageProps) => {
-  const { message, myId, privateKeyOfThisUser, userIndex } = props;
+  const { message, myId } = props;
+  // const [message, setMessage] = useState(null);
+  // const [myId, setMyId] = useState("");
+  const [privateKeyOfThisUser, setPrivateKeyOfThisUser] = useState("");
+  const [userIndex, setUserIndex] = useState("");
 
   useEffect(() => {
-    console.log(
-      "Messages  ------------------>>>>>>> ",
-      message.ciphers[userIndex],
-      privateKeyOfThisUser
-    );
-  }, []);
+    // setMessage(props.message);
+    // setMyId(props.myId);
+    setPrivateKeyOfThisUser(props.privateKeyOfThisUser);
+    setUserIndex(props.userIndex);
+  }, [props.privateKeyOfThisUser, props.userIndex]);
 
   const isMyMessage = () => {
     return message.user.id === myId;
@@ -55,6 +58,10 @@ const ChatMessage = (props: ChatMessageProps) => {
   //     console.log("Message cannot be deleted")
   //   }
   // }
+
+  if (privateKeyOfThisUser == "") {
+    return <Text></Text>;
+  }
 
   return (
     <View style={styles.container}>
