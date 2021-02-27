@@ -29,20 +29,28 @@ const ChatRoomScreen = () => {
   const [publicKeyOfThisUser, setPublicKeyOfThisUser] = useState("");
   const [userIndex, setUserIndex] = useState("");
   const [otherUserIndex, setOtherUserIndex] = useState("");
-
+  const [nextToken, setNextToken] = useState(null);
   // PUblic key routes
 
   const route = useRoute();
 
   useEffect(() => {
-    const fetchMessages = async () => {
+    const fetchMessages = async (nextToken) => {
       const messages = await API.graphql(
         graphqlOperation(messagesByChatRoom, {
           chatRoomID: route.params.id,
           sortDirection: "DESC",
+          limit: 4,
+          nextToken,
         })
       );
+
       setMessages(messages.data.messagesByChatRoom.items);
+      setNextToken(messages.data.messagesByChatRoom.nextToken);
+      console.log("Next Token --->",
+        messages.data.messagesByChatRoom.nextToken
+      );
+
     };
 
     const setKeys = async () => {
@@ -77,7 +85,7 @@ const ChatRoomScreen = () => {
       setPrivateKeyOfThisUser(privateKeyOfThisUserString);
     };
 
-    fetchMessages();
+    fetchMessages(nextToken);
     setKeys();
   }, []);
 

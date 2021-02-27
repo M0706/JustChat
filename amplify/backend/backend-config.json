@@ -1,6 +1,6 @@
 {
   "auth": {
-    "justchat518bbe1a": {
+    "justchatmanavd1345338": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,7 +8,7 @@
     }
   },
   "api": {
-    "justchat": {
+    "justchatmanav": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authjustchat518bbe1a"
+              "userPoolId": "authjustchatmanavd1345338"
             }
           },
           "additionalAuthenticationProviders": []
@@ -25,7 +25,7 @@
     }
   },
   "storage": {
-    "s328972039": {
+    "manav07": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }

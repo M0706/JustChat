@@ -10,6 +10,28 @@ projects:
         codeGenTarget: typescript
         generatedFileName: src/API.ts
         docsFilePath: graphql
+  justchatkuchbhibranc:
+    schemaPath: graphql/schema.json
+    includes:
+      - src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API.ts
+        docsFilePath: graphql
+  justchatmanav:
+    schemaPath: graphql/schema.json
+    includes:
+      - src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API.ts
+        docsFilePath: graphql
 extensions:
   amplify:
     version: 3
