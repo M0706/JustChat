@@ -1,19 +1,19 @@
 {
-  "dev": {
+  "taru": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-justchatmanav-dev-200924-authRole",
-      "UnauthRoleArn": "arn:aws:iam::187729020176:role/amplify-justchatmanav-dev-200924-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::187729020176:role/amplify-justchatmanav-dev-200924-authRole",
+      "AuthRoleName": "amplify-taruv2-taru-220801-authRole",
+      "UnauthRoleArn": "arn:aws:iam::187729020176:role/amplify-taruv2-taru-220801-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::187729020176:role/amplify-taruv2-taru-220801-authRole",
       "Region": "ap-south-1",
-      "DeploymentBucketName": "amplify-justchatmanav-dev-200924-deployment",
-      "UnauthRoleName": "amplify-justchatmanav-dev-200924-unauthRole",
-      "StackName": "amplify-justchatmanav-dev-200924",
-      "StackId": "arn:aws:cloudformation:ap-south-1:187729020176:stack/amplify-justchatmanav-dev-200924/6e538720-7840-11eb-a9a3-064737e4a070",
-      "AmplifyAppId": "du6d9sovijkkz"
+      "DeploymentBucketName": "amplify-taruv2-taru-220801-deployment",
+      "UnauthRoleName": "amplify-taruv2-taru-220801-unauthRole",
+      "StackName": "amplify-taruv2-taru-220801",
+      "StackId": "arn:aws:cloudformation:ap-south-1:187729020176:stack/amplify-taruv2-taru-220801/559c8430-79e3-11eb-9ef3-061e6fdaee76",
+      "AmplifyAppId": "d162hglg79zra6"
     },
     "categories": {
       "auth": {
-        "justchatmanavd1345338": {}
+        "taruv29b994308": {}
       }
     }
   }

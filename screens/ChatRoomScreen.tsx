@@ -4,7 +4,8 @@ import {
   Text,
   ImageBackground,
   KeyboardAvoidingView,
-  View,ActivityIndicator
+  View,
+  ActivityIndicator,
 } from "react-native";
 import DoubleClick from "react-native-double-click";
 
@@ -20,7 +21,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 // import { RSA, RSAKey } from "../helpers/rsa";
 // import { UserState } from "realm";
 
-
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
   // const currentUserId = useRef("");
@@ -35,14 +35,13 @@ const ChatRoomScreen = () => {
 
   const route = useRoute();
 
-  const HandleScroll =()=>{
-   //console.warn("fuck")
-   if(nextToken!==null){
-    fetchMessages(nextToken)
-    setKeys();
-   }
-
-  } 
+  const HandleScroll = () => {
+    //console.warn("fuck")
+    if (nextToken !== null) {
+      fetchMessages(nextToken);
+      setKeys();
+    }
+  };
 
   const fetchMessages = async (nextToken) => {
     const loadmessages = await API.graphql(
@@ -55,8 +54,10 @@ const ChatRoomScreen = () => {
     );
 
     //console.log("dfssdff--->",loadmessages.data.messagesByChatRoom.items)
-    let messageArr = [...messages].concat(loadmessages.data.messagesByChatRoom.items);
-    setMessages(messageArr)
+    let messageArr = [...messages].concat(
+      loadmessages.data.messagesByChatRoom.items
+    );
+    setMessages(messageArr);
     setNextToken(loadmessages.data.messagesByChatRoom.nextToken);
     // console.log("Next Token --->",
     //   messages.data.messagesByChatRoom.nextToken
@@ -75,12 +76,16 @@ const ChatRoomScreen = () => {
 
     for (let userIndex in chatRoomObj.data.getChatRoom.chatRoomUsers.items) {
       if (
-        chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
-          .publicKey != publicKeyOfThisUser
+        chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex].publicKey !=
+        publicKeyOfThisUser
       ) {
-        setPublicKeyOfOtherUser(
+        console.log(
+          "suhana safar aur mausam --------->",
           chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
-            .publicKey
+        );
+
+        setPublicKeyOfOtherUser(
+          chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex].publicKey
         );
 
         setOtherUserIndex(userIndex);
@@ -89,63 +94,11 @@ const ChatRoomScreen = () => {
       }
     }
 
-    const privateKeyOfThisUserString = await AsyncStorage.getItem(
-      "privateKey"
-    );
+    const privateKeyOfThisUserString = await AsyncStorage.getItem("privateKey");
     setPrivateKeyOfThisUser(privateKeyOfThisUserString);
   };
 
   useEffect(() => {
-    // const fetchMessages = async (nextToken) => {
-    //   const messages = await API.graphql(
-    //     graphqlOperation(messagesByChatRoom, {
-    //       chatRoomID: route.params.id,
-    //       sortDirection: "DESC",
-    //       limit: 8,
-    //       nextToken,
-    //     })
-    //   );
-
-    //   setMessages(messages.data.messagesByChatRoom.items);
-    //   setNextToken(messages.data.messagesByChatRoom.nextToken);
-    //   console.log("Next Token --->",
-    //     messages.data.messagesByChatRoom.nextToken
-    //   );
-
-    // };
-
-    // const setKeys = async () => {
-    //   const publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
-    //   setPublicKeyOfThisUser(publicKeyOfThisUser);
-
-    //   const chatRoomObj = await API.graphql(
-    //     graphqlOperation(getChatRoom, {
-    //       id: route.params.id,
-    //     })
-    //   );
-
-    //   for (let userIndex in chatRoomObj.data.getChatRoom.chatRoomUsers.items) {
-    //     if (
-    //       chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
-    //         .publicKey != publicKeyOfThisUser
-    //     ) {
-    //       setPublicKeyOfOtherUser(
-    //         chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
-    //           .publicKey
-    //       );
-
-    //       setOtherUserIndex(userIndex);
-    //     } else {
-    //       setUserIndex(userIndex);
-    //     }
-    //   }
-
-    //   const privateKeyOfThisUserString = await AsyncStorage.getItem(
-    //     "privateKey"
-    //   );
-    //   setPrivateKeyOfThisUser(privateKeyOfThisUserString);
-    // };
-
     fetchMessages(nextToken);
     setKeys();
   }, []);
@@ -184,14 +137,14 @@ const ChatRoomScreen = () => {
     console.warn("Double Clicked");
   };
 
-  const renderLoader = ()=>{
+  const renderLoader = () => {
     //add loader when reached top, to be added later
     return (
-      <View style = {{"alignItems":"center"}}>
-        <ActivityIndicator size="large"/>
+      <View style={{ alignItems: "center" }}>
+        <ActivityIndicator size="large" />
       </View>
-   
-    ) }
+    );
+  };
 
   return (
     <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>

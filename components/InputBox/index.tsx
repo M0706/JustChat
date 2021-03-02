@@ -25,7 +25,7 @@ import {
 
 import Attachment from "./Attachment";
 import * as ImagePicker from "expo-image-picker";
-import { v4 as uuidv4 } from "uuid";
+import uuid from "uuid-random";
 // import uuid from "uuid-random";
 import { nanoid } from "nanoid/async/index.native";
 
@@ -49,6 +49,8 @@ const InputBox = (props) => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    console.log("Props for InputBOX: ", props.publicKeyOfOtherUser);
+
     setPublicKeyOfOtherUser(props.publicKeyOfOtherUser);
     setChatRoomID(props.chatRoomID);
     setOtherUserIndex(props.otherUserIndex);
@@ -144,7 +146,7 @@ const InputBox = (props) => {
       const blob = await response.blob();
       const urlParts = image.split(".");
       const extension = urlParts[urlParts.length - 1];
-      const uniqueId = uuidv4();
+      const uniqueId = uuid();
       console.log(uniqueId);
       const key = `${uniqueId}.${extension}`;
       console.log("Key -->", key);

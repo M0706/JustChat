@@ -36,6 +36,26 @@ export default function ChatsScreen() {
         const privateKeyS = JSON.stringify(key);
 
         // Save uski private key
+        await AsyncStorage.setItem("privateKey", privateKeyS);
+        await AsyncStorage.setItem("publicKey", publicKeyS);
+
+        await API.graphql(
+          graphqlOperation(updateUser, {
+            input: {
+              id: userData.data.getUser.id,
+              publicKey: publicKeyS,
+            },
+          })
+        );
+      } else if ((await AsyncStorage.getItem("privateKey")) == null) {
+        var key = new RSAKey(true);
+
+        key.setType("public");
+        const publicKeyS = JSON.stringify(key);
+        key.setType("private");
+        const privateKeyS = JSON.stringify(key);
+
+        // Save uski private key
         AsyncStorage.setItem("privateKey", privateKeyS);
         AsyncStorage.setItem("publicKey", publicKeyS);
 

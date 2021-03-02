@@ -2,7 +2,7 @@ class RSAKey {
   constructor(generate) {
     if (generate) {
       // console.log("GENERATING PAIR...");
-      var primes = RKSAey.generatePrimes(1e4);
+      var primes = RSAKey.generatePrimes(1e4);
       this.p =
         primes[
           Math.floor(
