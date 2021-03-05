@@ -28,13 +28,7 @@ export default function ChatsScreen() {
         graphqlOperation(getUser, { id: currentUser.attributes.sub })
       );
 
-      console.log(
-        "ChatsScreen ------------>>>>>>",
-        userData.data.getUser.publicKey,
-        await AsyncStorage.getItem("publicKey")
-      );
-
-      if (!userData.data.getUser.publicKey) {
+      if (userData.data.getUser.publicKey == null) {
         var key = new RSAKey(true);
 
         key.setType("public");
@@ -80,7 +74,27 @@ export default function ChatsScreen() {
         userData.data.getUser.chatRoomUser.items.map((i) => ({ ...i.chatRoom }))
       );
     } catch (err) {
-      console.log(err);
+      const currentUser = await Auth.currentAuthenticatedUser();
+      var key = new RSAKey(true);
+
+      key.setType("public");
+      const publicKeyS = JSON.stringify(key);
+      key.setType("private");
+      const privateKeyS = JSON.stringify(key);
+
+      // Save uski private key
+      await AsyncStorage.setItem("privateKey", privateKeyS);
+      await AsyncStorage.setItem("publicKey", publicKeyS);
+
+      await API.graphql(
+        graphqlOperation(updateUser, {
+          input: {
+            id: currentUser.attributes.sub,
+            publicKey: publicKeyS,
+          },
+        })
+      );
+      console.log("Error while blah blah", err);
     }
   };
   useEffect(() => {
