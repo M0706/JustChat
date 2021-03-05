@@ -29,7 +29,11 @@ const ContactListItem = (props: ContactListItemProps) => {
       // var oldChatRoom = await API.graphql(
       //   graphqlOperation(getChatRoom, { id: user.previousChatID })
       // );
-      // console.log("Inside Contact List Item -------> ", oldChatRoom);
+      console.log(
+        "Inside Contact List Item -------> ",
+        user,
+        publicKeyOfThisUser
+      );
 
       if (!user.previousChatID) {
         newChatRoomData = await API.graphql(

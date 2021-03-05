@@ -68,6 +68,8 @@ const ChatRoomScreen = () => {
     const publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
     setPublicKeyOfThisUser(publicKeyOfThisUser);
 
+    console.log("Inside ChatRoomScreen - ---------->", publicKeyOfThisUser);
+
     const chatRoomObj = await API.graphql(
       graphqlOperation(getChatRoom, {
         id: route.params.id,
@@ -80,7 +82,8 @@ const ChatRoomScreen = () => {
         publicKeyOfThisUser
       ) {
         console.log(
-          "suhana safar aur mausam --------->",
+          "Chat Room Screen publicKeyOfOtherUser --------->",
+          userIndex,
           chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
         );
 

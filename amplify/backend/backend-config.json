@@ -1,6 +1,6 @@
 {
   "auth": {
-    "taruv29b994308": {
+    "tomar65395c0d": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,7 +8,7 @@
     }
   },
   "api": {
-    "taruv2": {
+    "tomar": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authtaruv29b994308"
+              "userPoolId": "authtomar65395c0d"
             }
           },
           "additionalAuthenticationProviders": []
@@ -25,7 +25,7 @@
     }
   },
   "storage": {
-    "s322d699a4": {
+    "s350a16656": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }

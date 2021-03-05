@@ -25,6 +25,8 @@ export default function ContactsScreen() {
       (value: {}) => Object.keys(value).length !== 0
     );
 
+    console.log("Contact Screen --------->", filterChatRoom);
+
     // const chatRoom = filterChatRoom.find(cr =>{
     //                       cr.chatRoomUsers.items.some((i) => (i.user.id === user.id))
     // });
@@ -53,7 +55,7 @@ export default function ContactsScreen() {
         const filteredUsers = usersData.data.listUsers.items
           .map((i: User) => mapUsers(i, currentUser.attributes.sub))
           .filter(Boolean);
-        // console.log("Filtered users-->",filteredUsers);
+        // console.log("Filtered users-->", filteredUsers);
         setUsers(filteredUsers);
       } catch (err) {
         console.warn(err);

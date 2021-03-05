@@ -12,10 +12,11 @@ import { ChatRoom } from "../types";
 import { UserState } from "realm";
 import { updateUser } from "../graphql/mutations";
 import { RSA, RSAKey } from "../helpers/rsa";
-
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 export default function ChatsScreen() {
+  const navigation = useNavigation();
   const [chatRooms, setChatRooms] = useState([]);
   const [user, setUser] = useState({});
 
@@ -25,6 +26,12 @@ export default function ChatsScreen() {
 
       const userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUser.attributes.sub })
+      );
+
+      console.log(
+        "ChatsScreen ------------>>>>>>",
+        userData.data.getUser.publicKey,
+        await AsyncStorage.getItem("publicKey")
       );
 
       if (!userData.data.getUser.publicKey) {
@@ -76,6 +83,13 @@ export default function ChatsScreen() {
       console.log(err);
     }
   };
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchChatRooms();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     fetchChatRooms();

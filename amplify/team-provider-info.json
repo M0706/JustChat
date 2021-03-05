@@ -1,19 +1,19 @@
 {
-  "taru": {
+  "tomar": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-taruv2-taru-220801-authRole",
-      "UnauthRoleArn": "arn:aws:iam::187729020176:role/amplify-taruv2-taru-220801-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::187729020176:role/amplify-taruv2-taru-220801-authRole",
+      "AuthRoleName": "amplify-tomar-tomar-190204-authRole",
+      "UnauthRoleArn": "arn:aws:iam::187729020176:role/amplify-tomar-tomar-190204-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::187729020176:role/amplify-tomar-tomar-190204-authRole",
       "Region": "ap-south-1",
-      "DeploymentBucketName": "amplify-taruv2-taru-220801-deployment",
-      "UnauthRoleName": "amplify-taruv2-taru-220801-unauthRole",
-      "StackName": "amplify-taruv2-taru-220801",
-      "StackId": "arn:aws:cloudformation:ap-south-1:187729020176:stack/amplify-taruv2-taru-220801/559c8430-79e3-11eb-9ef3-061e6fdaee76",
-      "AmplifyAppId": "d162hglg79zra6"
+      "DeploymentBucketName": "amplify-tomar-tomar-190204-deployment",
+      "UnauthRoleName": "amplify-tomar-tomar-190204-unauthRole",
+      "StackName": "amplify-tomar-tomar-190204",
+      "StackId": "arn:aws:cloudformation:ap-south-1:187729020176:stack/amplify-tomar-tomar-190204/b0186040-7b5b-11eb-987a-0696e01d0e2e",
+      "AmplifyAppId": "d1krh3a9weo36n"
     },
     "categories": {
       "auth": {
-        "taruv29b994308": {}
+        "tomar65395c0d": {}
       }
     }
   }
