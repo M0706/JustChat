@@ -26,8 +26,6 @@ import {
 import Attachment from "./Attachment";
 import * as ImagePicker from "expo-image-picker";
 import uuid from "uuid-random";
-// import uuid from "uuid-random";
-import { nanoid } from "nanoid/async/index.native";
 
 export type InputBoxProps = {
   chatRoomID: String;
@@ -189,10 +187,10 @@ const InputBox = (props) => {
     //console.warn("Send Attachment")
     await pickImage();
     const imagekey = await uploadImage();
-    //console.log("Image key in OnpressAttachment -->",imagekey);
+    console.log("Image key in OnpressAttachment -->",imagekey);
     const signedUrl = await Storage.get(imagekey);
-    //console.log("Signed Url --->",signedUrl);
-    //onSendPress(signedUrl);
+    console.log("Signed Url --->",signedUrl);
+    onSendPress(signedUrl);
   };
 
   return (

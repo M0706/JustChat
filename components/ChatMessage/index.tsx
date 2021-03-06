@@ -40,24 +40,26 @@ const ChatMessage = (props: ChatMessageProps) => {
     return message.user.id === myId;
   };
 
-  // const messageDelete=async()=>{
-  //   try{
-  //     const deletedmessageData = await API.graphql(
-  //       graphqlOperation(
-  //         deleteMessage, {
-  //           input: {
-  //             id:myId
-  //           }
-  //         }
-  //       )
-  //     )
-  //     console.log("Deletemessage===>",deletedmessageData)
+  const mediaMessage = (media) =>{
+    console.log(media)
+    if(media===""){
+      return (<Text style={styles.message}>
+      {RSA.decryptWithKey(
+        message.ciphers[userIndex],
+        JSON.parse(privateKeyOfThisUser)
+      )}
+    </Text>) 
+    }
+    //video needs to be sorted
+    else{
+      return ( <Image
+        source={{ uri: message.media }}
+        style={{ width: 100, height: 100 }}
+      />)
+    }
+  }
 
-  //   }
-  //   catch(e){
-  //     console.log("Message cannot be deleted")
-  //   }
-  // }
+
 
   if (privateKeyOfThisUser == "") {
     return <Text></Text>;
@@ -80,6 +82,8 @@ const ChatMessage = (props: ChatMessageProps) => {
             <Text style={styles.name}>{message.user.name}</Text>
           )}
 
+          {mediaMessage(message.media)}
+{/* 
           {message.media === "" ? (
             <Text style={styles.message}>
               {RSA.decryptWithKey(
@@ -93,6 +97,7 @@ const ChatMessage = (props: ChatMessageProps) => {
               style={{ width: 100, height: 100 }}
             />
           )}
+           */}
           <Text style={styles.time}>{moment(message.createdAt).fromNow()}</Text>
         </View>
       </TouchableOpacity>

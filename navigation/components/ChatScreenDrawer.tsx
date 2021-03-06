@@ -5,7 +5,8 @@ const SignOut = () => {
       try {
         //console.log("sdds")
         await Auth.signOut({ global: true });
-      } catch (error) {
+      } 
+      catch (error) {
         console.log('error signing out: ', error);
       }
     };
