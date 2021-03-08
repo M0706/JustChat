@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "tomar",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authtomar65395c0d",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
