@@ -146,7 +146,7 @@ class RSA {
     this.splitter = "-";
 
     //decrypt
-
+    // console.log("Ciperfasrfihfasrkdfjasdlfjlasdf", cipherText);
     cipherText = cipherText.split(this.splitter);
     // cipherText = cipherText.match(/.{1,4}/g);
     for (var i = 0; i < cipherText.length; i++) {

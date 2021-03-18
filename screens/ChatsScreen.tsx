@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList, Text } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import React, { useEffect, useState, useLayoutEffect } from "react";
+import { StyleSheet, FlatList, Text, TouchableOpacity } from "react-native";
+import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { View } from "../components/Themed";
 import ChatListItem from "../components/ChatListItem";
 import NewMessageButton from "../components/NewMessageButton";
