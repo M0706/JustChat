@@ -16,7 +16,7 @@ const ChatListItem = (props: ChatListItemProps) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log("Inside the Chat List Item ------->>", chatRoom);
+    //console.log("Inside the Chat List Item ------->>", chatRoom);
     const getOtherUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser();
       const user = chatRoom.chatRoomUsers.items.find(

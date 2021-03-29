@@ -1,10 +1,10 @@
 {
-  "AppSyncApiName": "tomar",
+  "AppSyncApiName": "justchat26march",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
   "AuthCognitoUserPoolId": {
     "Fn::GetAtt": [
-      "authtomar65395c0d",
+      "authjustchat26march7704e7e2",
       "Outputs.UserPoolId"
     ]
   }

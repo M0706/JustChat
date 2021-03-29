@@ -44,6 +44,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.3",
+    "react-native-camera": "^3.43.1",
     "react-native-double-click": "^1.0.5",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-popup-menu": "^0.15.10",

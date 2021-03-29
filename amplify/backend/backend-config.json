@@ -1,6 +1,6 @@
 {
   "auth": {
-    "tomar65395c0d": {
+    "justchat26march7704e7e2": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,7 +8,7 @@
     }
   },
   "api": {
-    "tomar": {
+    "justchat26march": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authtomar65395c0d"
+              "userPoolId": "authjustchat26march7704e7e2"
             }
           },
           "additionalAuthenticationProviders": []
@@ -25,7 +25,7 @@
     }
   },
   "storage": {
-    "s350a16656": {
+    "justChat26march": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }

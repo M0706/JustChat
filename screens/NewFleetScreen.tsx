@@ -20,7 +20,7 @@ import Colors from "../constants/Colors";
 import ProfilePicture from "../components/ProfilePicture";
 import {createFleet} from '../graphql/mutations'
 
-export default function NewFweetScreen() {
+export default function NewFleetScreen() {
 
   const [text, setText] = useState("");
   const [imageUrl, setImageUrl] = useState("");
