@@ -1,16 +1,22 @@
-import { Ionicons } from '@expo/vector-icons';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
 
-import { Fontisto } from "@expo/vector-icons";
+import { View } from "react-native";
+import { Octicons, Fontisto } from "@expo/vector-icons";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import ChatsScreen from '../screens/ChatsScreen';
-import Stories from '../screens/Stories';
-import Camera from '../screens/Camera'
-import { MainTabParamList, ChatScreenList, StoriesScreenList,CameraScreenList } from '../types';
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import ChatsScreen from "../screens/ChatsScreen";
+import Stories from "../screens/Stories";
+import Camera from "../screens/Camera";
+import {
+  MainTabParamList,
+  ChatScreenList,
+  StoriesScreenList,
+  CameraScreenList,
+} from "../types";
 
 const MainTab = createMaterialTopTabNavigator<MainTabParamList>();
 
@@ -30,30 +36,24 @@ export default function MainTabNavigator() {
           height: 4,
         },
         labelStyle: {
-          fontWeight: 'bold'
+          fontWeight: "bold",
         },
         showIcon: true,
-      }}>
+      }}
+    >
       <MainTab.Screen
         name="Camera"
         component={TabThreeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <Fontisto name="camera" color={color} size={18} />,
-          tabBarLabel: () => null
+          tabBarIcon: ({ color }) => (
+            <Fontisto name="camera" color={color} size={18} />
+          ),
+          tabBarLabel: () => null,
         }}
       />
-      <MainTab.Screen
-        name="Personal"
-        component={TabOneNavigator}
-      />
-      <MainTab.Screen
-        name="Work"
-        component={TabOneNavigator}
-      />
-      <MainTab.Screen
-        name="Stories"
-        component={TabTwoNavigator}
-      />
+      <MainTab.Screen name="Personal" component={TabOneNavigator} />
+      <MainTab.Screen name="Work" component={TabOneNavigator} />
+      <MainTab.Screen name="Stories" component={TabTwoNavigator} />
     </MainTab.Navigator>
   );
 }
@@ -74,7 +74,7 @@ function TabOneNavigator() {
       <TabChatsStack.Screen
         name="ChatScreen"
         component={ChatsScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        options={{ headerTitle: "Tab One Title" }}
       />
     </TabChatsStack.Navigator>
   );
@@ -88,7 +88,7 @@ function TabTwoNavigator() {
       <TabStoriesStack.Screen
         name="Stories"
         component={Stories}
-        options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerTitle: "Tab Two Title" }}
       />
     </TabStoriesStack.Navigator>
   );
@@ -98,15 +98,8 @@ const CameraTabStack = createStackNavigator<CameraScreenList>();
 
 function TabThreeNavigator() {
   return (
-   <CameraTabStack.Navigator>
-     <CameraTabStack.Screen
-     name="Camera"
-     component={Camera}
-     />
-   </CameraTabStack.Navigator> 
-  )
+    <CameraTabStack.Navigator>
+      <CameraTabStack.Screen name="Camera" component={Camera} />
+    </CameraTabStack.Navigator>
+  );
 }
-
-
-
-

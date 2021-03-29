@@ -47,7 +47,7 @@ const InputBox = (props) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log("Props for InputBOX: ", props.publicKeyOfOtherUser);
+    // console.log("Props for InputBOX: ", props.publicKeyOfOtherUser);
 
     setPublicKeyOfOtherUser(props.publicKeyOfOtherUser);
     setChatRoomID(props.chatRoomID);

@@ -18,7 +18,6 @@ const NewMessageButton = (props: NewMessageButtonProps) => {
 
   return (
     <View style={styles.container}>
-  
       <TouchableOpacity onPress={onPress}>
         <Text>ICON</Text>
       </TouchableOpacity>

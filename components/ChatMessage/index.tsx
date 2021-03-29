@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+} from "react-native";
 import { Message } from "../../types";
 import moment from "moment";
 import styles from "./styles";
-// import {
-//   API,
-//   Auth,
-//   graphqlOperation,
-//   Storage
-// } from 'aws-amplify';
-// import {
-//   deleteMessage,
-// } from '../../graphql/mutations';
+import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
+import { deleteMessage } from "../../graphql/mutations";
 
 import { RSA, RSAKey } from "../../helpers/rsa";
 
@@ -28,10 +28,9 @@ const ChatMessage = (props: ChatMessageProps) => {
   // const [myId, setMyId] = useState("");
   const [privateKeyOfThisUser, setPrivateKeyOfThisUser] = useState("");
   const [userIndex, setUserIndex] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    // setMessage(props.message);
-    // setMyId(props.myId);
     setPrivateKeyOfThisUser(props.privateKeyOfThisUser);
     setUserIndex(props.userIndex);
   }, [props.privateKeyOfThisUser, props.userIndex]);
@@ -41,35 +40,72 @@ const ChatMessage = (props: ChatMessageProps) => {
   };
 
   const mediaMessage = (media) => {
-    console.log(media);
-    if (media === "") {
-      return (
-        <Text style={styles.message}>
-          {RSA.decryptWithKey(
-            message.ciphers[userIndex],
-            JSON.parse(privateKeyOfThisUser)
-          )}
-        </Text>
-      );
-    }
-    //video needs to be sorted
-    else {
-      return (
-        <Image
-          source={{ uri: message.media }}
-          style={{ width: 100, height: 100 }}
-        />
-      );
-    }
+    console.log("JLSDFjlksjflksajflkdsjafklajsdflkjads", userIndex);
+    try {
+      if (media === "") {
+        return (
+          <Text style={styles.message}>
+            {RSA.decryptWithKey(
+              message.ciphers[userIndex],
+              JSON.parse(privateKeyOfThisUser)
+            )}
+          </Text>
+        );
+      }
+      //video needs to be sorted
+      else {
+        return (
+          <Image
+            source={{ uri: message.media }}
+            style={{ width: 100, height: 100 }}
+          />
+        );
+      }
+    } catch (er) {}
   };
 
   if (privateKeyOfThisUser == "") {
     return <Text></Text>;
   }
-
+  const deleteMessageF = async () => {
+    await API.graphql(
+      graphqlOperation(deleteMessage, { input: { id: message.id } })
+    );
+    setModalVisible(!modalVisible);
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>
+              Are you sure you want to delete the message?
+            </Text>
+            <View style={styles.buttonComp}>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={deleteMessageF}
+              >
+                <Text style={styles.textStyle}>Yes</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>No</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
         <View
           style={[
             styles.messageBox,

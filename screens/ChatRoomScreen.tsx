@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import DoubleClick from "react-native-double-click";
+import { onDeleteMessage } from "../graphql/subscriptions";
 
 import { useRoute } from "@react-navigation/native";
 import { API, graphqlOperation, Auth } from "aws-amplify";
@@ -68,8 +69,6 @@ const ChatRoomScreen = () => {
     const publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
     setPublicKeyOfThisUser(publicKeyOfThisUser);
 
-    console.log("Inside ChatRoomScreen - ---------->", publicKeyOfThisUser);
-
     const chatRoomObj = await API.graphql(
       graphqlOperation(getChatRoom, {
         id: route.params.id,
@@ -84,7 +83,8 @@ const ChatRoomScreen = () => {
         console.log(
           "Chat Room Screen publicKeyOfOtherUser --------->",
           userIndex,
-          chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex]
+          chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex].publicKey,
+          publicKeyOfThisUser
         );
 
         setPublicKeyOfOtherUser(
@@ -113,7 +113,18 @@ const ChatRoomScreen = () => {
     };
     fetchUserId();
   }, []);
+  useEffect(() => {
+    const onDeleteMessageSubscription = API.graphql(
+      graphqlOperation(onDeleteMessage)
+    ).subscribe({
+      next: (data) => {
+        console.log("Yahan pr fetch kia mene :)");
+        fetchMessages(nextToken);
+      },
+    });
 
+    return () => onDeleteMessageSubscription.unsubscribe();
+  }, [messages]);
   useEffect(() => {
     const subscription = API.graphql(
       graphqlOperation(onCreateMessage)
