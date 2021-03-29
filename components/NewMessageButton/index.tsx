@@ -18,7 +18,7 @@ const NewMessageButton = (props: NewMessageButtonProps) => {
 
   return (
     <View style={styles.container}>
-      <ThreeDRotation />
+  
       <TouchableOpacity onPress={onPress}>
         <Text>ICON</Text>
       </TouchableOpacity>

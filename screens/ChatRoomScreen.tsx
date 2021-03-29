@@ -36,7 +36,7 @@ const ChatRoomScreen = () => {
   const route = useRoute();
 
   const HandleScroll = () => {
-    //console.warn("fuck")
+
     if (nextToken !== null) {
       fetchMessages(nextToken);
       setKeys();
