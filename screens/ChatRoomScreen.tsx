@@ -166,7 +166,7 @@ const ChatRoomScreen = () => {
         data={messages}
         onEndReached={HandleScroll}
         onEndReachedThreshold={0}
-        //ListHeaderComponent={renderLoader}
+        //ListHeaderComponent={renderLoader}asd
         renderItem={({ item }) => (
           <DoubleClick onClick={doubleClick}>
             <ChatMessage
