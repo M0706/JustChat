@@ -80,6 +80,7 @@ web-build/
 # @end expo-cli
 
 
-#amplify
 amplify/
+amplify/**/*
+
 .secret-*
