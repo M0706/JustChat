@@ -99,7 +99,9 @@ const CameraTabStack = createStackNavigator<CameraScreenList>();
 function TabThreeNavigator() {
   return (
     <CameraTabStack.Navigator>
-      <CameraTabStack.Screen name="Camera" component={Camera} />
+      <CameraTabStack.Screen name="Camera" 
+      component={Camera} 
+      options={{ headerTitle: "Tab Three title" }}/>
     </CameraTabStack.Navigator>
   );
 }

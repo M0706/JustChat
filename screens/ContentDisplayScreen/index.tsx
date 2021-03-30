@@ -2,9 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View ,Image} from "react-native";
 
 export default function ImageScreen({route}) {
- 
+ console.log(route)
  const { photo } = route.params;
- console.log("Photo---->",photo);
+ //console.log("Photo---->",photo);
  
  return (
  <View style={{ flex: 1, alignItems: "center",justifyContent:"center" }}>

@@ -45,7 +45,7 @@ const AccountScreen = () => {
 
   const onCameraPress = () => {
     //console.warn("Camera pressed")
-    navigation.navigate("Camera");
+    navigation.navigate("Camera",{caption: 'Some caption'});
   };
 
   return (
@@ -69,7 +69,7 @@ const AccountScreen = () => {
         size={24}
         color="grey"
         style={styles.icon}
-        onPress={onCameraPress}
+        onPress={()=> onCameraPress()}
       />
     </View>
   );

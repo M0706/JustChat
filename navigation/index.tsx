@@ -18,6 +18,7 @@ import AccountScreen from "../screens/AccountScreen";
 import { RootStackParamList } from "../types";
 import MainTabNavigator from "./MainTabNavigator";
 import UnderDevelopment from "./UnderDevelopment";
+import Camera from "../screens/Camera";
 
 // import LinkingConfiguration from "./LinkingConfiguration";
 import Colors from "../constants/Colors";
@@ -77,7 +78,7 @@ export default function Navigation({
         <Tab.Screen name="Chats" component={RootNavigator} />
         <Tab.Screen name="feed" component={UnderDevelopment} />
         <Tab.Screen name="Calls" component={UnderDevelopment} />
-        <Tab.Screen name="account" component={AccountScreen} />
+        <Tab.Screen name="account" component={AccountNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
   );
@@ -171,6 +172,7 @@ function RootNavigator() {
       <Stack.Screen name="NewFleet" component={NewFleetScreen} />
 
       <Stack.Screen name="ContentDisplay" component={ContentDisplay} />
+      
 
       <Stack.Screen
         name="NotFound"
@@ -180,3 +182,12 @@ function RootNavigator() {
     </Stack.Navigator>
   );
 }
+function AccountNavigator() {
+  return (
+    <Stack.Navigator>
+
+        <Stack.Screen name="AccountScreen" component={AccountScreen} />
+        <Stack.Screen name="Camera" component={Camera} />
+
+    </Stack.Navigator>
+)}

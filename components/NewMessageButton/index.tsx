@@ -14,6 +14,7 @@ const NewMessageButton = (props: NewMessageButtonProps) => {
   const onPress = () => {
     //console.log(props)
     navigation.navigate("Contacts", { chatRooms: props.chatRooms });
+    
   };
 
   return (

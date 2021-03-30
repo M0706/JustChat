@@ -214,11 +214,14 @@ import React, { useRef, useState } from 'react';
 import { AppRegistry, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import styles from './styles';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,useRoute } from "@react-navigation/native";
 
-const camera = () => {
+
+const camera = (route) => {
   let cameraRef = useRef(null);
   const navigation = useNavigation();
+  //const route = useRoute();
+  console.log("Route ====>",route)
 
   const [camType,setcamType] = useState(RNCamera.Constants.Type.back);
   const [flashMode,setFlashMode]= useState(RNCamera.Constants.FlashMode.off)
@@ -290,7 +293,8 @@ const camera = () => {
           <TouchableOpacity onPress={()=>takePicture()} style={styles.capture}>
             <Text style={{ fontSize: 7 }}> SNAP </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>rotateCamera()} style={styles.capture}>
+          <TouchableOpacity onPress={()=>rotateCamera()} 
+          style={styles.capture}>
             <Text style={{ fontSize: 7 }}> Type </Text>
           </TouchableOpacity>
         </View>
