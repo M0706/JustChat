@@ -14,16 +14,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
   },
-  message: {
-
-  },
+  message: {},
   time: {
     alignSelf: "flex-end",
-    color: 'grey'
+    color: "grey",
   },
-  buttonComp:{
-    flexDirection:'row',
-    justifyContent:'space-between'
+  buttonComp: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   modalView: {
     margin: 20,
@@ -34,17 +32,17 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    margin: 10
+    margin: 10,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -55,12 +53,12 @@ const styles = StyleSheet.create({
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });
 
 export default styles;

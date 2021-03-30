@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+  Modal,
+  Pressable,
+} from "react-native";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 import { ChatRoom } from "../../types";
@@ -14,6 +21,7 @@ const ChatListItem = (props: ChatListItemProps) => {
   const { chatRoom } = props;
   const [otherUser, setOtherUser] = useState(null);
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     //console.log("Inside the Chat List Item ------->>", chatRoom);
@@ -27,7 +35,6 @@ const ChatListItem = (props: ChatListItemProps) => {
     getOtherUser();
   }, []);
 
-
   const onClick = () => {
     navigation.navigate("ChatRoom", {
       id: chatRoom.id,
@@ -40,8 +47,13 @@ const ChatListItem = (props: ChatListItemProps) => {
   return (
     <TouchableWithoutFeedback onPress={onClick}>
       <View style={styles.container}>
-        <Image style={styles.avatar} source={{ uri: otherUser.imageUri }} />
-
+        <Pressable
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <Image style={styles.avatar} source={{ uri: otherUser.imageUri }} />
+        </Pressable>
         <View style={styles.rightContainer}>
           <View style={styles.midContainer}>
             <Text style={styles.userName}>{otherUser.name}</Text>
@@ -57,6 +69,18 @@ const ChatListItem = (props: ChatListItemProps) => {
               moment(chatRoom.lastMessage.createdAt).format("DD/MM/YYYY")}
           </Text>
         </View>
+        <Modal animationType="fade" transparent={true} visible={modalVisible}>
+          <Pressable
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <Image
+              style={styles.avataropen}
+              source={{ uri: otherUser.imageUri }}
+            />
+          </Pressable>
+        </Modal>
       </View>
     </TouchableWithoutFeedback>
   );
