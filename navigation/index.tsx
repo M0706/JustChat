@@ -14,6 +14,7 @@ import {
 } from "@expo/vector-icons";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
+import AccountScreen from "../screens/AccountScreen";
 import { RootStackParamList } from "../types";
 import MainTabNavigator from "./MainTabNavigator";
 import UnderDevelopment from "./UnderDevelopment";
@@ -76,7 +77,7 @@ export default function Navigation({
         <Tab.Screen name="Chats" component={RootNavigator} />
         <Tab.Screen name="feed" component={UnderDevelopment} />
         <Tab.Screen name="Calls" component={UnderDevelopment} />
-        <Tab.Screen name="account" component={UnderDevelopment} />
+        <Tab.Screen name="account" component={AccountScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

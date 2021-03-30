@@ -121,7 +121,7 @@ const ChatMessage = (props: ChatMessageProps) => {
           )}
 
           {mediaMessage(message.media)}
-          {/* 
+
           {message.media === "" ? (
             <Text style={styles.message}>
               {RSA.decryptWithKey(
@@ -135,7 +135,7 @@ const ChatMessage = (props: ChatMessageProps) => {
               style={{ width: 100, height: 100 }}
             />
           )}
-           */}
+
           <Text style={styles.time}>{moment(message.createdAt).fromNow()}</Text>
         </View>
       </TouchableOpacity>
