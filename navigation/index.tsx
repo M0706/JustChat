@@ -188,6 +188,7 @@ function AccountNavigator() {
 
         <Stack.Screen name="AccountScreen" component={AccountScreen} />
         <Stack.Screen name="Camera" component={Camera} />
+        <Stack.Screen name="ContentDisplay" component={ContentDisplay} />
 
     </Stack.Navigator>
 )}

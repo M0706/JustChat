@@ -217,22 +217,22 @@ import styles from './styles';
 import { useNavigation,useRoute } from "@react-navigation/native";
 
 
-const camera = (route) => {
+const camera = () => {
   let cameraRef = useRef(null);
   const navigation = useNavigation();
-  //const route = useRoute();
-  console.log("Route ====>",route)
+  const route = useRoute();
+  //console.log("Route ====>",route.params)
 
   const [camType,setcamType] = useState(RNCamera.Constants.Type.back);
   const [flashMode,setFlashMode]= useState(RNCamera.Constants.FlashMode.off)
   const [isRecording, setIsRecording] = useState(false);
   
-  const takePicture = async () => {
+  const takePicture = async (params: Readonly<object | undefined>) => {
     if (cameraRef) {
       const options = { quality: 0.5, base64: true };
       const data = await cameraRef.current.takePictureAsync(options);
       console.log(data.uri);
-      navigation.navigate('ContentDisplay',{photo:data})
+      navigation.navigate('ContentDisplay',{photo:data, Screen:params})
     }
   };
 
@@ -290,7 +290,7 @@ const camera = (route) => {
           <TouchableOpacity onPress={()=>onRecord()} style={
             isRecording ? styles.buttonStop : styles.buttonRecord}>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>takePicture()} style={styles.capture}>
+          <TouchableOpacity onPress={()=>takePicture(route.params)} style={styles.capture}>
             <Text style={{ fontSize: 7 }}> SNAP </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=>rotateCamera()} 

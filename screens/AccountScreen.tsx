@@ -5,23 +5,33 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 import { getUser } from "./queries";
 import { TextInput, TouchableHighlight } from "react-native-gesture-handler";
 import imag from "../assets/images/favicon.png";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Fontisto } from "@expo/vector-icons";
 // import { Button } from "native-base";
+
+
 const AccountScreen = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
-  const exampleImageUri = Image.resolveAssetSource(imag).uri;
+  //const exampleImageUri = Image.resolveAssetSource(imag).uri;
   const [img, setImg] = useState("");
+  const route = useRoute()
+  console.log("routes in AccountScreen====>",route.params);
 
   const datauser = async (name, img) => {
     const currentUser = await Auth.currentAuthenticatedUser();
     const userData = await API.graphql(
       graphqlOperation(getUser, { id: currentUser.attributes.sub })
     );
+
     setUserName(userData.data.getUser.name);
+    console.log("sdvd")
+    if(route.params.imageUri!==""){
+      console.log('sj s')
+      setImg(route.params.imageUri);
+    }
     await API.graphql(
       graphqlOperation(updateUser, {
         input: {
@@ -35,7 +45,7 @@ const AccountScreen = () => {
   };
 
   useEffect(() => {
-    datauser;
+    datauser(username,img);
   }, []);
 
   const pressing = (name, img) => {
@@ -45,7 +55,7 @@ const AccountScreen = () => {
 
   const onCameraPress = () => {
     //console.warn("Camera pressed")
-    navigation.navigate("Camera",{caption: 'Some caption'});
+    navigation.navigate("Camera",{Screen: 'AccountScreen'});
   };
 
   return (
@@ -58,7 +68,7 @@ const AccountScreen = () => {
       <TextInput onChangeText={setName} value={name} />
       <Button
         onPress={() => {
-          pressing(name, exampleImageUri);
+          pressing(name, route.params.imageUri);
         }}
         title="Submit"
         color="#841584"
