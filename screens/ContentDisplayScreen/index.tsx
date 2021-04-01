@@ -10,7 +10,6 @@ export default function ImageScreen({route}) {
  //console.log("Screen---->",params);
 
  const onPress = (Screen: { Screen: string; },photo: any) => {
-    console.log("fuck")
     if(Screen.Screen==="AccountScreen"){
         navigation.navigate("AccountScreen",{imageUri: photo.uri});
     }
