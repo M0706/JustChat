@@ -18,7 +18,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 export default function ChatsScreen() {
   const navigation = useNavigation();
   const [chatRooms, setChatRooms] = useState([]);
-  const [user, setUser] = useState({});
 
   const fetchChatRooms = async () => {
     try {
@@ -113,7 +112,7 @@ export default function ChatsScreen() {
     const onUpdateChatRoomSubscription = API.graphql(
       graphqlOperation(onUpdateChatRoom)
     ).subscribe({
-      next: (data) => {
+      next: () => {
         fetchChatRooms();
       },
     });
@@ -125,7 +124,7 @@ export default function ChatsScreen() {
     const subscription = API.graphql(
       graphqlOperation(onCreateChatRoom)
     ).subscribe({
-      next: (data) => {
+      next: () => {
         fetchChatRooms();
       },
     });

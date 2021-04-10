@@ -1,37 +1,26 @@
-import React, { useEffect, useState, userRef, useRef } from "react";
+import React, {useEffect, useState} from 'react';
+import {FlatList, Text, ImageBackground, KeyboardAvoidingView } from 'react-native';
+import DoubleClick from 'react-native-double-click';
+
+import { useRoute } from '@react-navigation/native';
 import {
-  FlatList,
-  Text,
-  ImageBackground,
-  KeyboardAvoidingView,
-  View,
-  ActivityIndicator,
-} from "react-native";
-import DoubleClick from "react-native-double-click";
-import { onDeleteMessage } from "../graphql/subscriptions";
+  API,
+  graphqlOperation,
+  Auth,
+} from 'aws-amplify';
 
-import { useRoute } from "@react-navigation/native";
-import { API, graphqlOperation, Auth } from "aws-amplify";
-
-import { getChatRoom, messagesByChatRoom } from "../graphql/queries";
-import { onCreateMessage } from "../graphql/subscriptions";
+import { messagesByChatRoom } from '../graphql/queries';
+import { onCreateMessage } from '../graphql/subscriptions';
 import ChatMessage from "../components/ChatMessage";
-import BG from "../assets/images/BG.png";
+import BG from '../assets/images/BG.png';
 import InputBox from "../components/InputBox";
-import AsyncStorage from "@react-native-community/async-storage";
-// import { RSA, RSAKey } from "../helpers/rsa";
-// import { UserState } from "realm";
 
 const ChatRoomScreen = () => {
+
   const [messages, setMessages] = useState([]);
-  // const currentUserId = useRef("");
-  const [currentUserId, setCurrentUserId] = useState("");
-  const [publicKeyOfOtherUser, setPublicKeyOfOtherUser] = useState("");
-  const [privateKeyOfThisUser, setPrivateKeyOfThisUser] = useState("");
-  const [publicKeyOfThisUser, setPublicKeyOfThisUser] = useState("");
-  const [userIndex, setUserIndex] = useState("");
-  const [otherUserIndex, setOtherUserIndex] = useState("");
+  const [currentUserId, setCurrentUserId] = useState('');
   const [nextToken, setNextToken] = useState(null);
+
   // PUblic key routes
 
   const route = useRoute();
@@ -40,7 +29,6 @@ const ChatRoomScreen = () => {
 
     if (nextToken !== null) {
       fetchMessages(nextToken);
-      setKeys();
     }
   };
 
@@ -65,46 +53,11 @@ const ChatRoomScreen = () => {
     // );
   };
 
-  const setKeys = async () => {
-    const publicKeyOfThisUser = await AsyncStorage.getItem("publicKey");
-    setPublicKeyOfThisUser(publicKeyOfThisUser);
-
-    const chatRoomObj = await API.graphql(
-      graphqlOperation(getChatRoom, {
-        id: route.params.id,
-      })
-    );
-
-    for (let userIndex in chatRoomObj.data.getChatRoom.chatRoomUsers.items) {
-      if (
-        chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex].publicKey !=
-        publicKeyOfThisUser
-      ) {
-        console.log(
-          "Chat Room Screen publicKeyOfOtherUser --------->",
-          userIndex,
-          chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex].publicKey,
-          publicKeyOfThisUser
-        );
-
-        setPublicKeyOfOtherUser(
-          chatRoomObj.data.getChatRoom.chatRoomUsers.items[userIndex].publicKey
-        );
-
-        setOtherUserIndex(userIndex);
-      } else {
-        setUserIndex(userIndex);
-      }
-    }
-
-    const privateKeyOfThisUserString = await AsyncStorage.getItem("privateKey");
-    setPrivateKeyOfThisUser(privateKeyOfThisUserString);
-  };
 
   useEffect(() => {
     fetchMessages(nextToken);
-    setKeys();
   }, []);
+
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -113,19 +66,10 @@ const ChatRoomScreen = () => {
     };
     fetchUserId();
   }, []);
-  useEffect(() => {
-    const onDeleteMessageSubscription = API.graphql(
-      graphqlOperation(onDeleteMessage)
-    ).subscribe({
-      next: (data) => {
-        console.log("Yahan pr fetch kia mene :)");
-        fetchMessages(nextToken);
-      },
-    });
 
-    return () => onDeleteMessageSubscription.unsubscribe();
-  }, [messages]);
-  useEffect(() => {
+
+  useEffect(() => {    
+  
     const subscription = API.graphql(
       graphqlOperation(onCreateMessage)
     ).subscribe({
@@ -137,31 +81,24 @@ const ChatRoomScreen = () => {
           return;
         }
 
-        setMessages([newMessage, ...messages]);
+        setMessages([ newMessage, ...messages ]);
         //console.log(messages);
-      },
+      }
     });
 
     return () => subscription.unsubscribe();
-  }, [messages]);
+  }, [messages])
+
+
 
   //console.log(`messages in state: ${messages.length}`)
 
-  const doubleClick = () => {
-    console.warn("Double Clicked");
-  };
-
-  const renderLoader = () => {
-    //add loader when reached top, to be added later
-    return (
-      <View style={{ alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  };
+  const doubleClick=()=>{
+    console.warn("Double Clicked")
+  }
 
   return (
-    <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
+    <ImageBackground style={{width: '100%', height: '100%'}} source={BG}>
       <FlatList
         data={messages}
         onEndReached={HandleScroll}
@@ -169,24 +106,20 @@ const ChatRoomScreen = () => {
         //ListHeaderComponent={renderLoader}
         renderItem={({ item }) => (
           <DoubleClick onClick={doubleClick}>
-            <ChatMessage
-              myId={currentUserId}
-              message={item}
-              privateKeyOfThisUser={privateKeyOfThisUser}
-              userIndex={userIndex}
-            />
+
+          <ChatMessage myId={currentUserId} message={item}/>
           </DoubleClick>
-        )}
+       )}
         inverted
+        
       />
-      <InputBox
-        chatRoomID={route.params.id}
-        publicKeyOfOtherUser={publicKeyOfOtherUser}
-        otherUserIndex={otherUserIndex}
-        publicKeyOfThisUser={publicKeyOfThisUser}
-      />
+
+      <InputBox chatRoomID={route.params.id} />
+
     </ImageBackground>
+
+
   );
-};
+}
 
 export default ChatRoomScreen;
