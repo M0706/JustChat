@@ -24,21 +24,19 @@ export const getUser = /* GraphQL */ `
                 }
               }
             }
-            lastMessage{
+            lastMessage {
               id
-              ciphers
+              content
               updatedAt
-              user{
+              user {
                 id
                 name
               }
-
             }
           }
         }
         nextToken
       }
-      publicKey
       createdAt
       updatedAt
     }
