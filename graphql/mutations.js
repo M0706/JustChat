@@ -9,9 +9,11 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       name
+      phoneNumber
+      email
       imageUri
       status
-      chatRoomUser {
+      personalChatRoomUser {
         items {
           id
           userID
@@ -21,13 +23,11 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
-      fleets {
+      workChatRoomUser {
         items {
           id
-          type
-          text
-          image
           userID
+          chatRoomID
           createdAt
           updatedAt
         }
@@ -46,9 +46,11 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       name
+      phoneNumber
+      email
       imageUri
       status
-      chatRoomUser {
+      personalChatRoomUser {
         items {
           id
           userID
@@ -58,13 +60,11 @@ export const updateUser = /* GraphQL */ `
         }
         nextToken
       }
-      fleets {
+      workChatRoomUser {
         items {
           id
-          type
-          text
-          image
           userID
+          chatRoomID
           createdAt
           updatedAt
         }
@@ -83,9 +83,11 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       name
+      phoneNumber
+      email
       imageUri
       status
-      chatRoomUser {
+      personalChatRoomUser {
         items {
           id
           userID
@@ -95,13 +97,11 @@ export const deleteUser = /* GraphQL */ `
         }
         nextToken
       }
-      fleets {
+      workChatRoomUser {
         items {
           id
-          type
-          text
-          image
           userID
+          chatRoomID
           createdAt
           updatedAt
         }
@@ -112,24 +112,26 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
-export const createChatRoomUser = /* GraphQL */ `
-  mutation CreateChatRoomUser(
-    $input: CreateChatRoomUserInput!
-    $condition: ModelChatRoomUserConditionInput
+export const createPersonalChatRoomUser = /* GraphQL */ `
+  mutation CreatePersonalChatRoomUser(
+    $input: CreatePersonalChatRoomUserInput!
+    $condition: ModelPersonalChatRoomUserConditionInput
   ) {
-    createChatRoomUser(input: $input, condition: $condition) {
+    createPersonalChatRoomUser(input: $input, condition: $condition) {
       id
       userID
       chatRoomID
       user {
         id
         name
+        phoneNumber
+        email
         imageUri
         status
-        chatRoomUser {
+        personalChatRoomUser {
           nextToken
         }
-        fleets {
+        workChatRoomUser {
           nextToken
         }
         createdAt
@@ -161,24 +163,26 @@ export const createChatRoomUser = /* GraphQL */ `
     }
   }
 `;
-export const updateChatRoomUser = /* GraphQL */ `
-  mutation UpdateChatRoomUser(
-    $input: UpdateChatRoomUserInput!
-    $condition: ModelChatRoomUserConditionInput
+export const updatePersonalChatRoomUser = /* GraphQL */ `
+  mutation UpdatePersonalChatRoomUser(
+    $input: UpdatePersonalChatRoomUserInput!
+    $condition: ModelPersonalChatRoomUserConditionInput
   ) {
-    updateChatRoomUser(input: $input, condition: $condition) {
+    updatePersonalChatRoomUser(input: $input, condition: $condition) {
       id
       userID
       chatRoomID
       user {
         id
         name
+        phoneNumber
+        email
         imageUri
         status
-        chatRoomUser {
+        personalChatRoomUser {
           nextToken
         }
-        fleets {
+        workChatRoomUser {
           nextToken
         }
         createdAt
@@ -210,24 +214,26 @@ export const updateChatRoomUser = /* GraphQL */ `
     }
   }
 `;
-export const deleteChatRoomUser = /* GraphQL */ `
-  mutation DeleteChatRoomUser(
-    $input: DeleteChatRoomUserInput!
-    $condition: ModelChatRoomUserConditionInput
+export const deletePersonalChatRoomUser = /* GraphQL */ `
+  mutation DeletePersonalChatRoomUser(
+    $input: DeletePersonalChatRoomUserInput!
+    $condition: ModelPersonalChatRoomUserConditionInput
   ) {
-    deleteChatRoomUser(input: $input, condition: $condition) {
+    deletePersonalChatRoomUser(input: $input, condition: $condition) {
       id
       userID
       chatRoomID
       user {
         id
         name
+        phoneNumber
+        email
         imageUri
         status
-        chatRoomUser {
+        personalChatRoomUser {
           nextToken
         }
-        fleets {
+        workChatRoomUser {
           nextToken
         }
         createdAt
@@ -259,12 +265,12 @@ export const deleteChatRoomUser = /* GraphQL */ `
     }
   }
 `;
-export const createChatRoom = /* GraphQL */ `
-  mutation CreateChatRoom(
-    $input: CreateChatRoomInput!
-    $condition: ModelChatRoomConditionInput
+export const createPersonalChatRoom = /* GraphQL */ `
+  mutation CreatePersonalChatRoom(
+    $input: CreatePersonalChatRoomInput!
+    $condition: ModelPersonalChatRoomConditionInput
   ) {
-    createChatRoom(input: $input, condition: $condition) {
+    createPersonalChatRoom(input: $input, condition: $condition) {
       id
       chatRoomUsers {
         items {
@@ -299,19 +305,18 @@ export const createChatRoom = /* GraphQL */ `
         user {
           id
           name
+          phoneNumber
+          email
           imageUri
           status
           createdAt
           updatedAt
         }
-        chatRoom {
+        personalChatRoom {
           id
           lastMessageID
           createdAt
           updatedAt
-        }
-        likes {
-          nextToken
         }
         updatedAt
       }
@@ -320,12 +325,12 @@ export const createChatRoom = /* GraphQL */ `
     }
   }
 `;
-export const updateChatRoom = /* GraphQL */ `
-  mutation UpdateChatRoom(
-    $input: UpdateChatRoomInput!
-    $condition: ModelChatRoomConditionInput
+export const updatePersonalChatRoom = /* GraphQL */ `
+  mutation UpdatePersonalChatRoom(
+    $input: UpdatePersonalChatRoomInput!
+    $condition: ModelPersonalChatRoomConditionInput
   ) {
-    updateChatRoom(input: $input, condition: $condition) {
+    updatePersonalChatRoom(input: $input, condition: $condition) {
       id
       chatRoomUsers {
         items {
@@ -360,19 +365,18 @@ export const updateChatRoom = /* GraphQL */ `
         user {
           id
           name
+          phoneNumber
+          email
           imageUri
           status
           createdAt
           updatedAt
         }
-        chatRoom {
+        personalChatRoom {
           id
           lastMessageID
           createdAt
           updatedAt
-        }
-        likes {
-          nextToken
         }
         updatedAt
       }
@@ -381,12 +385,12 @@ export const updateChatRoom = /* GraphQL */ `
     }
   }
 `;
-export const deleteChatRoom = /* GraphQL */ `
-  mutation DeleteChatRoom(
-    $input: DeleteChatRoomInput!
-    $condition: ModelChatRoomConditionInput
+export const deletePersonalChatRoom = /* GraphQL */ `
+  mutation DeletePersonalChatRoom(
+    $input: DeletePersonalChatRoomInput!
+    $condition: ModelPersonalChatRoomConditionInput
   ) {
-    deleteChatRoom(input: $input, condition: $condition) {
+    deletePersonalChatRoom(input: $input, condition: $condition) {
       id
       chatRoomUsers {
         items {
@@ -421,19 +425,18 @@ export const deleteChatRoom = /* GraphQL */ `
         user {
           id
           name
+          phoneNumber
+          email
           imageUri
           status
           createdAt
           updatedAt
         }
-        chatRoom {
+        personalChatRoom {
           id
           lastMessageID
           createdAt
           updatedAt
-        }
-        likes {
-          nextToken
         }
         updatedAt
       }
@@ -442,12 +445,12 @@ export const deleteChatRoom = /* GraphQL */ `
     }
   }
 `;
-export const createMessage = /* GraphQL */ `
-  mutation CreateMessage(
-    $input: CreateMessageInput!
-    $condition: ModelMessageConditionInput
+export const createPersonalMessage = /* GraphQL */ `
+  mutation CreatePersonalMessage(
+    $input: CreatePersonalMessageInput!
+    $condition: ModelPersonalMessageConditionInput
   ) {
-    createMessage(input: $input, condition: $condition) {
+    createPersonalMessage(input: $input, condition: $condition) {
       id
       createdAt
       content
@@ -457,18 +460,20 @@ export const createMessage = /* GraphQL */ `
       user {
         id
         name
+        phoneNumber
+        email
         imageUri
         status
-        chatRoomUser {
+        personalChatRoomUser {
           nextToken
         }
-        fleets {
+        workChatRoomUser {
           nextToken
         }
         createdAt
         updatedAt
       }
-      chatRoom {
+      personalChatRoom {
         id
         chatRoomUsers {
           nextToken
@@ -489,26 +494,16 @@ export const createMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      likes {
-        items {
-          id
-          userID
-          messageID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       updatedAt
     }
   }
 `;
-export const updateMessage = /* GraphQL */ `
-  mutation UpdateMessage(
-    $input: UpdateMessageInput!
-    $condition: ModelMessageConditionInput
+export const updatePersonalMessage = /* GraphQL */ `
+  mutation UpdatePersonalMessage(
+    $input: UpdatePersonalMessageInput!
+    $condition: ModelPersonalMessageConditionInput
   ) {
-    updateMessage(input: $input, condition: $condition) {
+    updatePersonalMessage(input: $input, condition: $condition) {
       id
       createdAt
       content
@@ -518,18 +513,20 @@ export const updateMessage = /* GraphQL */ `
       user {
         id
         name
+        phoneNumber
+        email
         imageUri
         status
-        chatRoomUser {
+        personalChatRoomUser {
           nextToken
         }
-        fleets {
+        workChatRoomUser {
           nextToken
         }
         createdAt
         updatedAt
       }
-      chatRoom {
+      personalChatRoom {
         id
         chatRoomUsers {
           nextToken
@@ -550,26 +547,16 @@ export const updateMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      likes {
-        items {
-          id
-          userID
-          messageID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       updatedAt
     }
   }
 `;
-export const deleteMessage = /* GraphQL */ `
-  mutation DeleteMessage(
-    $input: DeleteMessageInput!
-    $condition: ModelMessageConditionInput
+export const deletePersonalMessage = /* GraphQL */ `
+  mutation DeletePersonalMessage(
+    $input: DeletePersonalMessageInput!
+    $condition: ModelPersonalMessageConditionInput
   ) {
-    deleteMessage(input: $input, condition: $condition) {
+    deletePersonalMessage(input: $input, condition: $condition) {
       id
       createdAt
       content
@@ -579,18 +566,20 @@ export const deleteMessage = /* GraphQL */ `
       user {
         id
         name
+        phoneNumber
+        email
         imageUri
         status
-        chatRoomUser {
+        personalChatRoomUser {
           nextToken
         }
-        fleets {
+        workChatRoomUser {
           nextToken
         }
         createdAt
         updatedAt
       }
-      chatRoom {
+      personalChatRoom {
         id
         chatRoomUsers {
           nextToken
@@ -611,134 +600,194 @@ export const deleteMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      likes {
+      updatedAt
+    }
+  }
+`;
+export const createWorkChatRoomUser = /* GraphQL */ `
+  mutation CreateWorkChatRoomUser(
+    $input: CreateWorkChatRoomUserInput!
+    $condition: ModelWorkChatRoomUserConditionInput
+  ) {
+    createWorkChatRoomUser(input: $input, condition: $condition) {
+      id
+      userID
+      chatRoomID
+      user {
+        id
+        name
+        phoneNumber
+        email
+        imageUri
+        status
+        personalChatRoomUser {
+          nextToken
+        }
+        workChatRoomUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      workChatRoom {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateWorkChatRoomUser = /* GraphQL */ `
+  mutation UpdateWorkChatRoomUser(
+    $input: UpdateWorkChatRoomUserInput!
+    $condition: ModelWorkChatRoomUserConditionInput
+  ) {
+    updateWorkChatRoomUser(input: $input, condition: $condition) {
+      id
+      userID
+      chatRoomID
+      user {
+        id
+        name
+        phoneNumber
+        email
+        imageUri
+        status
+        personalChatRoomUser {
+          nextToken
+        }
+        workChatRoomUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      workChatRoom {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteWorkChatRoomUser = /* GraphQL */ `
+  mutation DeleteWorkChatRoomUser(
+    $input: DeleteWorkChatRoomUserInput!
+    $condition: ModelWorkChatRoomUserConditionInput
+  ) {
+    deleteWorkChatRoomUser(input: $input, condition: $condition) {
+      id
+      userID
+      chatRoomID
+      user {
+        id
+        name
+        phoneNumber
+        email
+        imageUri
+        status
+        personalChatRoomUser {
+          nextToken
+        }
+        workChatRoomUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      workChatRoom {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createWorkChatRoom = /* GraphQL */ `
+  mutation CreateWorkChatRoom(
+    $input: CreateWorkChatRoomInput!
+    $condition: ModelWorkChatRoomConditionInput
+  ) {
+    createWorkChatRoom(input: $input, condition: $condition) {
+      id
+      chatRoomUsers {
         items {
           id
           userID
-          messageID
+          chatRoomID
           createdAt
           updatedAt
         }
         nextToken
       }
-      updatedAt
-    }
-  }
-`;
-export const createFleet = /* GraphQL */ `
-  mutation CreateFleet(
-    $input: CreateFleetInput!
-    $condition: ModelFleetConditionInput
-  ) {
-    createFleet(input: $input, condition: $condition) {
-      id
-      type
-      text
-      image
-      userID
-      user {
-        id
-        name
-        imageUri
-        status
-        chatRoomUser {
-          nextToken
+      messages {
+        items {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          updatedAt
         }
-        fleets {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateFleet = /* GraphQL */ `
-  mutation UpdateFleet(
-    $input: UpdateFleetInput!
-    $condition: ModelFleetConditionInput
-  ) {
-    updateFleet(input: $input, condition: $condition) {
-      id
-      type
-      text
-      image
-      userID
-      user {
-        id
-        name
-        imageUri
-        status
-        chatRoomUser {
-          nextToken
-        }
-        fleets {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteFleet = /* GraphQL */ `
-  mutation DeleteFleet(
-    $input: DeleteFleetInput!
-    $condition: ModelFleetConditionInput
-  ) {
-    deleteFleet(input: $input, condition: $condition) {
-      id
-      type
-      text
-      image
-      userID
-      user {
-        id
-        name
-        imageUri
-        status
-        chatRoomUser {
-          nextToken
-        }
-        fleets {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createLike = /* GraphQL */ `
-  mutation CreateLike(
-    $input: CreateLikeInput!
-    $condition: ModelLikeConditionInput
-  ) {
-    createLike(input: $input, condition: $condition) {
-      id
-      userID
-      messageID
-      user {
-        id
-        name
-        imageUri
-        status
-        chatRoomUser {
-          nextToken
-        }
-        fleets {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      message {
+      lastMessageID
+      lastMessage {
         id
         createdAt
         content
@@ -748,19 +797,18 @@ export const createLike = /* GraphQL */ `
         user {
           id
           name
+          phoneNumber
+          email
           imageUri
           status
           createdAt
           updatedAt
         }
-        chatRoom {
+        workChatRoom {
           id
           lastMessageID
           createdAt
           updatedAt
-        }
-        likes {
-          nextToken
         }
         updatedAt
       }
@@ -769,30 +817,37 @@ export const createLike = /* GraphQL */ `
     }
   }
 `;
-export const updateLike = /* GraphQL */ `
-  mutation UpdateLike(
-    $input: UpdateLikeInput!
-    $condition: ModelLikeConditionInput
+export const updateWorkChatRoom = /* GraphQL */ `
+  mutation UpdateWorkChatRoom(
+    $input: UpdateWorkChatRoomInput!
+    $condition: ModelWorkChatRoomConditionInput
   ) {
-    updateLike(input: $input, condition: $condition) {
+    updateWorkChatRoom(input: $input, condition: $condition) {
       id
-      userID
-      messageID
-      user {
-        id
-        name
-        imageUri
-        status
-        chatRoomUser {
-          nextToken
+      chatRoomUsers {
+        items {
+          id
+          userID
+          chatRoomID
+          createdAt
+          updatedAt
         }
-        fleets {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
-      message {
+      messages {
+        items {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          updatedAt
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
         id
         createdAt
         content
@@ -802,19 +857,18 @@ export const updateLike = /* GraphQL */ `
         user {
           id
           name
+          phoneNumber
+          email
           imageUri
           status
           createdAt
           updatedAt
         }
-        chatRoom {
+        workChatRoom {
           id
           lastMessageID
           createdAt
           updatedAt
-        }
-        likes {
-          nextToken
         }
         updatedAt
       }
@@ -823,30 +877,37 @@ export const updateLike = /* GraphQL */ `
     }
   }
 `;
-export const deleteLike = /* GraphQL */ `
-  mutation DeleteLike(
-    $input: DeleteLikeInput!
-    $condition: ModelLikeConditionInput
+export const deleteWorkChatRoom = /* GraphQL */ `
+  mutation DeleteWorkChatRoom(
+    $input: DeleteWorkChatRoomInput!
+    $condition: ModelWorkChatRoomConditionInput
   ) {
-    deleteLike(input: $input, condition: $condition) {
+    deleteWorkChatRoom(input: $input, condition: $condition) {
       id
-      userID
-      messageID
-      user {
-        id
-        name
-        imageUri
-        status
-        chatRoomUser {
-          nextToken
+      chatRoomUsers {
+        items {
+          id
+          userID
+          chatRoomID
+          createdAt
+          updatedAt
         }
-        fleets {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
-      message {
+      messages {
+        items {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          updatedAt
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
         id
         createdAt
         content
@@ -856,23 +917,181 @@ export const deleteLike = /* GraphQL */ `
         user {
           id
           name
+          phoneNumber
+          email
           imageUri
           status
           createdAt
           updatedAt
         }
-        chatRoom {
+        workChatRoom {
           id
           lastMessageID
           createdAt
           updatedAt
         }
-        likes {
-          nextToken
-        }
         updatedAt
       }
       createdAt
+      updatedAt
+    }
+  }
+`;
+export const createWorkMessage = /* GraphQL */ `
+  mutation CreateWorkMessage(
+    $input: CreateWorkMessageInput!
+    $condition: ModelWorkMessageConditionInput
+  ) {
+    createWorkMessage(input: $input, condition: $condition) {
+      id
+      createdAt
+      content
+      media
+      userID
+      chatRoomID
+      user {
+        id
+        name
+        phoneNumber
+        email
+        imageUri
+        status
+        personalChatRoomUser {
+          nextToken
+        }
+        workChatRoomUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      workChatRoom {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateWorkMessage = /* GraphQL */ `
+  mutation UpdateWorkMessage(
+    $input: UpdateWorkMessageInput!
+    $condition: ModelWorkMessageConditionInput
+  ) {
+    updateWorkMessage(input: $input, condition: $condition) {
+      id
+      createdAt
+      content
+      media
+      userID
+      chatRoomID
+      user {
+        id
+        name
+        phoneNumber
+        email
+        imageUri
+        status
+        personalChatRoomUser {
+          nextToken
+        }
+        workChatRoomUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      workChatRoom {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteWorkMessage = /* GraphQL */ `
+  mutation DeleteWorkMessage(
+    $input: DeleteWorkMessageInput!
+    $condition: ModelWorkMessageConditionInput
+  ) {
+    deleteWorkMessage(input: $input, condition: $condition) {
+      id
+      createdAt
+      content
+      media
+      userID
+      chatRoomID
+      user {
+        id
+        name
+        phoneNumber
+        email
+        imageUri
+        status
+        personalChatRoomUser {
+          nextToken
+        }
+        workChatRoomUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      workChatRoom {
+        id
+        chatRoomUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
   }

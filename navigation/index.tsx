@@ -13,8 +13,8 @@ import {
   FontAwesome5,
 } from "@expo/vector-icons";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import ChatRoomScreen from "../screens/ChatRoomScreen";
-import AccountScreen from "../screens/AccountScreen";
+import ChatRoomScreen from "../screens/Personal/ChatRoomScreen";
+import AccountScreen from "../screens/ContentDisplayScreen/AccountScreen";
 import { RootStackParamList } from "../types";
 import MainTabNavigator from "./MainTabNavigator";
 import UnderDevelopment from "./UnderDevelopment";
@@ -22,14 +22,16 @@ import Camera from "../screens/Camera";
 
 // import LinkingConfiguration from "./LinkingConfiguration";
 import Colors from "../constants/Colors";
-import ContactsScreen from "../screens/ContactsScreen";
-import FleetScreen from "../screens/FleetScreen";
-import NewFleetScreen from "../screens/NewFleetScreen";
+import ContactsScreen from "../screens/Personal/ContactsScreen";
+import LoginScreen from '../screens/Authentication/Login/login'
+import FleetScreen from "../screens/Personal/FleetScreen";
+import NewFleetScreen from "../screens/Personal/NewFleetScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ContentDisplay from "../screens/ContentDisplayScreen";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import SignOut from "./components/ChatScreenDrawer";
+
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 
@@ -91,6 +93,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   const navigation = useNavigation();
   return (
+    
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
@@ -105,6 +108,7 @@ function RootNavigator() {
         },
       }}
     >
+
       <Stack.Screen
         name="Root"
         component={MainTabNavigator}
@@ -172,7 +176,8 @@ function RootNavigator() {
       <Stack.Screen name="NewFleet" component={NewFleetScreen} />
 
       <Stack.Screen name="ContentDisplay" component={ContentDisplay} />
-      
+      <Stack.Screen name="Login" component={LoginScreen} />
+
 
       <Stack.Screen
         name="NotFound"

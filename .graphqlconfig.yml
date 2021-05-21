@@ -110,6 +110,17 @@ projects:
         generatedFileName: src/API.ts
         docsFilePath: src/graphql
   manav14apr:
+    schemaPath: amplify/backend/api/manav14apr/build/schema.graphql
+    includes:
+      - src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API.ts
+        docsFilePath: src/graphql
+  manav20mayjustchat:
     schemaPath: graphql/schema.json
     includes:
       - src/graphql/**/*.ts

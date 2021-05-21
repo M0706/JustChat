@@ -8,12 +8,14 @@ import { Octicons, Fontisto } from "@expo/vector-icons";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import ChatsScreen from "../screens/ChatsScreen";
-import Stories from "../screens/Stories";
+import ChatsScreen from "../screens/Personal/ChatsScreen";
+import Stories from "../screens/Personal/Stories";
+import Login from '../screens/Authentication/Login/login'
 import Camera from "../screens/Camera";
 import {
   MainTabParamList,
   ChatScreenList,
+  LoginScreenList,
   StoriesScreenList,
   CameraScreenList,
 } from "../types";
@@ -51,6 +53,7 @@ export default function MainTabNavigator() {
           tabBarLabel: () => null,
         }}
       />
+
       <MainTab.Screen name="Personal" component={TabOneNavigator} />
       <MainTab.Screen name="Work" component={TabOneNavigator} />
       <MainTab.Screen name="Stories" component={TabTwoNavigator} />
@@ -66,7 +69,23 @@ function TabBarIcon(props: { name: string; color: string }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+
+const TabLoginStack = createStackNavigator<LoginScreenList>();
+
+function LoginNavigator() {
+  return (
+    <TabLoginStack.Navigator>
+      <TabLoginStack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerTitle: "" }}
+      />
+    </TabLoginStack.Navigator>
+  );
+}
+
 const TabChatsStack = createStackNavigator<ChatScreenList>();
+
 
 function TabOneNavigator() {
   return (
@@ -79,6 +98,7 @@ function TabOneNavigator() {
     </TabChatsStack.Navigator>
   );
 }
+
 
 const TabStoriesStack = createStackNavigator<StoriesScreenList>();
 

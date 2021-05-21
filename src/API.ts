@@ -5,12 +5,16 @@
 export type CreateUserInput = {
   id?: string | null,
   name: string,
+  phoneNumber?: string | null,
+  Email?: string | null,
   imageUri?: string | null,
   status?: string | null,
 };
 
 export type ModelUserConditionInput = {
   name?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  Email?: ModelStringInput | null,
   imageUri?: ModelStringInput | null,
   status?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
@@ -62,50 +66,52 @@ export type User = {
   __typename: "User",
   id?: string,
   name?: string,
+  phoneNumber?: string | null,
+  Email?: string | null,
   imageUri?: string | null,
   status?: string | null,
-  chatRoomUser?: ModelChatRoomUserConnection,
-  fleets?: ModelFleetConnection,
+  personalChatRoomUser?: ModelPersonalChatRoomUserConnection,
+  workChatRoomUser?: ModelWorkChatRoomUserConnection,
   createdAt?: string,
   updatedAt?: string,
 };
 
-export type ModelChatRoomUserConnection = {
-  __typename: "ModelChatRoomUserConnection",
-  items?:  Array<ChatRoomUser | null > | null,
+export type ModelPersonalChatRoomUserConnection = {
+  __typename: "ModelPersonalChatRoomUserConnection",
+  items?:  Array<PersonalChatRoomUser | null > | null,
   nextToken?: string | null,
 };
 
-export type ChatRoomUser = {
-  __typename: "ChatRoomUser",
+export type PersonalChatRoomUser = {
+  __typename: "PersonalChatRoomUser",
   id?: string,
   userID?: string,
   chatRoomID?: string,
   user?: User,
-  chatRoom?: ChatRoom,
+  chatRoom?: PersonalChatRoom,
   createdAt?: string,
   updatedAt?: string,
 };
 
-export type ChatRoom = {
-  __typename: "ChatRoom",
+export type PersonalChatRoom = {
+  __typename: "PersonalChatRoom",
   id?: string,
-  chatRoomUsers?: ModelChatRoomUserConnection,
-  messages?: ModelMessageConnection,
+  chatRoomUsers?: ModelPersonalChatRoomUserConnection,
+  messages?: ModelPersonalMessageConnection,
   lastMessageID?: string,
-  lastMessage?: Message,
+  lastMessage?: PersonalMessage,
   createdAt?: string,
   updatedAt?: string,
 };
 
-export type ModelMessageConnection = {
-  __typename: "ModelMessageConnection",
-  items?:  Array<Message | null > | null,
+export type ModelPersonalMessageConnection = {
+  __typename: "ModelPersonalMessageConnection",
+  items?:  Array<PersonalMessage | null > | null,
   nextToken?: string | null,
 };
 
-export type Message = {
-  __typename: "Message",
+export type PersonalMessage = {
+  __typename: "PersonalMessage",
   id?: string,
   createdAt?: string,
   content?: string | null,
@@ -113,49 +119,62 @@ export type Message = {
   userID?: string,
   chatRoomID?: string,
   user?: User,
-  chatRoom?: ChatRoom,
-  likes?: ModelLikeConnection,
+  personalChatRoom?: PersonalChatRoom,
   updatedAt?: string,
 };
 
-export type ModelLikeConnection = {
-  __typename: "ModelLikeConnection",
-  items?:  Array<Like | null > | null,
+export type ModelWorkChatRoomUserConnection = {
+  __typename: "ModelWorkChatRoomUserConnection",
+  items?:  Array<WorkChatRoomUser | null > | null,
   nextToken?: string | null,
 };
 
-export type Like = {
-  __typename: "Like",
+export type WorkChatRoomUser = {
+  __typename: "WorkChatRoomUser",
   id?: string,
   userID?: string,
-  messageID?: string,
+  chatRoomID?: string,
   user?: User,
-  message?: Message,
+  workChatRoom?: WorkChatRoom,
   createdAt?: string,
   updatedAt?: string,
 };
 
-export type ModelFleetConnection = {
-  __typename: "ModelFleetConnection",
-  items?:  Array<Fleet | null > | null,
+export type WorkChatRoom = {
+  __typename: "WorkChatRoom",
+  id?: string,
+  chatRoomUsers?: ModelWorkChatRoomUserConnection,
+  messages?: ModelWorkMessageConnection,
+  lastMessageID?: string,
+  lastMessage?: WorkMessage,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type ModelWorkMessageConnection = {
+  __typename: "ModelWorkMessageConnection",
+  items?:  Array<WorkMessage | null > | null,
   nextToken?: string | null,
 };
 
-export type Fleet = {
-  __typename: "Fleet",
+export type WorkMessage = {
+  __typename: "WorkMessage",
   id?: string,
-  type?: string,
-  text?: string | null,
-  image?: string | null,
-  userID?: string,
-  user?: User,
   createdAt?: string,
+  content?: string | null,
+  media?: string | null,
+  userID?: string,
+  chatRoomID?: string,
+  user?: User,
+  workChatRoom?: WorkChatRoom,
   updatedAt?: string,
 };
 
 export type UpdateUserInput = {
   id: string,
   name?: string | null,
+  phoneNumber?: string | null,
+  Email?: string | null,
   imageUri?: string | null,
   status?: string | null,
 };
@@ -164,18 +183,18 @@ export type DeleteUserInput = {
   id?: string | null,
 };
 
-export type CreateChatRoomUserInput = {
+export type CreatePersonalChatRoomUserInput = {
   id?: string | null,
   userID: string,
   chatRoomID: string,
 };
 
-export type ModelChatRoomUserConditionInput = {
+export type ModelPersonalChatRoomUserConditionInput = {
   userID?: ModelIDInput | null,
   chatRoomID?: ModelIDInput | null,
-  and?: Array< ModelChatRoomUserConditionInput | null > | null,
-  or?: Array< ModelChatRoomUserConditionInput | null > | null,
-  not?: ModelChatRoomUserConditionInput | null,
+  and?: Array< ModelPersonalChatRoomUserConditionInput | null > | null,
+  or?: Array< ModelPersonalChatRoomUserConditionInput | null > | null,
+  not?: ModelPersonalChatRoomUserConditionInput | null,
 };
 
 export type ModelIDInput = {
@@ -194,38 +213,38 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type UpdateChatRoomUserInput = {
+export type UpdatePersonalChatRoomUserInput = {
   id: string,
   userID?: string | null,
   chatRoomID?: string | null,
 };
 
-export type DeleteChatRoomUserInput = {
+export type DeletePersonalChatRoomUserInput = {
   id?: string | null,
 };
 
-export type CreateChatRoomInput = {
+export type CreatePersonalChatRoomInput = {
   id?: string | null,
   lastMessageID: string,
 };
 
-export type ModelChatRoomConditionInput = {
+export type ModelPersonalChatRoomConditionInput = {
   lastMessageID?: ModelIDInput | null,
-  and?: Array< ModelChatRoomConditionInput | null > | null,
-  or?: Array< ModelChatRoomConditionInput | null > | null,
-  not?: ModelChatRoomConditionInput | null,
+  and?: Array< ModelPersonalChatRoomConditionInput | null > | null,
+  or?: Array< ModelPersonalChatRoomConditionInput | null > | null,
+  not?: ModelPersonalChatRoomConditionInput | null,
 };
 
-export type UpdateChatRoomInput = {
+export type UpdatePersonalChatRoomInput = {
   id: string,
   lastMessageID?: string | null,
 };
 
-export type DeleteChatRoomInput = {
+export type DeletePersonalChatRoomInput = {
   id?: string | null,
 };
 
-export type CreateMessageInput = {
+export type CreatePersonalMessageInput = {
   id?: string | null,
   createdAt?: string | null,
   content?: string | null,
@@ -234,18 +253,18 @@ export type CreateMessageInput = {
   chatRoomID: string,
 };
 
-export type ModelMessageConditionInput = {
+export type ModelPersonalMessageConditionInput = {
   createdAt?: ModelStringInput | null,
   content?: ModelStringInput | null,
   media?: ModelStringInput | null,
   userID?: ModelIDInput | null,
   chatRoomID?: ModelIDInput | null,
-  and?: Array< ModelMessageConditionInput | null > | null,
-  or?: Array< ModelMessageConditionInput | null > | null,
-  not?: ModelMessageConditionInput | null,
+  and?: Array< ModelPersonalMessageConditionInput | null > | null,
+  or?: Array< ModelPersonalMessageConditionInput | null > | null,
+  not?: ModelPersonalMessageConditionInput | null,
 };
 
-export type UpdateMessageInput = {
+export type UpdatePersonalMessageInput = {
   id: string,
   createdAt?: string | null,
   content?: string | null,
@@ -254,67 +273,93 @@ export type UpdateMessageInput = {
   chatRoomID?: string | null,
 };
 
-export type DeleteMessageInput = {
+export type DeletePersonalMessageInput = {
   id?: string | null,
 };
 
-export type CreateFleetInput = {
-  id?: string | null,
-  type: string,
-  text?: string | null,
-  image?: string | null,
-  userID: string,
-};
-
-export type ModelFleetConditionInput = {
-  type?: ModelStringInput | null,
-  text?: ModelStringInput | null,
-  image?: ModelStringInput | null,
-  userID?: ModelIDInput | null,
-  and?: Array< ModelFleetConditionInput | null > | null,
-  or?: Array< ModelFleetConditionInput | null > | null,
-  not?: ModelFleetConditionInput | null,
-};
-
-export type UpdateFleetInput = {
-  id: string,
-  type?: string | null,
-  text?: string | null,
-  image?: string | null,
-  userID?: string | null,
-};
-
-export type DeleteFleetInput = {
-  id?: string | null,
-};
-
-export type CreateLikeInput = {
+export type CreateWorkChatRoomUserInput = {
   id?: string | null,
   userID: string,
-  messageID: string,
+  chatRoomID: string,
 };
 
-export type ModelLikeConditionInput = {
+export type ModelWorkChatRoomUserConditionInput = {
   userID?: ModelIDInput | null,
-  messageID?: ModelIDInput | null,
-  and?: Array< ModelLikeConditionInput | null > | null,
-  or?: Array< ModelLikeConditionInput | null > | null,
-  not?: ModelLikeConditionInput | null,
+  chatRoomID?: ModelIDInput | null,
+  and?: Array< ModelWorkChatRoomUserConditionInput | null > | null,
+  or?: Array< ModelWorkChatRoomUserConditionInput | null > | null,
+  not?: ModelWorkChatRoomUserConditionInput | null,
 };
 
-export type UpdateLikeInput = {
+export type UpdateWorkChatRoomUserInput = {
   id: string,
   userID?: string | null,
-  messageID?: string | null,
+  chatRoomID?: string | null,
 };
 
-export type DeleteLikeInput = {
+export type DeleteWorkChatRoomUserInput = {
+  id?: string | null,
+};
+
+export type CreateWorkChatRoomInput = {
+  id?: string | null,
+  lastMessageID: string,
+};
+
+export type ModelWorkChatRoomConditionInput = {
+  lastMessageID?: ModelIDInput | null,
+  and?: Array< ModelWorkChatRoomConditionInput | null > | null,
+  or?: Array< ModelWorkChatRoomConditionInput | null > | null,
+  not?: ModelWorkChatRoomConditionInput | null,
+};
+
+export type UpdateWorkChatRoomInput = {
+  id: string,
+  lastMessageID?: string | null,
+};
+
+export type DeleteWorkChatRoomInput = {
+  id?: string | null,
+};
+
+export type CreateWorkMessageInput = {
+  id?: string | null,
+  createdAt?: string | null,
+  content?: string | null,
+  media?: string | null,
+  userID: string,
+  chatRoomID: string,
+};
+
+export type ModelWorkMessageConditionInput = {
+  createdAt?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  media?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
+  chatRoomID?: ModelIDInput | null,
+  and?: Array< ModelWorkMessageConditionInput | null > | null,
+  or?: Array< ModelWorkMessageConditionInput | null > | null,
+  not?: ModelWorkMessageConditionInput | null,
+};
+
+export type UpdateWorkMessageInput = {
+  id: string,
+  createdAt?: string | null,
+  content?: string | null,
+  media?: string | null,
+  userID?: string | null,
+  chatRoomID?: string | null,
+};
+
+export type DeleteWorkMessageInput = {
   id?: string | null,
 };
 
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  Email?: ModelStringInput | null,
   imageUri?: ModelStringInput | null,
   status?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
@@ -328,50 +373,74 @@ export type ModelUserConnection = {
   nextToken?: string | null,
 };
 
-export type ModelChatRoomUserFilterInput = {
+export type ModelPersonalChatRoomUserFilterInput = {
   id?: ModelIDInput | null,
   userID?: ModelIDInput | null,
   chatRoomID?: ModelIDInput | null,
-  and?: Array< ModelChatRoomUserFilterInput | null > | null,
-  or?: Array< ModelChatRoomUserFilterInput | null > | null,
-  not?: ModelChatRoomUserFilterInput | null,
+  and?: Array< ModelPersonalChatRoomUserFilterInput | null > | null,
+  or?: Array< ModelPersonalChatRoomUserFilterInput | null > | null,
+  not?: ModelPersonalChatRoomUserFilterInput | null,
 };
 
-export type ModelChatRoomFilterInput = {
+export type ModelPersonalChatRoomFilterInput = {
   id?: ModelIDInput | null,
   lastMessageID?: ModelIDInput | null,
-  and?: Array< ModelChatRoomFilterInput | null > | null,
-  or?: Array< ModelChatRoomFilterInput | null > | null,
-  not?: ModelChatRoomFilterInput | null,
+  and?: Array< ModelPersonalChatRoomFilterInput | null > | null,
+  or?: Array< ModelPersonalChatRoomFilterInput | null > | null,
+  not?: ModelPersonalChatRoomFilterInput | null,
 };
 
-export type ModelChatRoomConnection = {
-  __typename: "ModelChatRoomConnection",
-  items?:  Array<ChatRoom | null > | null,
+export type ModelPersonalChatRoomConnection = {
+  __typename: "ModelPersonalChatRoomConnection",
+  items?:  Array<PersonalChatRoom | null > | null,
   nextToken?: string | null,
 };
 
-export type ModelMessageFilterInput = {
+export type ModelPersonalMessageFilterInput = {
   id?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
   content?: ModelStringInput | null,
   media?: ModelStringInput | null,
   userID?: ModelIDInput | null,
   chatRoomID?: ModelIDInput | null,
-  and?: Array< ModelMessageFilterInput | null > | null,
-  or?: Array< ModelMessageFilterInput | null > | null,
-  not?: ModelMessageFilterInput | null,
+  and?: Array< ModelPersonalMessageFilterInput | null > | null,
+  or?: Array< ModelPersonalMessageFilterInput | null > | null,
+  not?: ModelPersonalMessageFilterInput | null,
 };
 
-export type ModelFleetFilterInput = {
+export type ModelWorkChatRoomUserFilterInput = {
   id?: ModelIDInput | null,
-  type?: ModelStringInput | null,
-  text?: ModelStringInput | null,
-  image?: ModelStringInput | null,
   userID?: ModelIDInput | null,
-  and?: Array< ModelFleetFilterInput | null > | null,
-  or?: Array< ModelFleetFilterInput | null > | null,
-  not?: ModelFleetFilterInput | null,
+  chatRoomID?: ModelIDInput | null,
+  and?: Array< ModelWorkChatRoomUserFilterInput | null > | null,
+  or?: Array< ModelWorkChatRoomUserFilterInput | null > | null,
+  not?: ModelWorkChatRoomUserFilterInput | null,
+};
+
+export type ModelWorkChatRoomFilterInput = {
+  id?: ModelIDInput | null,
+  lastMessageID?: ModelIDInput | null,
+  and?: Array< ModelWorkChatRoomFilterInput | null > | null,
+  or?: Array< ModelWorkChatRoomFilterInput | null > | null,
+  not?: ModelWorkChatRoomFilterInput | null,
+};
+
+export type ModelWorkChatRoomConnection = {
+  __typename: "ModelWorkChatRoomConnection",
+  items?:  Array<WorkChatRoom | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelWorkMessageFilterInput = {
+  id?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  media?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
+  chatRoomID?: ModelIDInput | null,
+  and?: Array< ModelWorkMessageFilterInput | null > | null,
+  or?: Array< ModelWorkMessageFilterInput | null > | null,
+  not?: ModelWorkMessageFilterInput | null,
 };
 
 export type ModelStringKeyConditionInput = {
@@ -400,12 +469,14 @@ export type CreateUserMutation = {
     __typename: "User",
     id: string,
     name: string,
+    phoneNumber?: string | null,
+    Email?: string | null,
     imageUri?: string | null,
     status?: string | null,
-    chatRoomUser?:  {
-      __typename: "ModelChatRoomUserConnection",
+    personalChatRoomUser?:  {
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -414,15 +485,13 @@ export type CreateUserMutation = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
-    fleets?:  {
-      __typename: "ModelFleetConnection",
+    workChatRoomUser?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
       items?:  Array< {
-        __typename: "Fleet",
+        __typename: "WorkChatRoomUser",
         id: string,
-        type: string,
-        text?: string | null,
-        image?: string | null,
         userID: string,
+        chatRoomID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -443,12 +512,14 @@ export type UpdateUserMutation = {
     __typename: "User",
     id: string,
     name: string,
+    phoneNumber?: string | null,
+    Email?: string | null,
     imageUri?: string | null,
     status?: string | null,
-    chatRoomUser?:  {
-      __typename: "ModelChatRoomUserConnection",
+    personalChatRoomUser?:  {
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -457,15 +528,13 @@ export type UpdateUserMutation = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
-    fleets?:  {
-      __typename: "ModelFleetConnection",
+    workChatRoomUser?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
       items?:  Array< {
-        __typename: "Fleet",
+        __typename: "WorkChatRoomUser",
         id: string,
-        type: string,
-        text?: string | null,
-        image?: string | null,
         userID: string,
+        chatRoomID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -486,12 +555,14 @@ export type DeleteUserMutation = {
     __typename: "User",
     id: string,
     name: string,
+    phoneNumber?: string | null,
+    Email?: string | null,
     imageUri?: string | null,
     status?: string | null,
-    chatRoomUser?:  {
-      __typename: "ModelChatRoomUserConnection",
+    personalChatRoomUser?:  {
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -500,15 +571,13 @@ export type DeleteUserMutation = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
-    fleets?:  {
-      __typename: "ModelFleetConnection",
+    workChatRoomUser?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
       items?:  Array< {
-        __typename: "Fleet",
+        __typename: "WorkChatRoomUser",
         id: string,
-        type: string,
-        text?: string | null,
-        image?: string | null,
         userID: string,
+        chatRoomID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -519,14 +588,14 @@ export type DeleteUserMutation = {
   } | null,
 };
 
-export type CreateChatRoomUserMutationVariables = {
-  input?: CreateChatRoomUserInput,
-  condition?: ModelChatRoomUserConditionInput | null,
+export type CreatePersonalChatRoomUserMutationVariables = {
+  input?: CreatePersonalChatRoomUserInput,
+  condition?: ModelPersonalChatRoomUserConditionInput | null,
 };
 
-export type CreateChatRoomUserMutation = {
-  createChatRoomUser?:  {
-    __typename: "ChatRoomUser",
+export type CreatePersonalChatRoomUserMutation = {
+  createPersonalChatRoomUser?:  {
+    __typename: "PersonalChatRoomUser",
     id: string,
     userID: string,
     chatRoomID: string,
@@ -534,33 +603,35 @@ export type CreateChatRoomUserMutation = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
     chatRoom?:  {
-      __typename: "ChatRoom",
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -577,14 +648,14 @@ export type CreateChatRoomUserMutation = {
   } | null,
 };
 
-export type UpdateChatRoomUserMutationVariables = {
-  input?: UpdateChatRoomUserInput,
-  condition?: ModelChatRoomUserConditionInput | null,
+export type UpdatePersonalChatRoomUserMutationVariables = {
+  input?: UpdatePersonalChatRoomUserInput,
+  condition?: ModelPersonalChatRoomUserConditionInput | null,
 };
 
-export type UpdateChatRoomUserMutation = {
-  updateChatRoomUser?:  {
-    __typename: "ChatRoomUser",
+export type UpdatePersonalChatRoomUserMutation = {
+  updatePersonalChatRoomUser?:  {
+    __typename: "PersonalChatRoomUser",
     id: string,
     userID: string,
     chatRoomID: string,
@@ -592,33 +663,35 @@ export type UpdateChatRoomUserMutation = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
     chatRoom?:  {
-      __typename: "ChatRoom",
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -635,14 +708,14 @@ export type UpdateChatRoomUserMutation = {
   } | null,
 };
 
-export type DeleteChatRoomUserMutationVariables = {
-  input?: DeleteChatRoomUserInput,
-  condition?: ModelChatRoomUserConditionInput | null,
+export type DeletePersonalChatRoomUserMutationVariables = {
+  input?: DeletePersonalChatRoomUserInput,
+  condition?: ModelPersonalChatRoomUserConditionInput | null,
 };
 
-export type DeleteChatRoomUserMutation = {
-  deleteChatRoomUser?:  {
-    __typename: "ChatRoomUser",
+export type DeletePersonalChatRoomUserMutation = {
+  deletePersonalChatRoomUser?:  {
+    __typename: "PersonalChatRoomUser",
     id: string,
     userID: string,
     chatRoomID: string,
@@ -650,33 +723,35 @@ export type DeleteChatRoomUserMutation = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
     chatRoom?:  {
-      __typename: "ChatRoom",
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -693,19 +768,19 @@ export type DeleteChatRoomUserMutation = {
   } | null,
 };
 
-export type CreateChatRoomMutationVariables = {
-  input?: CreateChatRoomInput,
-  condition?: ModelChatRoomConditionInput | null,
+export type CreatePersonalChatRoomMutationVariables = {
+  input?: CreatePersonalChatRoomInput,
+  condition?: ModelPersonalChatRoomConditionInput | null,
 };
 
-export type CreateChatRoomMutation = {
-  createChatRoom?:  {
-    __typename: "ChatRoom",
+export type CreatePersonalChatRoomMutation = {
+  createPersonalChatRoom?:  {
+    __typename: "PersonalChatRoom",
     id: string,
     chatRoomUsers?:  {
-      __typename: "ModelChatRoomUserConnection",
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -715,9 +790,9 @@ export type CreateChatRoomMutation = {
       nextToken?: string | null,
     } | null,
     messages?:  {
-      __typename: "ModelMessageConnection",
+      __typename: "ModelPersonalMessageConnection",
       items?:  Array< {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -730,7 +805,7 @@ export type CreateChatRoomMutation = {
     } | null,
     lastMessageID: string,
     lastMessage?:  {
-      __typename: "Message",
+      __typename: "PersonalMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -741,21 +816,19 @@ export type CreateChatRoomMutation = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      personalChatRoom?:  {
+        __typename: "PersonalChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
       } | null,
       updatedAt: string,
     } | null,
@@ -764,19 +837,19 @@ export type CreateChatRoomMutation = {
   } | null,
 };
 
-export type UpdateChatRoomMutationVariables = {
-  input?: UpdateChatRoomInput,
-  condition?: ModelChatRoomConditionInput | null,
+export type UpdatePersonalChatRoomMutationVariables = {
+  input?: UpdatePersonalChatRoomInput,
+  condition?: ModelPersonalChatRoomConditionInput | null,
 };
 
-export type UpdateChatRoomMutation = {
-  updateChatRoom?:  {
-    __typename: "ChatRoom",
+export type UpdatePersonalChatRoomMutation = {
+  updatePersonalChatRoom?:  {
+    __typename: "PersonalChatRoom",
     id: string,
     chatRoomUsers?:  {
-      __typename: "ModelChatRoomUserConnection",
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -786,9 +859,9 @@ export type UpdateChatRoomMutation = {
       nextToken?: string | null,
     } | null,
     messages?:  {
-      __typename: "ModelMessageConnection",
+      __typename: "ModelPersonalMessageConnection",
       items?:  Array< {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -801,7 +874,7 @@ export type UpdateChatRoomMutation = {
     } | null,
     lastMessageID: string,
     lastMessage?:  {
-      __typename: "Message",
+      __typename: "PersonalMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -812,21 +885,19 @@ export type UpdateChatRoomMutation = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      personalChatRoom?:  {
+        __typename: "PersonalChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
       } | null,
       updatedAt: string,
     } | null,
@@ -835,19 +906,19 @@ export type UpdateChatRoomMutation = {
   } | null,
 };
 
-export type DeleteChatRoomMutationVariables = {
-  input?: DeleteChatRoomInput,
-  condition?: ModelChatRoomConditionInput | null,
+export type DeletePersonalChatRoomMutationVariables = {
+  input?: DeletePersonalChatRoomInput,
+  condition?: ModelPersonalChatRoomConditionInput | null,
 };
 
-export type DeleteChatRoomMutation = {
-  deleteChatRoom?:  {
-    __typename: "ChatRoom",
+export type DeletePersonalChatRoomMutation = {
+  deletePersonalChatRoom?:  {
+    __typename: "PersonalChatRoom",
     id: string,
     chatRoomUsers?:  {
-      __typename: "ModelChatRoomUserConnection",
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -857,9 +928,9 @@ export type DeleteChatRoomMutation = {
       nextToken?: string | null,
     } | null,
     messages?:  {
-      __typename: "ModelMessageConnection",
+      __typename: "ModelPersonalMessageConnection",
       items?:  Array< {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -872,7 +943,7 @@ export type DeleteChatRoomMutation = {
     } | null,
     lastMessageID: string,
     lastMessage?:  {
-      __typename: "Message",
+      __typename: "PersonalMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -883,21 +954,19 @@ export type DeleteChatRoomMutation = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      personalChatRoom?:  {
+        __typename: "PersonalChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
       } | null,
       updatedAt: string,
     } | null,
@@ -906,14 +975,14 @@ export type DeleteChatRoomMutation = {
   } | null,
 };
 
-export type CreateMessageMutationVariables = {
-  input?: CreateMessageInput,
-  condition?: ModelMessageConditionInput | null,
+export type CreatePersonalMessageMutationVariables = {
+  input?: CreatePersonalMessageInput,
+  condition?: ModelPersonalMessageConditionInput | null,
 };
 
-export type CreateMessageMutation = {
-  createMessage?:  {
-    __typename: "Message",
+export type CreatePersonalMessageMutation = {
+  createPersonalMessage?:  {
+    __typename: "PersonalMessage",
     id: string,
     createdAt: string,
     content?: string | null,
@@ -924,33 +993,35 @@ export type CreateMessageMutation = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
-    chatRoom?:  {
-      __typename: "ChatRoom",
+    personalChatRoom?:  {
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -962,30 +1033,18 @@ export type CreateMessageMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    likes?:  {
-      __typename: "ModelLikeConnection",
-      items?:  Array< {
-        __typename: "Like",
-        id: string,
-        userID: string,
-        messageID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateMessageMutationVariables = {
-  input?: UpdateMessageInput,
-  condition?: ModelMessageConditionInput | null,
+export type UpdatePersonalMessageMutationVariables = {
+  input?: UpdatePersonalMessageInput,
+  condition?: ModelPersonalMessageConditionInput | null,
 };
 
-export type UpdateMessageMutation = {
-  updateMessage?:  {
-    __typename: "Message",
+export type UpdatePersonalMessageMutation = {
+  updatePersonalMessage?:  {
+    __typename: "PersonalMessage",
     id: string,
     createdAt: string,
     content?: string | null,
@@ -996,33 +1055,35 @@ export type UpdateMessageMutation = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
-    chatRoom?:  {
-      __typename: "ChatRoom",
+    personalChatRoom?:  {
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -1034,30 +1095,18 @@ export type UpdateMessageMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    likes?:  {
-      __typename: "ModelLikeConnection",
-      items?:  Array< {
-        __typename: "Like",
-        id: string,
-        userID: string,
-        messageID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteMessageMutationVariables = {
-  input?: DeleteMessageInput,
-  condition?: ModelMessageConditionInput | null,
+export type DeletePersonalMessageMutationVariables = {
+  input?: DeletePersonalMessageInput,
+  condition?: ModelPersonalMessageConditionInput | null,
 };
 
-export type DeleteMessageMutation = {
-  deleteMessage?:  {
-    __typename: "Message",
+export type DeletePersonalMessageMutation = {
+  deletePersonalMessage?:  {
+    __typename: "PersonalMessage",
     id: string,
     createdAt: string,
     content?: string | null,
@@ -1068,33 +1117,35 @@ export type DeleteMessageMutation = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
-    chatRoom?:  {
-      __typename: "ChatRoom",
+    personalChatRoom?:  {
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -1106,157 +1157,228 @@ export type DeleteMessageMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    likes?:  {
-      __typename: "ModelLikeConnection",
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateWorkChatRoomUserMutationVariables = {
+  input?: CreateWorkChatRoomUserInput,
+  condition?: ModelWorkChatRoomUserConditionInput | null,
+};
+
+export type CreateWorkChatRoomUserMutation = {
+  createWorkChatRoomUser?:  {
+    __typename: "WorkChatRoomUser",
+    id: string,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateWorkChatRoomUserMutationVariables = {
+  input?: UpdateWorkChatRoomUserInput,
+  condition?: ModelWorkChatRoomUserConditionInput | null,
+};
+
+export type UpdateWorkChatRoomUserMutation = {
+  updateWorkChatRoomUser?:  {
+    __typename: "WorkChatRoomUser",
+    id: string,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteWorkChatRoomUserMutationVariables = {
+  input?: DeleteWorkChatRoomUserInput,
+  condition?: ModelWorkChatRoomUserConditionInput | null,
+};
+
+export type DeleteWorkChatRoomUserMutation = {
+  deleteWorkChatRoomUser?:  {
+    __typename: "WorkChatRoomUser",
+    id: string,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateWorkChatRoomMutationVariables = {
+  input?: CreateWorkChatRoomInput,
+  condition?: ModelWorkChatRoomConditionInput | null,
+};
+
+export type CreateWorkChatRoomMutation = {
+  createWorkChatRoom?:  {
+    __typename: "WorkChatRoom",
+    id: string,
+    chatRoomUsers?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
       items?:  Array< {
-        __typename: "Like",
+        __typename: "WorkChatRoomUser",
         id: string,
         userID: string,
-        messageID: string,
+        chatRoomID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
       nextToken?: string | null,
     } | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateFleetMutationVariables = {
-  input?: CreateFleetInput,
-  condition?: ModelFleetConditionInput | null,
-};
-
-export type CreateFleetMutation = {
-  createFleet?:  {
-    __typename: "Fleet",
-    id: string,
-    type: string,
-    text?: string | null,
-    image?: string | null,
-    userID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
+    messages?:  {
+      __typename: "ModelWorkMessageConnection",
+      items?:  Array< {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateFleetMutationVariables = {
-  input?: UpdateFleetInput,
-  condition?: ModelFleetConditionInput | null,
-};
-
-export type UpdateFleetMutation = {
-  updateFleet?:  {
-    __typename: "Fleet",
-    id: string,
-    type: string,
-    text?: string | null,
-    image?: string | null,
-    userID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteFleetMutationVariables = {
-  input?: DeleteFleetInput,
-  condition?: ModelFleetConditionInput | null,
-};
-
-export type DeleteFleetMutation = {
-  deleteFleet?:  {
-    __typename: "Fleet",
-    id: string,
-    type: string,
-    text?: string | null,
-    image?: string | null,
-    userID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateLikeMutationVariables = {
-  input?: CreateLikeInput,
-  condition?: ModelLikeConditionInput | null,
-};
-
-export type CreateLikeMutation = {
-  createLike?:  {
-    __typename: "Like",
-    id: string,
-    userID: string,
-    messageID: string,
-    user:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    message:  {
-      __typename: "Message",
+    lastMessageID: string,
+    lastMessage?:  {
+      __typename: "WorkMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -1267,59 +1389,65 @@ export type CreateLikeMutation = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
       } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
-      } | null,
       updatedAt: string,
-    },
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateLikeMutationVariables = {
-  input?: UpdateLikeInput,
-  condition?: ModelLikeConditionInput | null,
+export type UpdateWorkChatRoomMutationVariables = {
+  input?: UpdateWorkChatRoomInput,
+  condition?: ModelWorkChatRoomConditionInput | null,
 };
 
-export type UpdateLikeMutation = {
-  updateLike?:  {
-    __typename: "Like",
+export type UpdateWorkChatRoomMutation = {
+  updateWorkChatRoom?:  {
+    __typename: "WorkChatRoom",
     id: string,
-    userID: string,
-    messageID: string,
-    user:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    message:  {
-      __typename: "Message",
+    chatRoomUsers?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
+      items?:  Array< {
+        __typename: "WorkChatRoomUser",
+        id: string,
+        userID: string,
+        chatRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    messages?:  {
+      __typename: "ModelWorkMessageConnection",
+      items?:  Array< {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    lastMessageID: string,
+    lastMessage?:  {
+      __typename: "WorkMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -1330,59 +1458,65 @@ export type UpdateLikeMutation = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
       } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
-      } | null,
       updatedAt: string,
-    },
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteLikeMutationVariables = {
-  input?: DeleteLikeInput,
-  condition?: ModelLikeConditionInput | null,
+export type DeleteWorkChatRoomMutationVariables = {
+  input?: DeleteWorkChatRoomInput,
+  condition?: ModelWorkChatRoomConditionInput | null,
 };
 
-export type DeleteLikeMutation = {
-  deleteLike?:  {
-    __typename: "Like",
+export type DeleteWorkChatRoomMutation = {
+  deleteWorkChatRoom?:  {
+    __typename: "WorkChatRoom",
     id: string,
-    userID: string,
-    messageID: string,
-    user:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    message:  {
-      __typename: "Message",
+    chatRoomUsers?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
+      items?:  Array< {
+        __typename: "WorkChatRoomUser",
+        id: string,
+        userID: string,
+        chatRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    messages?:  {
+      __typename: "ModelWorkMessageConnection",
+      items?:  Array< {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    lastMessageID: string,
+    lastMessage?:  {
+      __typename: "WorkMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -1393,25 +1527,209 @@ export type DeleteLikeMutation = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
       } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateWorkMessageMutationVariables = {
+  input?: CreateWorkMessageInput,
+  condition?: ModelWorkMessageConditionInput | null,
+};
+
+export type CreateWorkMessageMutation = {
+  createWorkMessage?:  {
+    __typename: "WorkMessage",
+    id: string,
+    createdAt: string,
+    content?: string | null,
+    media?: string | null,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
       updatedAt: string,
-    },
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateWorkMessageMutationVariables = {
+  input?: UpdateWorkMessageInput,
+  condition?: ModelWorkMessageConditionInput | null,
+};
+
+export type UpdateWorkMessageMutation = {
+  updateWorkMessage?:  {
+    __typename: "WorkMessage",
+    id: string,
     createdAt: string,
+    content?: string | null,
+    media?: string | null,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteWorkMessageMutationVariables = {
+  input?: DeleteWorkMessageInput,
+  condition?: ModelWorkMessageConditionInput | null,
+};
+
+export type DeleteWorkMessageMutation = {
+  deleteWorkMessage?:  {
+    __typename: "WorkMessage",
+    id: string,
+    createdAt: string,
+    content?: string | null,
+    media?: string | null,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
   } | null,
 };
@@ -1425,12 +1743,14 @@ export type GetUserQuery = {
     __typename: "User",
     id: string,
     name: string,
+    phoneNumber?: string | null,
+    Email?: string | null,
     imageUri?: string | null,
     status?: string | null,
-    chatRoomUser?:  {
-      __typename: "ModelChatRoomUserConnection",
+    personalChatRoomUser?:  {
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -1439,15 +1759,13 @@ export type GetUserQuery = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
-    fleets?:  {
-      __typename: "ModelFleetConnection",
+    workChatRoomUser?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
       items?:  Array< {
-        __typename: "Fleet",
+        __typename: "WorkChatRoomUser",
         id: string,
-        type: string,
-        text?: string | null,
-        image?: string | null,
         userID: string,
+        chatRoomID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -1471,14 +1789,16 @@ export type ListUsersQuery = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -1488,13 +1808,13 @@ export type ListUsersQuery = {
   } | null,
 };
 
-export type GetChatRoomUserQueryVariables = {
+export type GetPersonalChatRoomUserQueryVariables = {
   id?: string,
 };
 
-export type GetChatRoomUserQuery = {
-  getChatRoomUser?:  {
-    __typename: "ChatRoomUser",
+export type GetPersonalChatRoomUserQuery = {
+  getPersonalChatRoomUser?:  {
+    __typename: "PersonalChatRoomUser",
     id: string,
     userID: string,
     chatRoomID: string,
@@ -1502,33 +1822,35 @@ export type GetChatRoomUserQuery = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
     chatRoom?:  {
-      __typename: "ChatRoom",
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -1545,17 +1867,17 @@ export type GetChatRoomUserQuery = {
   } | null,
 };
 
-export type ListChatRoomUsersQueryVariables = {
-  filter?: ModelChatRoomUserFilterInput | null,
+export type ListPersonalChatRoomUsersQueryVariables = {
+  filter?: ModelPersonalChatRoomUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListChatRoomUsersQuery = {
-  listChatRoomUsers?:  {
-    __typename: "ModelChatRoomUserConnection",
+export type ListPersonalChatRoomUsersQuery = {
+  listPersonalChatRoomUsers?:  {
+    __typename: "ModelPersonalChatRoomUserConnection",
     items?:  Array< {
-      __typename: "ChatRoomUser",
+      __typename: "PersonalChatRoomUser",
       id: string,
       userID: string,
       chatRoomID: string,
@@ -1563,13 +1885,15 @@ export type ListChatRoomUsersQuery = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
       chatRoom?:  {
-        __typename: "ChatRoom",
+        __typename: "PersonalChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
@@ -1582,18 +1906,18 @@ export type ListChatRoomUsersQuery = {
   } | null,
 };
 
-export type GetChatRoomQueryVariables = {
+export type GetPersonalChatRoomQueryVariables = {
   id?: string,
 };
 
-export type GetChatRoomQuery = {
-  getChatRoom?:  {
-    __typename: "ChatRoom",
+export type GetPersonalChatRoomQuery = {
+  getPersonalChatRoom?:  {
+    __typename: "PersonalChatRoom",
     id: string,
     chatRoomUsers?:  {
-      __typename: "ModelChatRoomUserConnection",
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -1603,9 +1927,9 @@ export type GetChatRoomQuery = {
       nextToken?: string | null,
     } | null,
     messages?:  {
-      __typename: "ModelMessageConnection",
+      __typename: "ModelPersonalMessageConnection",
       items?:  Array< {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -1618,7 +1942,7 @@ export type GetChatRoomQuery = {
     } | null,
     lastMessageID: string,
     lastMessage?:  {
-      __typename: "Message",
+      __typename: "PersonalMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -1629,21 +1953,19 @@ export type GetChatRoomQuery = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      personalChatRoom?:  {
+        __typename: "PersonalChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
       } | null,
       updatedAt: string,
     } | null,
@@ -1652,29 +1974,29 @@ export type GetChatRoomQuery = {
   } | null,
 };
 
-export type ListChatRoomsQueryVariables = {
-  filter?: ModelChatRoomFilterInput | null,
+export type ListPersonalChatRoomsQueryVariables = {
+  filter?: ModelPersonalChatRoomFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListChatRoomsQuery = {
-  listChatRooms?:  {
-    __typename: "ModelChatRoomConnection",
+export type ListPersonalChatRoomsQuery = {
+  listPersonalChatRooms?:  {
+    __typename: "ModelPersonalChatRoomConnection",
     items?:  Array< {
-      __typename: "ChatRoom",
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -1690,13 +2012,13 @@ export type ListChatRoomsQuery = {
   } | null,
 };
 
-export type GetMessageQueryVariables = {
+export type GetPersonalMessageQueryVariables = {
   id?: string,
 };
 
-export type GetMessageQuery = {
-  getMessage?:  {
-    __typename: "Message",
+export type GetPersonalMessageQuery = {
+  getPersonalMessage?:  {
+    __typename: "PersonalMessage",
     id: string,
     createdAt: string,
     content?: string | null,
@@ -1707,33 +2029,35 @@ export type GetMessageQuery = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
-    chatRoom?:  {
-      __typename: "ChatRoom",
+    personalChatRoom?:  {
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -1745,33 +2069,21 @@ export type GetMessageQuery = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    likes?:  {
-      __typename: "ModelLikeConnection",
-      items?:  Array< {
-        __typename: "Like",
-        id: string,
-        userID: string,
-        messageID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
     updatedAt: string,
   } | null,
 };
 
-export type ListMessagesQueryVariables = {
-  filter?: ModelMessageFilterInput | null,
+export type ListPersonalMessagesQueryVariables = {
+  filter?: ModelPersonalMessageFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListMessagesQuery = {
-  listMessages?:  {
-    __typename: "ModelMessageConnection",
+export type ListPersonalMessagesQuery = {
+  listPersonalMessages?:  {
+    __typename: "ModelPersonalMessageConnection",
     items?:  Array< {
-      __typename: "Message",
+      __typename: "PersonalMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -1782,21 +2094,19 @@ export type ListMessagesQuery = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      personalChatRoom?:  {
+        __typename: "PersonalChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
       } | null,
       updatedAt: string,
     } | null > | null,
@@ -1804,31 +2114,56 @@ export type ListMessagesQuery = {
   } | null,
 };
 
-export type GetFleetQueryVariables = {
+export type GetWorkChatRoomUserQueryVariables = {
   id?: string,
 };
 
-export type GetFleetQuery = {
-  getFleet?:  {
-    __typename: "Fleet",
+export type GetWorkChatRoomUserQuery = {
+  getWorkChatRoomUser?:  {
+    __typename: "WorkChatRoomUser",
     id: string,
-    type: string,
-    text?: string | null,
-    image?: string | null,
     userID: string,
+    chatRoomID: string,
     user?:  {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -1838,32 +2173,291 @@ export type GetFleetQuery = {
   } | null,
 };
 
-export type ListFleetsQueryVariables = {
-  filter?: ModelFleetFilterInput | null,
+export type ListWorkChatRoomUsersQueryVariables = {
+  filter?: ModelWorkChatRoomUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListFleetsQuery = {
-  listFleets?:  {
-    __typename: "ModelFleetConnection",
+export type ListWorkChatRoomUsersQuery = {
+  listWorkChatRoomUsers?:  {
+    __typename: "ModelWorkChatRoomUserConnection",
     items?:  Array< {
-      __typename: "Fleet",
+      __typename: "WorkChatRoomUser",
       id: string,
-      type: string,
-      text?: string | null,
-      image?: string | null,
       userID: string,
+      chatRoomID: string,
       user?:  {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
+        id: string,
+        lastMessageID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetWorkChatRoomQueryVariables = {
+  id?: string,
+};
+
+export type GetWorkChatRoomQuery = {
+  getWorkChatRoom?:  {
+    __typename: "WorkChatRoom",
+    id: string,
+    chatRoomUsers?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
+      items?:  Array< {
+        __typename: "WorkChatRoomUser",
+        id: string,
+        userID: string,
+        chatRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    messages?:  {
+      __typename: "ModelWorkMessageConnection",
+      items?:  Array< {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    lastMessageID: string,
+    lastMessage?:  {
+      __typename: "WorkMessage",
+      id: string,
+      createdAt: string,
+      content?: string | null,
+      media?: string | null,
+      userID: string,
+      chatRoomID: string,
+      user?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
+        imageUri?: string | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
+        id: string,
+        lastMessageID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListWorkChatRoomsQueryVariables = {
+  filter?: ModelWorkChatRoomFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListWorkChatRoomsQuery = {
+  listWorkChatRooms?:  {
+    __typename: "ModelWorkChatRoomConnection",
+    items?:  Array< {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetWorkMessageQueryVariables = {
+  id?: string,
+};
+
+export type GetWorkMessageQuery = {
+  getWorkMessage?:  {
+    __typename: "WorkMessage",
+    id: string,
+    createdAt: string,
+    content?: string | null,
+    media?: string | null,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListWorkMessagesQueryVariables = {
+  filter?: ModelWorkMessageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListWorkMessagesQuery = {
+  listWorkMessages?:  {
+    __typename: "ModelWorkMessageConnection",
+    items?:  Array< {
+      __typename: "WorkMessage",
+      id: string,
+      createdAt: string,
+      content?: string | null,
+      media?: string | null,
+      userID: string,
+      chatRoomID: string,
+      user?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
+        imageUri?: string | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
+        id: string,
+        lastMessageID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type MessagesByPersonalChatRoomQueryVariables = {
+  chatRoomID?: string | null,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPersonalMessageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type MessagesByPersonalChatRoomQuery = {
+  messagesByPersonalChatRoom?:  {
+    __typename: "ModelPersonalMessageConnection",
+    items?:  Array< {
+      __typename: "PersonalMessage",
+      id: string,
+      createdAt: string,
+      content?: string | null,
+      media?: string | null,
+      userID: string,
+      chatRoomID: string,
+      user?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
+        imageUri?: string | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      personalChatRoom?:  {
+        __typename: "PersonalChatRoom",
+        id: string,
+        lastMessageID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       updatedAt: string,
     } | null > | null,
     nextToken?: string | null,
@@ -1874,16 +2468,16 @@ export type MessagesByChatRoomQueryVariables = {
   chatRoomID?: string | null,
   createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
-  filter?: ModelMessageFilterInput | null,
+  filter?: ModelWorkMessageFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
 export type MessagesByChatRoomQuery = {
   messagesByChatRoom?:  {
-    __typename: "ModelMessageConnection",
+    __typename: "ModelWorkMessageConnection",
     items?:  Array< {
-      __typename: "Message",
+      __typename: "WorkMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -1894,21 +2488,19 @@ export type MessagesByChatRoomQuery = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
       } | null,
       updatedAt: string,
     } | null > | null,
@@ -1921,12 +2513,14 @@ export type OnCreateUserSubscription = {
     __typename: "User",
     id: string,
     name: string,
+    phoneNumber?: string | null,
+    Email?: string | null,
     imageUri?: string | null,
     status?: string | null,
-    chatRoomUser?:  {
-      __typename: "ModelChatRoomUserConnection",
+    personalChatRoomUser?:  {
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -1935,15 +2529,13 @@ export type OnCreateUserSubscription = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
-    fleets?:  {
-      __typename: "ModelFleetConnection",
+    workChatRoomUser?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
       items?:  Array< {
-        __typename: "Fleet",
+        __typename: "WorkChatRoomUser",
         id: string,
-        type: string,
-        text?: string | null,
-        image?: string | null,
         userID: string,
+        chatRoomID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -1959,12 +2551,14 @@ export type OnUpdateUserSubscription = {
     __typename: "User",
     id: string,
     name: string,
+    phoneNumber?: string | null,
+    Email?: string | null,
     imageUri?: string | null,
     status?: string | null,
-    chatRoomUser?:  {
-      __typename: "ModelChatRoomUserConnection",
+    personalChatRoomUser?:  {
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -1973,15 +2567,13 @@ export type OnUpdateUserSubscription = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
-    fleets?:  {
-      __typename: "ModelFleetConnection",
+    workChatRoomUser?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
       items?:  Array< {
-        __typename: "Fleet",
+        __typename: "WorkChatRoomUser",
         id: string,
-        type: string,
-        text?: string | null,
-        image?: string | null,
         userID: string,
+        chatRoomID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -1997,12 +2589,14 @@ export type OnDeleteUserSubscription = {
     __typename: "User",
     id: string,
     name: string,
+    phoneNumber?: string | null,
+    Email?: string | null,
     imageUri?: string | null,
     status?: string | null,
-    chatRoomUser?:  {
-      __typename: "ModelChatRoomUserConnection",
+    personalChatRoomUser?:  {
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -2011,15 +2605,13 @@ export type OnDeleteUserSubscription = {
       } | null > | null,
       nextToken?: string | null,
     } | null,
-    fleets?:  {
-      __typename: "ModelFleetConnection",
+    workChatRoomUser?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
       items?:  Array< {
-        __typename: "Fleet",
+        __typename: "WorkChatRoomUser",
         id: string,
-        type: string,
-        text?: string | null,
-        image?: string | null,
         userID: string,
+        chatRoomID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -2030,9 +2622,9 @@ export type OnDeleteUserSubscription = {
   } | null,
 };
 
-export type OnCreateChatRoomUserSubscription = {
-  onCreateChatRoomUser?:  {
-    __typename: "ChatRoomUser",
+export type OnCreatePersonalChatRoomUserSubscription = {
+  onCreatePersonalChatRoomUser?:  {
+    __typename: "PersonalChatRoomUser",
     id: string,
     userID: string,
     chatRoomID: string,
@@ -2040,33 +2632,35 @@ export type OnCreateChatRoomUserSubscription = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
     chatRoom?:  {
-      __typename: "ChatRoom",
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -2083,9 +2677,9 @@ export type OnCreateChatRoomUserSubscription = {
   } | null,
 };
 
-export type OnUpdateChatRoomUserSubscription = {
-  onUpdateChatRoomUser?:  {
-    __typename: "ChatRoomUser",
+export type OnUpdatePersonalChatRoomUserSubscription = {
+  onUpdatePersonalChatRoomUser?:  {
+    __typename: "PersonalChatRoomUser",
     id: string,
     userID: string,
     chatRoomID: string,
@@ -2093,33 +2687,35 @@ export type OnUpdateChatRoomUserSubscription = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
     chatRoom?:  {
-      __typename: "ChatRoom",
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -2136,9 +2732,9 @@ export type OnUpdateChatRoomUserSubscription = {
   } | null,
 };
 
-export type OnDeleteChatRoomUserSubscription = {
-  onDeleteChatRoomUser?:  {
-    __typename: "ChatRoomUser",
+export type OnDeletePersonalChatRoomUserSubscription = {
+  onDeletePersonalChatRoomUser?:  {
+    __typename: "PersonalChatRoomUser",
     id: string,
     userID: string,
     chatRoomID: string,
@@ -2146,33 +2742,35 @@ export type OnDeleteChatRoomUserSubscription = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
     chatRoom?:  {
-      __typename: "ChatRoom",
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -2189,14 +2787,14 @@ export type OnDeleteChatRoomUserSubscription = {
   } | null,
 };
 
-export type OnCreateChatRoomSubscription = {
-  onCreateChatRoom?:  {
-    __typename: "ChatRoom",
+export type OnCreatePersonalChatRoomSubscription = {
+  onCreatePersonalChatRoom?:  {
+    __typename: "PersonalChatRoom",
     id: string,
     chatRoomUsers?:  {
-      __typename: "ModelChatRoomUserConnection",
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -2206,9 +2804,9 @@ export type OnCreateChatRoomSubscription = {
       nextToken?: string | null,
     } | null,
     messages?:  {
-      __typename: "ModelMessageConnection",
+      __typename: "ModelPersonalMessageConnection",
       items?:  Array< {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -2221,7 +2819,7 @@ export type OnCreateChatRoomSubscription = {
     } | null,
     lastMessageID: string,
     lastMessage?:  {
-      __typename: "Message",
+      __typename: "PersonalMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -2232,21 +2830,19 @@ export type OnCreateChatRoomSubscription = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      personalChatRoom?:  {
+        __typename: "PersonalChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
       } | null,
       updatedAt: string,
     } | null,
@@ -2255,14 +2851,14 @@ export type OnCreateChatRoomSubscription = {
   } | null,
 };
 
-export type OnUpdateChatRoomSubscription = {
-  onUpdateChatRoom?:  {
-    __typename: "ChatRoom",
+export type OnUpdatePersonalChatRoomSubscription = {
+  onUpdatePersonalChatRoom?:  {
+    __typename: "PersonalChatRoom",
     id: string,
     chatRoomUsers?:  {
-      __typename: "ModelChatRoomUserConnection",
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -2272,9 +2868,9 @@ export type OnUpdateChatRoomSubscription = {
       nextToken?: string | null,
     } | null,
     messages?:  {
-      __typename: "ModelMessageConnection",
+      __typename: "ModelPersonalMessageConnection",
       items?:  Array< {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -2287,7 +2883,7 @@ export type OnUpdateChatRoomSubscription = {
     } | null,
     lastMessageID: string,
     lastMessage?:  {
-      __typename: "Message",
+      __typename: "PersonalMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -2298,21 +2894,19 @@ export type OnUpdateChatRoomSubscription = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      personalChatRoom?:  {
+        __typename: "PersonalChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
       } | null,
       updatedAt: string,
     } | null,
@@ -2321,14 +2915,14 @@ export type OnUpdateChatRoomSubscription = {
   } | null,
 };
 
-export type OnDeleteChatRoomSubscription = {
-  onDeleteChatRoom?:  {
-    __typename: "ChatRoom",
+export type OnDeletePersonalChatRoomSubscription = {
+  onDeletePersonalChatRoom?:  {
+    __typename: "PersonalChatRoom",
     id: string,
     chatRoomUsers?:  {
-      __typename: "ModelChatRoomUserConnection",
+      __typename: "ModelPersonalChatRoomUserConnection",
       items?:  Array< {
-        __typename: "ChatRoomUser",
+        __typename: "PersonalChatRoomUser",
         id: string,
         userID: string,
         chatRoomID: string,
@@ -2338,9 +2932,9 @@ export type OnDeleteChatRoomSubscription = {
       nextToken?: string | null,
     } | null,
     messages?:  {
-      __typename: "ModelMessageConnection",
+      __typename: "ModelPersonalMessageConnection",
       items?:  Array< {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -2353,7 +2947,7 @@ export type OnDeleteChatRoomSubscription = {
     } | null,
     lastMessageID: string,
     lastMessage?:  {
-      __typename: "Message",
+      __typename: "PersonalMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -2364,21 +2958,19 @@ export type OnDeleteChatRoomSubscription = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      personalChatRoom?:  {
+        __typename: "PersonalChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
       } | null,
       updatedAt: string,
     } | null,
@@ -2387,9 +2979,9 @@ export type OnDeleteChatRoomSubscription = {
   } | null,
 };
 
-export type OnCreateMessageSubscription = {
-  onCreateMessage?:  {
-    __typename: "Message",
+export type OnCreatePersonalMessageSubscription = {
+  onCreatePersonalMessage?:  {
+    __typename: "PersonalMessage",
     id: string,
     createdAt: string,
     content?: string | null,
@@ -2400,33 +2992,35 @@ export type OnCreateMessageSubscription = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
-    chatRoom?:  {
-      __typename: "ChatRoom",
+    personalChatRoom?:  {
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -2438,25 +3032,13 @@ export type OnCreateMessageSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    likes?:  {
-      __typename: "ModelLikeConnection",
-      items?:  Array< {
-        __typename: "Like",
-        id: string,
-        userID: string,
-        messageID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateMessageSubscription = {
-  onUpdateMessage?:  {
-    __typename: "Message",
+export type OnUpdatePersonalMessageSubscription = {
+  onUpdatePersonalMessage?:  {
+    __typename: "PersonalMessage",
     id: string,
     createdAt: string,
     content?: string | null,
@@ -2467,33 +3049,35 @@ export type OnUpdateMessageSubscription = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
-    chatRoom?:  {
-      __typename: "ChatRoom",
+    personalChatRoom?:  {
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -2505,25 +3089,13 @@ export type OnUpdateMessageSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    likes?:  {
-      __typename: "ModelLikeConnection",
-      items?:  Array< {
-        __typename: "Like",
-        id: string,
-        userID: string,
-        messageID: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteMessageSubscription = {
-  onDeleteMessage?:  {
-    __typename: "Message",
+export type OnDeletePersonalMessageSubscription = {
+  onDeletePersonalMessage?:  {
+    __typename: "PersonalMessage",
     id: string,
     createdAt: string,
     content?: string | null,
@@ -2534,33 +3106,35 @@ export type OnDeleteMessageSubscription = {
       __typename: "User",
       id: string,
       name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
       imageUri?: string | null,
       status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
-    chatRoom?:  {
-      __typename: "ChatRoom",
+    personalChatRoom?:  {
+      __typename: "PersonalChatRoom",
       id: string,
       chatRoomUsers?:  {
-        __typename: "ModelChatRoomUserConnection",
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
       messages?:  {
-        __typename: "ModelMessageConnection",
+        __typename: "ModelPersonalMessageConnection",
         nextToken?: string | null,
       } | null,
       lastMessageID: string,
       lastMessage?:  {
-        __typename: "Message",
+        __typename: "PersonalMessage",
         id: string,
         createdAt: string,
         content?: string | null,
@@ -2572,137 +3146,208 @@ export type OnDeleteMessageSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    likes?:  {
-      __typename: "ModelLikeConnection",
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateWorkChatRoomUserSubscription = {
+  onCreateWorkChatRoomUser?:  {
+    __typename: "WorkChatRoomUser",
+    id: string,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateWorkChatRoomUserSubscription = {
+  onUpdateWorkChatRoomUser?:  {
+    __typename: "WorkChatRoomUser",
+    id: string,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteWorkChatRoomUserSubscription = {
+  onDeleteWorkChatRoomUser?:  {
+    __typename: "WorkChatRoomUser",
+    id: string,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateWorkChatRoomSubscription = {
+  onCreateWorkChatRoom?:  {
+    __typename: "WorkChatRoom",
+    id: string,
+    chatRoomUsers?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
       items?:  Array< {
-        __typename: "Like",
+        __typename: "WorkChatRoomUser",
         id: string,
         userID: string,
-        messageID: string,
+        chatRoomID: string,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
       nextToken?: string | null,
     } | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateFleetSubscription = {
-  onCreateFleet?:  {
-    __typename: "Fleet",
-    id: string,
-    type: string,
-    text?: string | null,
-    image?: string | null,
-    userID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
+    messages?:  {
+      __typename: "ModelWorkMessageConnection",
+      items?:  Array< {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateFleetSubscription = {
-  onUpdateFleet?:  {
-    __typename: "Fleet",
-    id: string,
-    type: string,
-    text?: string | null,
-    image?: string | null,
-    userID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteFleetSubscription = {
-  onDeleteFleet?:  {
-    __typename: "Fleet",
-    id: string,
-    type: string,
-    text?: string | null,
-    image?: string | null,
-    userID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateLikeSubscription = {
-  onCreateLike?:  {
-    __typename: "Like",
-    id: string,
-    userID: string,
-    messageID: string,
-    user:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    message:  {
-      __typename: "Message",
+    lastMessageID: string,
+    lastMessage?:  {
+      __typename: "WorkMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -2713,54 +3358,60 @@ export type OnCreateLikeSubscription = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
       } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
-      } | null,
       updatedAt: string,
-    },
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateLikeSubscription = {
-  onUpdateLike?:  {
-    __typename: "Like",
+export type OnUpdateWorkChatRoomSubscription = {
+  onUpdateWorkChatRoom?:  {
+    __typename: "WorkChatRoom",
     id: string,
-    userID: string,
-    messageID: string,
-    user:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    message:  {
-      __typename: "Message",
+    chatRoomUsers?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
+      items?:  Array< {
+        __typename: "WorkChatRoomUser",
+        id: string,
+        userID: string,
+        chatRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    messages?:  {
+      __typename: "ModelWorkMessageConnection",
+      items?:  Array< {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    lastMessageID: string,
+    lastMessage?:  {
+      __typename: "WorkMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -2771,54 +3422,60 @@ export type OnUpdateLikeSubscription = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
       } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
-        nextToken?: string | null,
-      } | null,
       updatedAt: string,
-    },
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteLikeSubscription = {
-  onDeleteLike?:  {
-    __typename: "Like",
+export type OnDeleteWorkChatRoomSubscription = {
+  onDeleteWorkChatRoom?:  {
+    __typename: "WorkChatRoom",
     id: string,
-    userID: string,
-    messageID: string,
-    user:  {
-      __typename: "User",
-      id: string,
-      name: string,
-      imageUri?: string | null,
-      status?: string | null,
-      chatRoomUser?:  {
-        __typename: "ModelChatRoomUserConnection",
-        nextToken?: string | null,
-      } | null,
-      fleets?:  {
-        __typename: "ModelFleetConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    },
-    message:  {
-      __typename: "Message",
+    chatRoomUsers?:  {
+      __typename: "ModelWorkChatRoomUserConnection",
+      items?:  Array< {
+        __typename: "WorkChatRoomUser",
+        id: string,
+        userID: string,
+        chatRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    messages?:  {
+      __typename: "ModelWorkMessageConnection",
+      items?:  Array< {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    lastMessageID: string,
+    lastMessage?:  {
+      __typename: "WorkMessage",
       id: string,
       createdAt: string,
       content?: string | null,
@@ -2829,25 +3486,194 @@ export type OnDeleteLikeSubscription = {
         __typename: "User",
         id: string,
         name: string,
+        phoneNumber?: string | null,
+        Email?: string | null,
         imageUri?: string | null,
         status?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
-      chatRoom?:  {
-        __typename: "ChatRoom",
+      workChatRoom?:  {
+        __typename: "WorkChatRoom",
         id: string,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
       } | null,
-      likes?:  {
-        __typename: "ModelLikeConnection",
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateWorkMessageSubscription = {
+  onCreateWorkMessage?:  {
+    __typename: "WorkMessage",
+    id: string,
+    createdAt: string,
+    content?: string | null,
+    media?: string | null,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
         nextToken?: string | null,
       } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
       updatedAt: string,
-    },
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateWorkMessageSubscription = {
+  onUpdateWorkMessage?:  {
+    __typename: "WorkMessage",
+    id: string,
     createdAt: string,
+    content?: string | null,
+    media?: string | null,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteWorkMessageSubscription = {
+  onDeleteWorkMessage?:  {
+    __typename: "WorkMessage",
+    id: string,
+    createdAt: string,
+    content?: string | null,
+    media?: string | null,
+    userID: string,
+    chatRoomID: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phoneNumber?: string | null,
+      Email?: string | null,
+      imageUri?: string | null,
+      status?: string | null,
+      personalChatRoomUser?:  {
+        __typename: "ModelPersonalChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      workChatRoomUser?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    workChatRoom?:  {
+      __typename: "WorkChatRoom",
+      id: string,
+      chatRoomUsers?:  {
+        __typename: "ModelWorkChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelWorkMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "WorkMessage",
+        id: string,
+        createdAt: string,
+        content?: string | null,
+        media?: string | null,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     updatedAt: string,
   } | null,
 };

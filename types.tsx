@@ -3,7 +3,8 @@ export type RootStackParamList = {
   NotFound: undefined;
   Contacts: undefined;
   ChatRoom: undefined;
-  Fleet:undefined;
+  Fleet: undefined;
+  Login: undefined;
 };
 
 export type MainTabParamList = {
@@ -32,6 +33,9 @@ export type CameraScreenList = {
   Camera: undefined;
 };
 
+export type LoginScreenList = {
+  Login: undefined;
+}
 
 export type User = {
   id: String;
