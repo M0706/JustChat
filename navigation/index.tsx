@@ -7,8 +7,7 @@ import Camera from "../screens/Camera/index"
 import PersonalTabNavigator from "./PersonalTabNavigator";
 import WorkTabNavigator from "./WorkTabNavigator";
 
-import Icon from "react-native-vector-icons/Ionicons";
-import IconMat from "react-native-vector-icons/MaterialCommunityIcons";
+import { Entypo,MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'; 
 import Colors from "../constants/Colors";
 
 const MainTab = createMaterialBottomTabNavigator();
@@ -34,8 +33,8 @@ const MainNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                <IconMat
-                  name="account-group-outline"
+                <MaterialIcons
+                  name="people"
                   size={26}
                   color={Colors.iconPrimaryColor}
                 />
@@ -50,7 +49,7 @@ const MainNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                <Icon name="camera" size={25} color={Colors.iconPrimaryColor} />
+                <Entypo name="camera" size={25} color={Colors.iconPrimaryColor} />
               );
             },
             tabBarColor: Colors.accentColor,
@@ -62,8 +61,8 @@ const MainNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                <IconMat
-                  name="account-tie-outline"
+                <MaterialCommunityIcons
+                  name="professional-hexagon"
                   size={30}
                   color={Colors.iconPrimaryColor}
                 />

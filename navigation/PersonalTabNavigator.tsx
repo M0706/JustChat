@@ -1,4 +1,5 @@
 import React from "react";
+import {Text} from 'react-native';
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -10,7 +11,6 @@ import ChatsScreen from "../screens/Personal/ChatsScreen";
 import ChatRoomScreen from "../screens/Personal/ChatRoomScreen";
 import ContactsScreen from "../screens/Personal/ContactsScreen";
 
-import Icon from "react-native-vector-icons/Ionicons";
 import Colors from "../constants/Colors";
 
 // stack navigator for chat screen
@@ -20,16 +20,17 @@ const ChatsNavigator = () => {
   return (
     <ChatsStack.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: Colors.light.tint,
-          shadowOpacity: 0,
-          elevation: 0,
-        },
-        headerTintColor: Colors.light.background,
-        headerTitleAlign: "left",
-        headerTitleStyle: {
-          fontWeight: "bold",
-        },
+        // headerStyle: {
+        //   backgroundColor: Colors.light.tint,
+        //   shadowOpacity: 0,
+        //   elevation: 0,
+        // },
+        // headerTintColor: Colors.light.background,
+        // headerTitleAlign: "left",
+        // headerTitleStyle: {
+        //   fontWeight: "bold",
+        // },
+        headerShown : false
       }}
     >
       <ChatsStack.Screen name="ChatScreen" component={ChatsScreen} />
@@ -47,7 +48,7 @@ const PersonalTabNavigator = () => {
       style={{ marginTop: 30 }}
       tabBarOptions={{
         showIcon: true,
-        showLabel: false,
+        showLabel: true,
         pressColor: Colors.primaryColor,
         activeTintColor: "rgba(0,150,250,1)",
         inactiveTintColor: "rgba(0,0,20,0.5)",
@@ -58,13 +59,7 @@ const PersonalTabNavigator = () => {
         name="PersonalCall"
         component={PersonalCall}
         options={{
-          title: "Call",
-          tabBarIcon: ({ color }) => {
-            return (
-              <Icon name="call-outline" size={25} color={color} />
-              // color="rgba(120,250,250,1)" />
-            );
-          },
+          title: "Calls",
           tabBarColor: Colors.iconPrimaryColor,
         }}
       />
@@ -74,9 +69,9 @@ const PersonalTabNavigator = () => {
         options={{
           title: "Chats",
 
-          tabBarIcon: ({ color }) => {
-            return <Icon name="chatbubbles-outline" size={25} color={color} />;
-          },
+          // tabBarIcon: ({ color }) => {
+          //   return <Text>Chats</Text>;
+          // },
         }}
       />
 
@@ -85,9 +80,9 @@ const PersonalTabNavigator = () => {
         component={PersonalStories}
         options={{
           title: "Stories",
-          tabBarIcon: ({ color }) => {
-            return <Icon name="list-outline" size={25} color={color} />;
-          },
+          // tabBarIcon: ({ color }) => {
+          //   return <Text>Stories</Text>;
+          // },
         }}
       />
       <PersonalTab.Screen
@@ -95,9 +90,9 @@ const PersonalTabNavigator = () => {
         component={PersonalProfile}
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => {
-            return <Icon name="person-outline" size={25} color={color} />;
-          },
+          // tabBarIcon: ({ color }) => {
+          //   return <Text>Profile</Text>;
+          // },
         }}
       />
     </PersonalTab.Navigator>
