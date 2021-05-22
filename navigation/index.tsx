@@ -3,30 +3,22 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { NavigationContainer } from "@react-navigation/native";
 
 // import Camera from "../screens/Personal/CameraScreen";//////////
-import Camera from "../screens/Camera/index"
+import Camera from "../screens/Camera/index";
 import PersonalTabNavigator from "./PersonalTabNavigator";
 import WorkTabNavigator from "./WorkTabNavigator";
 
-import { Entypo,MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'; 
+import {
+  Entypo,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 
 const MainTab = createMaterialBottomTabNavigator();
 const MainNavigator = () => {
   return (
-    <NavigationContainer>
+    <>
       <MainTab.Navigator barStyle={{ height: 55 }} shifting={true}>
-        {/* <MainTab.Screen
-          name="Camera"
-          component={Camera}
-          options={{
-            tabBarIcon: () => {
-              return (
-                <Icon name="camera" size={25} color={Colors.iconPrimaryColor} />
-              );
-            },
-            tabBarColor: Colors.accentColor,
-          }}
-        /> */}
         <MainTab.Screen
           name="Personal"
           component={PersonalTabNavigator}
@@ -49,7 +41,11 @@ const MainNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                <Entypo name="camera" size={25} color={Colors.iconPrimaryColor} />
+                <Entypo
+                  name="camera"
+                  size={25}
+                  color={Colors.iconPrimaryColor}
+                />
               );
             },
             tabBarColor: Colors.accentColor,
@@ -72,13 +68,11 @@ const MainNavigator = () => {
           }}
         />
       </MainTab.Navigator>
-    </NavigationContainer>
+    </>
   );
 };
 
 export default MainNavigator;
-
-
 
 // import {
 //   NavigationContainer,
@@ -175,7 +169,7 @@ export default MainNavigator;
 // function RootNavigator() {
 //   const navigation = useNavigation();
 //   return (
-    
+
 //     <Stack.Navigator
 //       screenOptions={{
 //         headerStyle: {
@@ -259,7 +253,6 @@ export default MainNavigator;
 
 //       <Stack.Screen name="ContentDisplay" component={ContentDisplay} />
 //       <Stack.Screen name="Login" component={LoginScreen} />
-
 
 //       <Stack.Screen
 //         name="NotFound"

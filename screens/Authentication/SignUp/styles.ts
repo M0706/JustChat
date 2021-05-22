@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
       marginBottom:10
     },
     loginText:{
-      color:"white",
+      color:"white"
     },
     navigate:{
       color:"white",
