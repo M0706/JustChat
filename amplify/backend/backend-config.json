@@ -1,6 +1,6 @@
 {
   "auth": {
-    "whatsappclone314937eb": {
+    "nihantjain22may5876755a": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,7 +8,7 @@
     }
   },
   "api": {
-    "whatsappclone": {
+    "NishantJain22May": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authwhatsappclone314937eb"
+              "userPoolId": "authnihantjain22may5876755a"
             }
           },
           "additionalAuthenticationProviders": []

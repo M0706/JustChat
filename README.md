@@ -1,1 +1,0 @@
-This app is aimed at recreating the WhatsApp experience in a react native frontend with AWS amplify built-in to assist with all the backend communication and authentication steps required to create a close match to WhatsApp.

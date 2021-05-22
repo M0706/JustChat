@@ -3,11 +3,11 @@ import { FlatList, ImageBackground } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 
-import ChatMessage from '../components/ChatMessage';
-import BG from '../assets/images/BG.png';
-import InputBox from '../components/InputBox';
-import { messagesByChatRoom } from '../graphql/queries';
-import { onCreateMessage } from '../graphql/subscriptions';
+import ChatMessage from '../../components/ChatMessage';
+import BG from '../../assets/images/BG.png';
+import InputBox from '../../components/InputBox';
+import { messagesByChatRoom } from '../../graphql/queries';
+import { onCreateMessage } from '../../graphql/subscriptions';
 
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
