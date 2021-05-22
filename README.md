@@ -1,1 +1,1 @@
-# JustChat
+# JustChat App
