@@ -17,13 +17,28 @@ export default function ContactsScreen() {
     if (user.id === currentAuthedUser) {
       return null;
     }
+    // console.log("hi")
+    let filterChatRoom = chatRooms.filter(
+      (value: {}) => Object.keys(value).length !== 0
+    );
 
-    const chatRoom = chatRooms.find(cr => cr.chatRoomUsers.items.some((i) => i.user.id === user.id));
-    if (chatRoom) {
-      return {
-        ...user,
-        previousChatID: chatRoom.id
-      };
+    console.log("Contact Screen --------->", filterChatRoom);
+
+    // const chatRoom = filterChatRoom.find(cr =>{
+    //                       cr.chatRoomUsers.items.some((i) => (i.user.id === user.id))
+    // });
+
+    for (var cr in filterChatRoom) {
+      var temp = filterChatRoom[cr];
+      for (var tr in temp.chatRoomUsers.items) {
+        var tuser = temp.chatRoomUsers.items[tr];
+        if (tuser.user.id == user.id) {
+          return {
+            ...user,
+            previousChatID: temp.id,
+          };
+        }
+      }
     }
 
     return { ...user };
