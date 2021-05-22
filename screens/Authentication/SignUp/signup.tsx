@@ -44,7 +44,6 @@ export default function SignUpScreen() {
   };
 
   const confirmCode = async () => {
-    // navigation.navigate("MainScreen");
     setConfirming(true);
     try {
       await Auth.confirmSignUp(userName, otp);
