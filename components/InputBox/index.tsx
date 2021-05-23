@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Entypo,
-  FontAwesome5,
+  Entypo, FontAwesome5, 
+  MaterialCommunityIcons, 
   Fontisto,
-  MaterialCommunityIcons,
-  MaterialIcons
-} from '@expo/vector-icons';
+  MaterialIcons          
+} from  '@expo/vector-icons';
 import {
-  TextInput,
   View,
   KeyboardAvoidingView,
+  TextInput,
   Platform
 } from 'react-native';
 import {
@@ -18,6 +17,7 @@ import {
 import {
   Auth,
   API,
+  Storage,
   graphqlOperation
 } from 'aws-amplify';
 import { createMessage, updateChatRoom } from '../../graphql/mutations';
@@ -28,9 +28,12 @@ export type InputBoxProps = {
 }
 
 const InputBox = (props: InputBoxProps) => {
-  const { chatRoomID } = props;
-  const [message, setMessage] = useState('');
   const [userID, setUserID] = useState(null);
+  
+  const { chatRoomID } = props;
+
+  const [message, setMessage] = useState('');
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -62,35 +65,91 @@ const InputBox = (props: InputBoxProps) => {
       console.log(err);
     }
   };
-
-  const sendPress = async () => {
-    try {
-      const createdMessage = await API.graphql(
+ 
+  //Add media in schema before sending images
+  const sendPress = async (Imagekey:object) => {
+    //console.log("key in onSendPress ==>",Imagekey)
+     try {
+      const newMessageData = await API.graphql(
         graphqlOperation(
-          createMessage,
-          {
+          createMessage, {
             input: {
               content: message,
-              userID,
+              //media:Imagekey,
+              userID: userID,
               chatRoomID
             }
           }
         )
-      );
-
-      await updateChatRoomAsync(createdMessage.data.createMessage.id);
-    } catch (err) {
-      console.log(err);
+      )
+      //console.log("NewMessage Data --->",newMessageData)
+      setMessage('');
+      await updateChatRoomAsync(newMessageData.data.createMessage.id)
+    } catch (e) {
+      console.log(e);
     }
 
-    setMessage('');
+    //setMessage('');
+  }
+
+  const uploadImage = async () => {
+    try {
+      const response = await fetch(image);
+      const blob = await response.blob();
+      const urlParts = image.split(".");
+      const extension = urlParts[urlParts.length - 1];
+      const uniqueId = uuid();
+      console.log(uniqueId);
+      const key = `${uniqueId}.${extension}`;
+      console.log("Key -->", key);
+      await Storage.put(key, blob).then((result) => {
+        console.log("Uploaded image to S3");
+      });
+
+      return key;
+    } catch (e) {
+      console.log(e);
+    }
+    return "";
   };
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    //console.log(result);
+
+    if (!result.cancelled) {
+    //console.log(result)
+      setImage(result.uri);
+    }
+  };
+
+  const onPressAttachment= async ()=>{
+    //console.warn("Send Attachment")
+    await pickImage();
+    const imagekey = await uploadImage();
+    //console.log("Image key in OnpressAttachment -->",imagekey);
+    const signedUrl = await Storage.get(imagekey)
+    //console.log("Signed Url --->",signedUrl);
+    //sendPress(signedUrl); 
+}
+
+const onCameraPress=()=>{
+  console.warn("Camera pressed")
+}
+
+
 
   const onPress = () => {
     if (!message) {
       onMicrophonePress();
     } else {
-      sendPress();
+      sendPress("");
     }
   };
 
@@ -110,21 +169,34 @@ const InputBox = (props: InputBoxProps) => {
             value={message}
             onChangeText={setMessage}
           />
-          <Entypo name="attachment" size={24} color="grey" style={styles.icon} />
-          { !message && <Fontisto name="camera" size={24} color="grey" style={styles.icon} /> }
+          <Entypo name="attachment" 
+          size={24} color="grey" 
+          style={styles.icon} 
+          onPress={onPressAttachment}
+          />
+
+
+        {!message && 
+        <Fontisto name="camera" 
+                  size={24} color="grey" 
+                  style={styles.icon}
+                  onPress={onCameraPress}
+                  />}
+                  
         </View>
         <TouchableOpacity onPress={onPress}>
-          <View style={styles.buttonContainer}>
-            {
-              !message
-                ? <MaterialCommunityIcons name="microphone" size={24} color="white" />
-                : <MaterialIcons name="send" size={24} color="white" />
-            }
-          </View>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          {!message
+            ? <MaterialCommunityIcons name="microphone" size={28} color="white" />
+            : <MaterialIcons name="send" size={28} color="white" />}
+        </View>
+
+       </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+  </KeyboardAvoidingView>
   );
 };
 
 export default InputBox;
+
+

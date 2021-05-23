@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { StyleSheet, FlatList, Text } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -13,7 +14,7 @@ import {
 import { ChatRoom } from "../../types";
 
 export default function ChatsScreen() {
-  const [chatRooms, setChatRooms] = useState([]);
+  const [chatRooms, setChatRooms] = useState([])
 
   const fetchChatRooms = async () => {
     try {
@@ -22,6 +23,7 @@ export default function ChatsScreen() {
       const userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUser.attributes.sub })
       );
+      
 
       setChatRooms(
         userData.data.getUser.chatRoomUser.items.map((i) => ({ ...i.chatRoom }))

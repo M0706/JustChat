@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, FlatList } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import React, {useEffect, useState } from 'react';
+import { StyleSheet,FlatList } from 'react-native';
+import { useRoute} from '@react-navigation/native';
 
 import { View } from '../../components/Themed';
 import ContactListItem from '../../components/ContactListItem';
@@ -9,9 +9,10 @@ import { listUsers } from '../../graphql/queries';
 import { User } from '../../types';
 
 export default function ContactsScreen() {
-  const [users, setUsers] = useState([]);
-  const route = useRoute();
-  const chatRooms = route.params.chatRooms;
+  const [users, setUsers] =useState([])
+  const route=useRoute();
+
+  const chatRooms= route.params.chatRooms;
 
   const mapUsers = (user: User, currentAuthedUser: string) => {
     if (user.id === currentAuthedUser) {
@@ -47,31 +48,32 @@ export default function ContactsScreen() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersData = await API.graphql(graphqlOperation(listUsers));
-        const currentUser = await Auth.currentAuthenticatedUser();
-        const filteredUsers = usersData.data.listUsers.items.map((i: User) => mapUsers(i, currentUser.attributes.sub)).filter(Boolean);
-        setUsers(filteredUsers);
-      } catch(err) {
-        console.warn(err);
+        const usersData= await API.graphql(graphqlOperation(listUsers));
+        const currentUser= await Auth.currentAuthenticatedUser();
+        const filteredUsers= usersData.data.listUsers.items.map((i: User) => mapUsers(i, currentUser.attributes.sub)).filter(Boolean);
+         setUsers(filteredUsers);
+      }catch(err) {
+      console.warn(err);
       }
     };
 
-    fetchUsers();
-  }, []);
+  fetchUsers();
+  },[]);
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        style={{ width: '100%' }}
-        data={users}
-        renderItem={({ item }) => <ContactListItem user={item} />}
-        keyExtractor={(item: User) => item.id}
-      />
-    </View>
+  <View style={styles.container}>
+    <FlatList
+      style={{ width: '100%' }}
+      data={users}
+      renderItem={({ item }) => <ContactListItem user={item} />}
+      keyExtractor={(item: User) => item.id}
+    />
+  </View>
   );
 }
 
-const styles = StyleSheet.create({
+
+const styles= StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
