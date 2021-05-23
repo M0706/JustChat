@@ -12,35 +12,59 @@ import { onCreateMessage } from '../../graphql/subscriptions';
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
   const [currentUserId, setCurrentUserId] = useState('');
+  const [nextToken, setNextToken] = useState(null);
+
   const route = useRoute();
 
+
+  const HandleScroll = () => {
+
+    if (nextToken !== null) {
+      fetchMessages(nextToken);
+    }
+  };
+
+  const fetchMessages = async (nextToken) => {
+    const loadmessages = await API.graphql(
+      graphqlOperation(messagesByChatRoom, {
+        chatRoomID: route.params.id,
+        sortDirection: "DESC",
+        limit: 15,
+        nextToken,
+      })
+    );
+
+    //console.log("dfssdff--->",loadmessages.data.messagesByChatRoom.items)
+    let messageArr = [...messages].concat(
+      loadmessages.data.messagesByChatRoom.items
+    );
+    setMessages(messageArr);
+    setNextToken(loadmessages.data.messagesByChatRoom.nextToken);
+    // console.log("Next Token --->",
+    //   messages.data.messagesByChatRoom.nextToken
+    // );
+  };
+
+  const fetchUserId = async () => {
+    const currentUser = await Auth.currentAuthenticatedUser();
+    setCurrentUserId(currentUser.attributes.sub);
+  };
+
+
+
   useEffect(() => {
-    const fetchMessages = async () => {
-      const messages = await API.graphql(
-        graphqlOperation(
-          messagesByChatRoom,
-          {
-            chatRoomID: route.params.id,
-            sortDirection: 'DESC'
-          }
-        )
-      );
-      setMessages(messages.data.messagesByChatRoom.items);
-    };
-
-    fetchMessages();
-  }, []);
-
-  useEffect(() => {
-    const fetchUserId = async () => {
-      const currentUser = await Auth.currentAuthenticatedUser();
-      setCurrentUserId(currentUser.attributes.sub);
-    };
-
+    fetchMessages(nextToken);
     fetchUserId();
+
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   fetchUserId();
+  // }, []);
+
+
+  useEffect(() => {    
+  
     const subscription = API.graphql(
       graphqlOperation(onCreateMessage)
     ).subscribe({
@@ -48,30 +72,37 @@ const ChatRoomScreen = () => {
         const newMessage = data.value.data.onCreateMessage;
 
         if (newMessage.chatRoomID !== route.params.id) {
-          console.log('Message is in another room');
+          // console.log('Message is in another room');
           return;
         }
 
         setMessages([ newMessage, ...messages ]);
+        //console.log(messages);
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [messages]);
+  }, [messages])
+
 
   return (
-    <ImageBackground
-      style={{ width: '100%', height: '100%' }}
-      source={BG}
-    >
+
+      <ImageBackground style={{width: '100%', height: '100%'}} source={BG}>
+
       <FlatList
         data={messages}
-        renderItem={({ item }) => <ChatMessage message={item} currentUserId={currentUserId}/>}
-        inverted
-      />
-      <InputBox chatRoomID={route.params.id} />
+        onEndReached={HandleScroll}
+        onEndReachedThreshold={0}
+        //ListHeaderComponent={renderLoader}
+        renderItem={({ item }) => (
+        <ChatMessage currentUserId={currentUserId} message={item}/>
+       )}
+        inverted />
+        
+      <InputBox chatRoomID = {route.params.id} />
     </ImageBackground>
   );
 };
 
 export default ChatRoomScreen;
+
