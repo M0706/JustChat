@@ -22,7 +22,7 @@ export default function ContactsScreen() {
       (value: {}) => Object.keys(value).length !== 0
     );
 
-    console.log("Contact Screen --------->", filterChatRoom);
+    //console.log("Contact Screen --------->", filterChatRoom);
 
     // const chatRoom = filterChatRoom.find(cr =>{
     //                       cr.chatRoomUsers.items.some((i) => (i.user.id === user.id))
