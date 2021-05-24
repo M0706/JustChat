@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableWithoutFeedback
-} from 'react-native';
-import moment from 'moment';
-import { useNavigation } from '@react-navigation/native';
-import { ChatRoom} from '../../../../types';
-import styles from './style';
-import { Auth } from 'aws-amplify';
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
+import moment from "moment";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { ChatRoom } from "../../../../types";
+import styles from "./style";
+import { Auth } from "aws-amplify";
 
 export type ChatListItemProps = {
-  chatRoom: ChatRoom,
-}
+  chatRoom: ChatRoom;
+};
 
 const ChatListItem = (props: ChatListItemProps) => {
   const { chatRoom } = props;
@@ -23,7 +18,9 @@ const ChatListItem = (props: ChatListItemProps) => {
   useEffect(() => {
     const getOtherUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser();
-      const user = chatRoom.chatRoomUsers.items.find((i) => i.user.id !== userInfo.attributes.sub).user;
+      const user = chatRoom.chatRoomUsers.items.find(
+        (i) => i.user.id !== userInfo.attributes.sub
+      ).user;
       setOtherUser(user);
     };
 
@@ -31,13 +28,10 @@ const ChatListItem = (props: ChatListItemProps) => {
   }, []);
 
   const onClick = () => {
-    navigation.navigate(
-      'ChatRoom',
-      {
-        id: chatRoom.id,
-        name: otherUser.name
-      }
-    );
+    navigation.navigate("ChatRoom", {
+      id: chatRoom.id,
+      name: otherUser.name,
+    });
   };
 
   if (!otherUser) return null;
@@ -50,19 +44,17 @@ const ChatListItem = (props: ChatListItemProps) => {
         <View style={styles.rightContainer}>
           <View style={styles.midContainer}>
             <Text style={styles.userName}>{otherUser.name}</Text>
-            <Text
-              numberOfLines={1}
-              style={styles.lastMessage}
-            >
-              {
-                chatRoom.lastMessage
-                  ? `${chatRoom.lastMessage.user.name}: ${chatRoom.lastMessage.content}`
-                  : ''
-              }
+            <Text numberOfLines={1} style={styles.lastMessage}>
+              {chatRoom.lastMessage
+                ? `${chatRoom.lastMessage.user.name}: ${chatRoom.lastMessage.content}`
+                : ""}
             </Text>
           </View>
 
-          <Text style={styles.time}>{chatRoom.lastMessage && moment(chatRoom.lastMessage.createdAt).format('DD/MM/YYYY')}</Text>
+          <Text style={styles.time}>
+            {chatRoom.lastMessage &&
+              moment(chatRoom.lastMessage.createdAt).format("DD/MM/YYYY")}
+          </Text>
         </View>
       </View>
     </TouchableWithoutFeedback>
