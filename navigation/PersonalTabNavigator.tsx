@@ -4,12 +4,12 @@ import {Text} from 'react-native';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import PersonalCall from "../screens/Personal/PersonalCall";
-import PersonalProfile from "../screens/Personal/PersonalProfile";
-import PersonalStories from "../screens/Personal/PersonalStories";
-import ChatsScreen from "../screens/Personal/ChatsScreen";
-import ChatRoomScreen from "../screens/Personal/ChatRoomScreen";
-import ContactsScreen from "../screens/Personal/ContactsScreen";
+import PersonalCall from "../screens/Personal/CallsScreen/PersonalCall";
+import GroupChatScreen from "../screens/Personal/GroupChats/ChatScreen";
+import PersonalStories from "../screens/Personal/StoryScreen/PersonalStories";
+import ChatsScreen from "../screens/Personal/IndividualChats/ChatsScreen";
+import ChatRoomScreen from "../screens/Personal/IndividualChats/ChatRoomScreen";
+import ContactsScreen from "../screens/Personal/IndividualChats/ContactsScreen";
 
 import Colors from "../constants/Colors";
 
@@ -40,6 +40,8 @@ const ChatsNavigator = () => {
   );
 };
 
+const StackNavigator = createStackNavigator
+
 const PersonalTab = createMaterialTopTabNavigator();
 
 const PersonalTabNavigator = () => {
@@ -55,14 +57,7 @@ const PersonalTabNavigator = () => {
       }}
       activeColor={Colors.iconPrimaryColor}
     >
-      <PersonalTab.Screen
-        name="PersonalCall"
-        component={PersonalCall}
-        options={{
-          title: "Calls",
-          tabBarColor: Colors.iconPrimaryColor,
-        }}
-      />
+  
       <PersonalTab.Screen
         name="PersonalChats"
         component={ChatsNavigator}
@@ -71,6 +66,17 @@ const PersonalTabNavigator = () => {
 
           // tabBarIcon: ({ color }) => {
           //   return <Text>Chats</Text>;
+          // },
+        }}
+      />
+
+      < PersonalTab.Screen
+        name="GroupChatScreen"
+        component={GroupChatScreen}
+        options={{
+          title: "Groups",
+          // tabBarIcon: ({ color }) => {
+          //   return <Text>Profile</Text>;
           // },
         }}
       />
@@ -85,14 +91,13 @@ const PersonalTabNavigator = () => {
           // },
         }}
       />
+  
       <PersonalTab.Screen
-        name="PersonalProfile"
-        component={PersonalProfile}
+        name="PersonalCall"
+        component={PersonalCall}
         options={{
-          title: "Profile",
-          // tabBarIcon: ({ color }) => {
-          //   return <Text>Profile</Text>;
-          // },
+          title: "Calls",
+          tabBarColor: Colors.iconPrimaryColor,
         }}
       />
     </PersonalTab.Navigator>

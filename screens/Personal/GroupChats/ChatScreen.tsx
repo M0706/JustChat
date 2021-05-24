@@ -1,10 +1,12 @@
+//This is Group ChatScreen 
+
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const PersonalCall = () => {
+const PersonalStories = () => {
   return (
     <View style={styles.screen}>
-      <Text>This is PersonalCall Screen !!!</Text>
+      <Text>This is GroupChats Screen !!!</Text>
     </View>
   );
 };
@@ -17,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PersonalCall;
+export default PersonalStories;

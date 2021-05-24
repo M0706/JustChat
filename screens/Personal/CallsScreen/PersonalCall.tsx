@@ -33,7 +33,7 @@ export default function PersonalProfile() {
       {signingOut ? (
         <ActivityIndicator />
       ) : (
-        <Text onPress={logout}>This is PersonalProfile Screen !!!</Text>
+        <Text onPress={logout}>Click here to logout!!!</Text>
       )}
     </View>
   );

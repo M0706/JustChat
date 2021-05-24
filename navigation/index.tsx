@@ -74,6 +74,11 @@ const MainNavigator = () => {
 
 export default MainNavigator;
 
+
+
+
+
+
 // import {
 //   NavigationContainer,
 //   DefaultTheme,
