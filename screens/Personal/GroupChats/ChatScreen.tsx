@@ -1,22 +1,24 @@
 //This is Group ChatScreen 
 
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import * as React from 'react';
+import {FlatList, StyleSheet,View} from 'react-native';
 
-const PersonalStories = () => {
+
+
+export default function ChatsScreen() {
   return (
-    <View style={styles.screen}>
-      <Text>This is GroupChats Screen !!!</Text>
+    <View style={styles.container}>
+ 
+     
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  screen: {
+  container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-});
 
-export default PersonalStories;
+});

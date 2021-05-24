@@ -3,9 +3,9 @@ import { FlatList, ImageBackground } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 
-import ChatMessage from '../../../components/ChatMessage';
+import ChatMessage from '../../../components/Personal/SingleChats/ChatMessage';
 import BG from '../../../assets/images/BG.png';
-import InputBox from '../../../components/InputBox';
+import InputBox from '../../../components/Personal/SingleChats/InputBox';
 import { messagesByChatRoom } from '../../../graphql/queries';
 import { onCreateMessage } from '../../../graphql/subscriptions';
 

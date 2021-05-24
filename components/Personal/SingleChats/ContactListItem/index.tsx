@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { createChatRoomUser, createChatRoom } from '../../graphql/mutations';
+import { createChatRoomUser, createChatRoom } from '../../../../graphql/mutations';
 
 import { User } from '../../types';
 import styles from './style';

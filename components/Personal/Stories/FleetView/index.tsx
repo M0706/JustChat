@@ -6,8 +6,8 @@ import {
     Text, View, Image,TouchableOpacity
  } from "react-native";
 
-import {User,FleetType} from '../../types'
-import ProfilePicture from "../ProfilePicture";
+import {User,FleetType} from '../../../../types'
+import ProfilePicture from "../../ProfilePicture";
 import styles from './styles';
 
 export type FleetViewProps={

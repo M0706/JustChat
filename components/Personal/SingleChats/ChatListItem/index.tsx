@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
-import { ChatRoom} from '../../types';
+import { ChatRoom} from '../../../../types';
 import styles from './style';
 import { Auth } from 'aws-amplify';
 

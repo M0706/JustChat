@@ -7,9 +7,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import PersonalCall from "../screens/Personal/CallsScreen/PersonalCall";
 import GroupChatScreen from "../screens/Personal/GroupChats/ChatScreen";
 import PersonalStories from "../screens/Personal/StoryScreen/PersonalStories";
-import ChatsScreen from "../screens/Personal/IndividualChats/ChatsScreen";
-import ChatRoomScreen from "../screens/Personal/IndividualChats/ChatRoomScreen";
-import ContactsScreen from "../screens/Personal/IndividualChats/ContactsScreen";
+import ChatsScreen from "../screens/Personal/SingleChats/ChatsScreen";
+import ChatRoomScreen from "../screens/Personal/SingleChats/ChatRoomScreen";
+import ContactsScreen from "../screens/Personal/SingleChats/ContactsScreen";
 
 import Colors from "../constants/Colors";
 

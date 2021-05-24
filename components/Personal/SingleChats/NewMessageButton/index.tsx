@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ChatRoom } from '../../types';
+import { ChatRoom } from '../../../../types';
 
 export type NewMessageButtonProps = {
   chatRooms: ChatRoom[],

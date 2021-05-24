@@ -3,7 +3,7 @@ import { StyleSheet,FlatList } from 'react-native';
 import { useRoute} from '@react-navigation/native';
 
 import { View } from '../../../components/Themed';
-import ContactListItem from '../../../components/ContactListItem';
+import ContactListItem from '../../../components/Personal/SingleChats/ContactListItem';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { listUsers } from '../../../graphql/queries';
 import { User } from '../../../types';

@@ -20,7 +20,7 @@ import {
   Storage,
   graphqlOperation
 } from 'aws-amplify';
-import { createMessage, updateChatRoom } from '../../graphql/mutations';
+import { createMessage, updateChatRoom } from '../../../../graphql/mutations';
 import styles from './styles';
 
 export type InputBoxProps = {
