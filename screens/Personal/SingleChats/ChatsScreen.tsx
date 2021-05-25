@@ -1,5 +1,4 @@
-//This is Personal ChatScreen 
-
+//This is Personal ChatScreen
 
 import React, { useEffect, useState } from "react";
 import { StyleSheet, FlatList, Text } from "react-native";
@@ -16,16 +15,16 @@ import {
 import { ChatRoom } from "../../../types";
 
 export default function ChatsScreen() {
-  const [chatRooms, setChatRooms] = useState([])
+  const [chatRooms, setChatRooms] = useState([]);
 
   const fetchChatRooms = async () => {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
-      
+
       const userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUser.attributes.sub })
       );
-      
+      console.log(userData);
 
       setChatRooms(
         userData.data.getUser.chatRoomUser.items.map((i) => ({ ...i.chatRoom }))

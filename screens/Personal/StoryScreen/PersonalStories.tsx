@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-
 const PersonalStories = () => {
   return (
     <View style={styles.screen}>
