@@ -29,6 +29,7 @@ const CustomMenu = ({ visible, toggleOverlay, navigation }) => {
         top: 10,
         right: 10,
       }}
+      animationType="fade"
     >
       <Text style={{ padding: 10 }}>Hello from Overlay!</Text>
       <Text style={{ padding: 10 }}>Hello from Overlay!</Text>
