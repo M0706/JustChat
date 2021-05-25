@@ -87,6 +87,7 @@ export const onCreateChatRoomUser = /* GraphQL */ `
       }
       chatRoom {
         id
+        group
         chatRoomUsers {
           nextToken
         }
@@ -129,6 +130,7 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
       }
       chatRoom {
         id
+        group
         chatRoomUsers {
           nextToken
         }
@@ -171,6 +173,7 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
       }
       chatRoom {
         id
+        group
         chatRoomUsers {
           nextToken
         }
@@ -198,6 +201,7 @@ export const onCreateChatRoom = /* GraphQL */ `
   subscription OnCreateChatRoom {
     onCreateChatRoom {
       id
+      group
       chatRoomUsers {
         items {
           id
@@ -236,6 +240,7 @@ export const onCreateChatRoom = /* GraphQL */ `
         }
         chatRoom {
           id
+          group
           lastMessageID
           createdAt
           updatedAt
@@ -251,6 +256,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
   subscription OnUpdateChatRoom {
     onUpdateChatRoom {
       id
+      group
       chatRoomUsers {
         items {
           id
@@ -289,6 +295,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
         }
         chatRoom {
           id
+          group
           lastMessageID
           createdAt
           updatedAt
@@ -304,6 +311,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
   subscription OnDeleteChatRoom {
     onDeleteChatRoom {
       id
+      group
       chatRoomUsers {
         items {
           id
@@ -342,6 +350,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
         }
         chatRoom {
           id
+          group
           lastMessageID
           createdAt
           updatedAt
@@ -374,6 +383,7 @@ export const onCreateMessage = /* GraphQL */ `
       }
       chatRoom {
         id
+        group
         chatRoomUsers {
           nextToken
         }
@@ -417,6 +427,7 @@ export const onUpdateMessage = /* GraphQL */ `
       }
       chatRoom {
         id
+        group
         chatRoomUsers {
           nextToken
         }
@@ -460,6 +471,7 @@ export const onDeleteMessage = /* GraphQL */ `
       }
       chatRoom {
         id
+        group
         chatRoomUsers {
           nextToken
         }

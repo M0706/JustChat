@@ -6,6 +6,7 @@ import {
 } from "@react-navigation/stack";
 import LoginScreen from "../screens/Authentication/Login/login";
 import SignUpScreen from "../screens/Authentication/SignUp/signup";
+import GroupChatScreen from "../screens/Personal/GroupChats/ChatScreen";
 import Navigation from "../navigation";
 
 const LoginStack = createStackNavigator();

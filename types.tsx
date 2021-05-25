@@ -22,11 +22,11 @@ export type TabTwoParamList = {
 
 export type TabThreeParamList = {
   StatusScreen: undefined;
-}
+};
 
 export type TabFourParamList = {
   CallsScreen: undefined;
-}
+};
 
 export type User = {
   id: string;
@@ -34,17 +34,17 @@ export type User = {
   imageUri: string;
   status: string;
   previousChatID: string;
-}
+};
 
 export type Message = {
   id: string;
   content: string;
   user: User;
   createdAt: string;
-}
+};
 
 export type ChatRoom = {
   id: string;
   users: User[];
-  lastMessage: Message
-}
+  lastMessage: Message;
+};

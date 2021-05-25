@@ -1,20 +1,18 @@
-import React from 'react';
+import React from "react";
+import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Auth, API, graphqlOperation } from "aws-amplify";
 import {
-  View,
-  Text,
-  Image,
-  TouchableWithoutFeedback
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { createChatRoomUser, createChatRoom } from '../../../../graphql/mutations';
+  createChatRoomUser,
+  createChatRoom,
+} from "../../../../graphql/mutations";
 
-import { User } from '../../types';
-import styles from './style';
+import { User } from "../../../../types";
+import styles from "./style";
 
 export type ContactListItemProps = {
-  user: User
-}
+  user: User;
+};
 
 const ContactListItem = (props: ContactListItemProps) => {
   const { user } = props;
@@ -25,49 +23,43 @@ const ContactListItem = (props: ContactListItemProps) => {
       let newChatRoomData;
       if (!user.previousChatID) {
         newChatRoomData = await API.graphql(
-          graphqlOperation(
-            createChatRoom,
-            { input: { lastMessageID: '' } }
-          )
+          graphqlOperation(createChatRoom, {
+            input: { lastMessageID: "", group: "False" },
+          })
         );
 
-        if(!newChatRoomData.data) {
-          console.log('Failed to create chat room');
+        if (!newChatRoomData.data) {
+          console.log("Failed to create chat room");
           return;
         }
 
         await API.graphql(
-          graphqlOperation(
-            createChatRoomUser,
-            {
-              input: {
-                userID: user.id,
-                chatRoomID: newChatRoomData.data.createChatRoom.id
-              }
-            }
-          )
+          graphqlOperation(createChatRoomUser, {
+            input: {
+              userID: user.id,
+              chatRoomID: newChatRoomData.data.createChatRoom.id,
+            },
+          })
         );
 
         const userInfo = await Auth.currentAuthenticatedUser();
         await API.graphql(
-          graphqlOperation(
-            createChatRoomUser,
-            {
-              input: {
-                userID: userInfo.attributes.sub,
-                chatRoomID: newChatRoomData.data.createChatRoom.id
-              }
-            }
-          )
+          graphqlOperation(createChatRoomUser, {
+            input: {
+              userID: userInfo.attributes.sub,
+              chatRoomID: newChatRoomData.data.createChatRoom.id,
+            },
+          })
         );
       }
 
-      navigation.navigate('ChatRoom', {
-        id: user.previousChatID ? user.previousChatID : (newChatRoomData?.data.createChatRoom.id || ''),
-        name: user.name
+      navigation.navigate("ChatRoom", {
+        id: user.previousChatID
+          ? user.previousChatID
+          : newChatRoomData?.data.createChatRoom.id || "",
+        name: user.name,
       });
-
-    } catch(err) {
+    } catch (err) {
       console.warn(err);
     }
   };

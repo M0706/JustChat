@@ -89,6 +89,8 @@ export type ChatRoomUser = {
 export type ChatRoom = {
   __typename: "ChatRoom",
   id?: string,
+  group?: string,
+  name?: string | null,
   chatRoomUsers?: ModelChatRoomUserConnection,
   messages?: ModelMessageConnection,
   lastMessageID?: string,
@@ -168,10 +170,14 @@ export type DeleteChatRoomUserInput = {
 
 export type CreateChatRoomInput = {
   id?: string | null,
+  group: string,
+  name?: string | null,
   lastMessageID: string,
 };
 
 export type ModelChatRoomConditionInput = {
+  group?: ModelStringInput | null,
+  name?: ModelStringInput | null,
   lastMessageID?: ModelIDInput | null,
   and?: Array< ModelChatRoomConditionInput | null > | null,
   or?: Array< ModelChatRoomConditionInput | null > | null,
@@ -180,6 +186,8 @@ export type ModelChatRoomConditionInput = {
 
 export type UpdateChatRoomInput = {
   id: string,
+  group?: string | null,
+  name?: string | null,
   lastMessageID?: string | null,
 };
 
@@ -244,6 +252,8 @@ export type ModelChatRoomUserFilterInput = {
 
 export type ModelChatRoomFilterInput = {
   id?: ModelIDInput | null,
+  group?: ModelStringInput | null,
+  name?: ModelStringInput | null,
   lastMessageID?: ModelIDInput | null,
   and?: Array< ModelChatRoomFilterInput | null > | null,
   or?: Array< ModelChatRoomFilterInput | null > | null,
@@ -267,6 +277,12 @@ export type ModelMessageFilterInput = {
   not?: ModelMessageFilterInput | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelStringKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
@@ -276,12 +292,6 @@ export type ModelStringKeyConditionInput = {
   between?: Array< string | null > | null,
   beginsWith?: string | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type CreateUserMutationVariables = {
   input?: CreateUserInput,
@@ -397,6 +407,8 @@ export type CreateChatRoomUserMutation = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -450,6 +462,8 @@ export type UpdateChatRoomUserMutation = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -503,6 +517,8 @@ export type DeleteChatRoomUserMutation = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -538,6 +554,8 @@ export type CreateChatRoomMutation = {
   createChatRoom?:  {
     __typename: "ChatRoom",
     id: string,
+    group: string,
+    name?: string | null,
     chatRoomUsers?:  {
       __typename: "ModelChatRoomUserConnection",
       items?:  Array< {
@@ -583,6 +601,8 @@ export type CreateChatRoomMutation = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
@@ -603,6 +623,8 @@ export type UpdateChatRoomMutation = {
   updateChatRoom?:  {
     __typename: "ChatRoom",
     id: string,
+    group: string,
+    name?: string | null,
     chatRoomUsers?:  {
       __typename: "ModelChatRoomUserConnection",
       items?:  Array< {
@@ -648,6 +670,8 @@ export type UpdateChatRoomMutation = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
@@ -668,6 +692,8 @@ export type DeleteChatRoomMutation = {
   deleteChatRoom?:  {
     __typename: "ChatRoom",
     id: string,
+    group: string,
+    name?: string | null,
     chatRoomUsers?:  {
       __typename: "ModelChatRoomUserConnection",
       items?:  Array< {
@@ -713,6 +739,8 @@ export type DeleteChatRoomMutation = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
@@ -753,6 +781,8 @@ export type CreateMessageMutation = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -807,6 +837,8 @@ export type UpdateMessageMutation = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -861,6 +893,8 @@ export type DeleteMessageMutation = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -966,6 +1000,8 @@ export type GetChatRoomUserQuery = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -1018,6 +1054,8 @@ export type ListChatRoomUsersQuery = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
@@ -1037,6 +1075,8 @@ export type GetChatRoomQuery = {
   getChatRoom?:  {
     __typename: "ChatRoom",
     id: string,
+    group: string,
+    name?: string | null,
     chatRoomUsers?:  {
       __typename: "ModelChatRoomUserConnection",
       items?:  Array< {
@@ -1082,6 +1122,8 @@ export type GetChatRoomQuery = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
@@ -1105,6 +1147,8 @@ export type ListChatRoomsQuery = {
     items?:  Array< {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -1158,6 +1202,8 @@ export type GetMessageQuery = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -1211,10 +1257,53 @@ export type ListMessagesQuery = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
       } | null,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ChatRoomsByGroupsQueryVariables = {
+  group?: string | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelChatRoomFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ChatRoomsByGroupsQuery = {
+  chatRoomsByGroups?:  {
+    __typename: "ModelChatRoomConnection",
+    items?:  Array< {
+      __typename: "ChatRoom",
+      id: string,
+      group: string,
+      name?: string | null,
+      chatRoomUsers?:  {
+        __typename: "ModelChatRoomUserConnection",
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      lastMessageID: string,
+      lastMessage?:  {
+        __typename: "Message",
+        id: string,
+        createdAt: string,
+        content: string,
+        userID: string,
+        chatRoomID: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
       updatedAt: string,
     } | null > | null,
     nextToken?: string | null,
@@ -1252,6 +1341,8 @@ export type MessagesByChatRoomQuery = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
@@ -1356,6 +1447,8 @@ export type OnCreateChatRoomUserSubscription = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -1404,6 +1497,8 @@ export type OnUpdateChatRoomUserSubscription = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -1452,6 +1547,8 @@ export type OnDeleteChatRoomUserSubscription = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -1482,6 +1579,8 @@ export type OnCreateChatRoomSubscription = {
   onCreateChatRoom?:  {
     __typename: "ChatRoom",
     id: string,
+    group: string,
+    name?: string | null,
     chatRoomUsers?:  {
       __typename: "ModelChatRoomUserConnection",
       items?:  Array< {
@@ -1527,6 +1626,8 @@ export type OnCreateChatRoomSubscription = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
@@ -1542,6 +1643,8 @@ export type OnUpdateChatRoomSubscription = {
   onUpdateChatRoom?:  {
     __typename: "ChatRoom",
     id: string,
+    group: string,
+    name?: string | null,
     chatRoomUsers?:  {
       __typename: "ModelChatRoomUserConnection",
       items?:  Array< {
@@ -1587,6 +1690,8 @@ export type OnUpdateChatRoomSubscription = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
@@ -1602,6 +1707,8 @@ export type OnDeleteChatRoomSubscription = {
   onDeleteChatRoom?:  {
     __typename: "ChatRoom",
     id: string,
+    group: string,
+    name?: string | null,
     chatRoomUsers?:  {
       __typename: "ModelChatRoomUserConnection",
       items?:  Array< {
@@ -1647,6 +1754,8 @@ export type OnDeleteChatRoomSubscription = {
       chatRoom?:  {
         __typename: "ChatRoom",
         id: string,
+        group: string,
+        name?: string | null,
         lastMessageID: string,
         createdAt: string,
         updatedAt: string,
@@ -1682,6 +1791,8 @@ export type OnCreateMessageSubscription = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -1731,6 +1842,8 @@ export type OnUpdateMessageSubscription = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,
@@ -1780,6 +1893,8 @@ export type OnDeleteMessageSubscription = {
     chatRoom?:  {
       __typename: "ChatRoom",
       id: string,
+      group: string,
+      name?: string | null,
       chatRoomUsers?:  {
         __typename: "ModelChatRoomUserConnection",
         nextToken?: string | null,

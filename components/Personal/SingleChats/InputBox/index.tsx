@@ -1,38 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
-  Entypo, FontAwesome5, 
-  MaterialCommunityIcons, 
+  Entypo,
+  FontAwesome5,
+  MaterialCommunityIcons,
   Fontisto,
-  MaterialIcons          
-} from  '@expo/vector-icons';
-import {
-  View,
-  KeyboardAvoidingView,
-  TextInput,
-  Platform
-} from 'react-native';
-import {
-  TouchableOpacity
-} from 'react-native-gesture-handler';
-import {
-  Auth,
-  API,
-  Storage,
-  graphqlOperation
-} from 'aws-amplify';
-import { createMessage, updateChatRoom } from '../../../../graphql/mutations';
-import styles from './styles';
+  MaterialIcons,
+} from "@expo/vector-icons";
+import { View, KeyboardAvoidingView, TextInput, Platform } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Auth, API, Storage, graphqlOperation } from "aws-amplify";
+import { createMessage, updateChatRoom } from "../../../../graphql/mutations";
+import styles from "./styles";
 
 export type InputBoxProps = {
-  chatRoomID: string
-}
+  chatRoomID: string;
+};
 
 const InputBox = (props: InputBoxProps) => {
   const [userID, setUserID] = useState(null);
-  
+
   const { chatRoomID } = props;
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -45,52 +34,47 @@ const InputBox = (props: InputBoxProps) => {
   }, []);
 
   const onMicrophonePress = () => {
-    console.warn('Microphone');
+    console.warn("Microphone");
   };
 
   const updateChatRoomAsync = async (lastMessageID: string) => {
     try {
       await API.graphql(
-        graphqlOperation(
-          updateChatRoom,
-          {
-            input: {
-              id: chatRoomID,
-              lastMessageID
-            }
-          }
-        )
+        graphqlOperation(updateChatRoom, {
+          input: {
+            id: chatRoomID,
+            lastMessageID,
+          },
+        })
       );
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };
- 
+
   //Add media in schema before sending images
-  const sendPress = async (Imagekey:object) => {
+  const sendPress = async (Imagekey: object) => {
     //console.log("key in onSendPress ==>",Imagekey)
-     try {
+    try {
       const newMessageData = await API.graphql(
-        graphqlOperation(
-          createMessage, {
-            input: {
-              content: message,
-              //media:Imagekey,
-              userID: userID,
-              chatRoomID
-            }
-          }
-        )
-      )
+        graphqlOperation(createMessage, {
+          input: {
+            content: message,
+            //media:Imagekey,
+            userID: userID,
+            chatRoomID,
+          },
+        })
+      );
       //console.log("NewMessage Data --->",newMessageData)
-      setMessage('');
-      await updateChatRoomAsync(newMessageData.data.createMessage.id)
+      setMessage("");
+      await updateChatRoomAsync(newMessageData.data.createMessage.id);
     } catch (e) {
       console.log(e);
     }
 
     //setMessage('');
-  }
+  };
 
   const uploadImage = async () => {
     try {
@@ -124,26 +108,24 @@ const InputBox = (props: InputBoxProps) => {
     //console.log(result);
 
     if (!result.cancelled) {
-    //console.log(result)
+      //console.log(result)
       setImage(result.uri);
     }
   };
 
-  const onPressAttachment= async ()=>{
+  const onPressAttachment = async () => {
     //console.warn("Send Attachment")
     await pickImage();
     const imagekey = await uploadImage();
     //console.log("Image key in OnpressAttachment -->",imagekey);
-    const signedUrl = await Storage.get(imagekey)
+    const signedUrl = await Storage.get(imagekey);
     //console.log("Signed Url --->",signedUrl);
-    //sendPress(signedUrl); 
-}
+    //sendPress(signedUrl);
+  };
 
-const onCameraPress=()=>{
-  console.warn("Camera pressed")
-}
-
-
+  const onCameraPress = () => {
+    console.warn("Camera pressed");
+  };
 
   const onPress = () => {
     if (!message) {
@@ -155,9 +137,9 @@ const onCameraPress=()=>{
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
       keyboardVerticalOffset={100}
-      style={{ width: '100%' }}
+      style={{ width: "100%" }}
     >
       <View style={styles.container}>
         <View style={styles.mainContainer}>
@@ -169,34 +151,40 @@ const onCameraPress=()=>{
             value={message}
             onChangeText={setMessage}
           />
-          <Entypo name="attachment" 
-          size={24} color="grey" 
-          style={styles.icon} 
-          onPress={onPressAttachment}
+          <Entypo
+            name="attachment"
+            size={24}
+            color="grey"
+            style={styles.icon}
+            onPress={onPressAttachment}
           />
 
-
-        {!message && 
-        <Fontisto name="camera" 
-                  size={24} color="grey" 
-                  style={styles.icon}
-                  onPress={onCameraPress}
-                  />}
-                  
+          {!message && (
+            <Fontisto
+              name="camera"
+              size={24}
+              color="grey"
+              style={styles.icon}
+              onPress={onCameraPress}
+            />
+          )}
         </View>
         <TouchableOpacity onPress={onPress}>
-        <View style={styles.buttonContainer}>
-          {!message
-            ? <MaterialCommunityIcons name="microphone" size={28} color="white" />
-            : <MaterialIcons name="send" size={28} color="white" />}
-        </View>
-
-       </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            {!message ? (
+              <MaterialCommunityIcons
+                name="microphone"
+                size={28}
+                color="white"
+              />
+            ) : (
+              <MaterialIcons name="send" size={28} color="white" />
+            )}
+          </View>
+        </TouchableOpacity>
       </View>
-  </KeyboardAvoidingView>
+    </KeyboardAvoidingView>
   );
 };
 
 export default InputBox;
-
-
