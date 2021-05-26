@@ -43,5 +43,5 @@ type Message
   userID: ID!
   chatRoomID: ID!
   user: User @connection(fields: ["userID"])
-  chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
+  chatRoom: ChatRoom @connection(fields: ["chatRoomID"], sortField: "createdAt")
 }

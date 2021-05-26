@@ -21,10 +21,56 @@ import ChatRoomScreen from "../screens/Personal/SingleChats/ChatRoomScreen";
 import ContactsScreen from "../screens/Personal/SingleChats/ContactsScreen";
 import AddGroupInfo from "../screens/Personal/GroupChats/AddGroupInfo";
 import WorkProfile from "../screens/Work/WorkProfile";
-
+import OtherUserInfo from "../screens/Personal/OtherUserInfo";
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { Button } from "react-native-paper";
 // stack navigator for chat screen
+
+const chatsHeader = (route) => {
+  const navigation = useNavigation();
+  return {
+    title: route.params.name,
+    headerShown: true,
+    // header: () => (
+    //   <>
+    //     <Button>Hi</Button>
+    //   </>
+    // ),
+    headerRight: () => (
+      <>
+        <View
+          style={{
+            flexDirection: "row",
+            width: 100,
+            justifyContent: "space-between",
+            marginRight: 10,
+          }}
+        >
+          <FontAwesome5 name="video" size={22} color={"black"} />
+          <MaterialIcons
+            name="call"
+            size={22}
+            color={"black"}
+            onPress={() => {
+              navigation.navigate("OtherUserInfo");
+            }}
+          />
+          <MaterialCommunityIcons
+            name="dots-vertical"
+            size={22}
+            color={"black"}
+          />
+        </View>
+      </>
+    ),
+    headerLeft: () => (
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <MaterialCommunityIcons name="arrow-left" size={22} color={"black"} />
+      </TouchableOpacity>
+    ),
+  };
+};
 
 const CustomMenu = ({ visible, toggleOverlay, navigation }) => {
   return (
@@ -60,16 +106,6 @@ const ChatsNavigator = () => {
   return (
     <ChatsStack.Navigator
       screenOptions={{
-        // headerStyle: {
-        //   backgroundColor: Colors.light.tint,
-        //   shadowOpacity: 0,
-        //   elevation: 0,
-        // },
-        // headerTintColor: Colors.light.background,
-        // headerTitleAlign: "left",
-        // headerTitleStyle: {
-        //   fontWeight: "bold",
-        // },
         headerShown: false,
       }}
     >
@@ -77,39 +113,10 @@ const ChatsNavigator = () => {
       <ChatsStack.Screen
         name="ChatRoom"
         component={ChatRoomScreen}
-        options={({ route }) => ({
-          title: route.params.name,
-          headerShown: true,
-          headerRight: () => (
-            <View
-              style={{
-                flexDirection: "row",
-                width: 100,
-                justifyContent: "space-between",
-                marginRight: 10,
-              }}
-            >
-              <FontAwesome5 name="video" size={22} color={"white"} />
-              <MaterialIcons name="call" size={22} color={"white"} />
-              <MaterialCommunityIcons
-                name="dots-vertical"
-                size={22}
-                color={"white"}
-              />
-            </View>
-          ),
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <MaterialCommunityIcons
-                name="arrow-left"
-                size={22}
-                color={"white"}
-              />
-            </TouchableOpacity>
-          ),
-        })}
+        options={({ route }) => chatsHeader(route)}
       />
       <ChatsStack.Screen name="Contacts" component={ContactsScreen} />
+      <ChatsStack.Screen name="OtherUserInfo" component={OtherUserInfo} />
     </ChatsStack.Navigator>
   );
 };
@@ -131,37 +138,7 @@ const GroupsChatsNavigator = () => {
       <GroupsStack.Screen
         name="ChatRoom"
         component={ChatRoomScreen}
-        options={({ route }) => ({
-          title: route.params.name,
-          headerShown: true,
-          headerRight: () => (
-            <View
-              style={{
-                flexDirection: "row",
-                width: 100,
-                justifyContent: "space-between",
-                marginRight: 10,
-              }}
-            >
-              <FontAwesome5 name="video" size={22} color={"white"} />
-              <MaterialIcons name="call" size={22} color={"white"} />
-              <MaterialCommunityIcons
-                name="dots-vertical"
-                size={22}
-                color={"white"}
-              />
-            </View>
-          ),
-          // headerLeft: () => (
-          //   <TouchableOpacity onPress={() => navigation.navigate("Root")}>
-          //     <MaterialCommunityIcons
-          //       name="arrow-left"
-          //       size={22}
-          //       color={"white"}
-          //     />
-          //   </TouchableOpacity>
-          // ),
-        })}
+        options={({ route }) => chatsHeader(route)}
       />
       <GroupsStack.Screen name="Contacts" component={AddContactsScreen} />
       <GroupsStack.Screen name="AddGroupInfo" component={AddGroupInfo} />

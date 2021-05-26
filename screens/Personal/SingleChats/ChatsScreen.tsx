@@ -11,8 +11,21 @@ import { getUser } from "../../../graphqlCustom/queries";
 import {
   onUpdateChatRoom,
   onCreateChatRoom,
+  onCreateMessage,
+  onUpdateMessage,
 } from "../../../graphql/subscriptions";
+import moment from "moment";
 import { ChatRoom } from "../../../types";
+
+function comapre_time(a, b) {
+  if (moment(a.chatRoom.updatedAt).isBefore(b.chatRoom.updatedAt)) {
+    return 1;
+  } else if (moment(a.chatRoom.updatedAt).isAfter(b.chatRoom.updatedAt)) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
@@ -31,6 +44,8 @@ export default function ChatsScreen() {
           tempChatRoomArr.push(room);
         }
       });
+
+      tempChatRoomArr.sort(comapre_time);
 
       setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
     } catch (err) {
