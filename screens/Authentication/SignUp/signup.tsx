@@ -22,6 +22,8 @@ export default function SignUpScreen() {
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [askingOTP, setAskingOTP] = useState(false);
+  const [send, setSend] = useState(false)
+
   const navigation = useNavigation();
 
   const signup = async () => {
@@ -42,6 +44,20 @@ export default function SignUpScreen() {
     }
     setLoading(false);
   };
+
+  const resendOTP = async() =>{
+    setSend(true);
+    try {
+      const resend = await Auth.resendSignUp(userName);
+      Alert.alert("Success!","Code send successfully");
+      //setAskingOTP(true);
+    } catch (err) {
+      console.log(err);
+      Alert.alert("Error!", err.message || "An error ocurred");
+    }
+    setSend(false);
+
+  }
 
   const confirmCode = async () => {
     setConfirming(true);
@@ -74,10 +90,20 @@ export default function SignUpScreen() {
             style={styles.loginBtn}
             onPress={confirmCode}
           >
+            
             {confirming ? (
               <ActivityIndicator />
             ) : (
               <Text style={styles.loginText}>Confirm</Text>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={resendOTP}
+          >
+            {send ? (
+              <ActivityIndicator />
+            ) : (
+              <Text style={styles.loginText}>Resend Code</Text>
             )}
           </TouchableOpacity>
         </>
