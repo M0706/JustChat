@@ -9,7 +9,8 @@ projects:
       amplify:
         codeGenTarget: typescript
         generatedFileName: API.ts
-        docsFilePath: /graphql
+        docsFilePath: src/graphql
+        maxDepth: 6
   NishantJain22May:
     schemaPath: graphql/schema.json
     includes:

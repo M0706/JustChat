@@ -14,6 +14,8 @@ export const getUser = /* GraphQL */ `
           updatedAt
           chatRoom {
             id
+            group
+            name
             chatRoomUsers {
               items {
                 user {

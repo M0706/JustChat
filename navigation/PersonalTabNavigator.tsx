@@ -5,7 +5,12 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { Overlay } from "react-native-elements";
-import { FontAwesome5 } from "@expo/vector-icons";
+import {
+  FontAwesome5,
+  Entypo,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 
 import PersonalCall from "../screens/Personal/CallsScreen/PersonalCall";
 import GroupChatScreen from "../screens/Personal/GroupChats/ChatScreen";
@@ -18,7 +23,7 @@ import AddGroupInfo from "../screens/Personal/GroupChats/AddGroupInfo";
 import WorkProfile from "../screens/Work/WorkProfile";
 
 import Colors from "../constants/Colors";
-
+import { useNavigation } from "@react-navigation/native";
 // stack navigator for chat screen
 
 const CustomMenu = ({ visible, toggleOverlay, navigation }) => {
@@ -51,6 +56,7 @@ const CustomMenu = ({ visible, toggleOverlay, navigation }) => {
 const ChatsStack = createStackNavigator();
 
 const ChatsNavigator = () => {
+  const navigation = useNavigation();
   return (
     <ChatsStack.Navigator
       screenOptions={{
@@ -68,7 +74,41 @@ const ChatsNavigator = () => {
       }}
     >
       <ChatsStack.Screen name="ChatScreen" component={ChatsScreen} />
-      <ChatsStack.Screen name="ChatRoom" component={ChatRoomScreen} />
+      <ChatsStack.Screen
+        name="ChatRoom"
+        component={ChatRoomScreen}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerShown: true,
+          headerRight: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                width: 100,
+                justifyContent: "space-between",
+                marginRight: 10,
+              }}
+            >
+              <FontAwesome5 name="video" size={22} color={"white"} />
+              <MaterialIcons name="call" size={22} color={"white"} />
+              <MaterialCommunityIcons
+                name="dots-vertical"
+                size={22}
+                color={"white"}
+              />
+            </View>
+          ),
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={22}
+                color={"white"}
+              />
+            </TouchableOpacity>
+          ),
+        })}
+      />
       <ChatsStack.Screen name="Contacts" component={ContactsScreen} />
     </ChatsStack.Navigator>
   );
@@ -83,8 +123,46 @@ const GroupsChatsNavigator = () => {
         headerShown: false,
       }}
     >
-      <GroupsStack.Screen name="ChatScreen" component={GroupChatScreen} />
-      <GroupsStack.Screen name="ChatRoom" component={ChatRoomScreen} />
+      <GroupsStack.Screen
+        name="ChatScreen"
+        component={GroupChatScreen}
+        options={{ title: "JustChat" }}
+      />
+      <GroupsStack.Screen
+        name="ChatRoom"
+        component={ChatRoomScreen}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerShown: true,
+          headerRight: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                width: 100,
+                justifyContent: "space-between",
+                marginRight: 10,
+              }}
+            >
+              <FontAwesome5 name="video" size={22} color={"white"} />
+              <MaterialIcons name="call" size={22} color={"white"} />
+              <MaterialCommunityIcons
+                name="dots-vertical"
+                size={22}
+                color={"white"}
+              />
+            </View>
+          ),
+          // headerLeft: () => (
+          //   <TouchableOpacity onPress={() => navigation.navigate("Root")}>
+          //     <MaterialCommunityIcons
+          //       name="arrow-left"
+          //       size={22}
+          //       color={"white"}
+          //     />
+          //   </TouchableOpacity>
+          // ),
+        })}
+      />
       <GroupsStack.Screen name="Contacts" component={AddContactsScreen} />
       <GroupsStack.Screen name="AddGroupInfo" component={AddGroupInfo} />
     </GroupsStack.Navigator>

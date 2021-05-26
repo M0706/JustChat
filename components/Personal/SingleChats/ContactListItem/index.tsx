@@ -16,6 +16,7 @@ export type ContactListItemProps = {
 
 const ContactListItem = (props: ContactListItemProps) => {
   const { user } = props;
+  //console.log("User ====>", user);
   const navigation = useNavigation();
 
   const onClick = async () => {

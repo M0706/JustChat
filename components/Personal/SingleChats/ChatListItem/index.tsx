@@ -18,10 +18,18 @@ const ChatListItem = (props: ChatListItemProps) => {
   useEffect(() => {
     const getOtherUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser();
-      const user = chatRoom.chatRoomUsers.items.find(
-        (i) => i.user.id !== userInfo.attributes.sub
-      ).user;
-      setOtherUser(user);
+      console.log(chatRoom);
+      if (chatRoom.group === "True") {
+        setOtherUser({
+          name: chatRoom.name,
+          imageUri: "",
+        });
+      } else {
+        const user = chatRoom.chatRoomUsers.items.find(
+          (i) => i.user.id !== userInfo.attributes.sub
+        ).user;
+        setOtherUser(user);
+      }
     };
 
     getOtherUser();

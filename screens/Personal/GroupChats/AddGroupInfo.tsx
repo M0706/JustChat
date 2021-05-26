@@ -12,6 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import Colors from "../../../constants/Colors";
 import { ActivityIndicator } from "react-native-paper";
+import { Auth, API, graphqlOperation } from "aws-amplify";
+import { createChatRoom, createChatRoomUser } from "../../../graphql/mutations";
 
 const GroupInfo = (props) => {
   const navigation = useNavigation();
@@ -19,12 +21,53 @@ const GroupInfo = (props) => {
   const [loading, setLoading] = useState(false);
   const [groupName, setGroupName] = useState("");
 
-  const makeGroup = () => {
+  const makeGroup = async () => {
     if (groupName == "") {
       Alert.alert("Error!", "Name of Group not specified");
       return;
     }
     const groupInfo = [...groupUsers, { groupName: groupName }];
+    try {
+      let newChatRoomData = await API.graphql(
+        graphqlOperation(createChatRoom, {
+          input: {
+            lastMessageID: "",
+            group: "True",
+            name: groupName,
+          },
+        })
+      );
+      if (!newChatRoomData.data) {
+        console.log("Failed to create chat room");
+        return;
+      }
+      groupUsers.forEach(async (user) => {
+        await API.graphql(
+          graphqlOperation(createChatRoomUser, {
+            input: {
+              userID: user.id,
+              chatRoomID: newChatRoomData.data.createChatRoom.id,
+            },
+          })
+        );
+      });
+
+      const userInfo = await Auth.currentAuthenticatedUser();
+      await API.graphql(
+        graphqlOperation(createChatRoomUser, {
+          input: {
+            userID: userInfo.attributes.sub,
+            chatRoomID: newChatRoomData.data.createChatRoom.id,
+          },
+        })
+      );
+      navigation.navigate("ChatRoom", {
+        id: newChatRoomData?.data.createChatRoom.id || "",
+        name: groupName,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -32,7 +75,7 @@ const GroupInfo = (props) => {
       <View style={styles.inputView}>
         <TextInput
           style={styles.inputText}
-          placeholder="Group Name"
+          placeholder="Enter your group name here"
           placeholderTextColor="black"
           onChangeText={(text) => setGroupName(text)}
         />

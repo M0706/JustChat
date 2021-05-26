@@ -21,14 +21,18 @@ export default function ChatsScreen() {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
 
-      const userData = await API.graphql(
+      let userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUser.attributes.sub })
       );
-      console.log(userData);
 
-      setChatRooms(
-        userData.data.getUser.chatRoomUser.items.map((i) => ({ ...i.chatRoom }))
-      );
+      let tempChatRoomArr: any = [];
+      userData.data.getUser.chatRoomUser.items.map((room) => {
+        if (room.chatRoom.group === "False") {
+          tempChatRoomArr.push(room);
+        }
+      });
+
+      setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
     } catch (err) {
       console.log(err);
     }
@@ -58,7 +62,6 @@ export default function ChatsScreen() {
         fetchChatRooms();
       },
     });
-
     return () => subscription.unsubscribe();
   }, [chatRooms]);
 

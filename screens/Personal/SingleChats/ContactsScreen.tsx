@@ -1,18 +1,18 @@
-import React, {useEffect, useState } from 'react';
-import { StyleSheet,FlatList } from 'react-native';
-import { useRoute} from '@react-navigation/native';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, FlatList } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
-import { View } from '../../../components/Themed';
-import ContactListItem from '../../../components/Personal/SingleChats/ContactListItem';
-import { Auth, API, graphqlOperation } from 'aws-amplify';
-import { listUsers } from '../../../graphql/queries';
-import { User } from '../../../types';
+import { View } from "../../../components/Themed";
+import ContactListItem from "../../../components/Personal/SingleChats/ContactListItem";
+import { Auth, API, graphqlOperation } from "aws-amplify";
+import { listUsers } from "../../../graphql/queries";
+import { User } from "../../../types";
 
 export default function ContactsScreen() {
-  const [users, setUsers] =useState([])
-  const route=useRoute();
+  const [users, setUsers] = useState([]);
+  const route = useRoute();
 
-  const chatRooms= route.params.chatRooms;
+  const chatRooms = route.params.chatRooms;
 
   const mapUsers = (user: User, currentAuthedUser: string) => {
     if (user.id === currentAuthedUser) {
@@ -29,8 +29,13 @@ export default function ContactsScreen() {
     //                       cr.chatRoomUsers.items.some((i) => (i.user.id === user.id))
     // });
 
+    //console.log("sd cks  ====>", filterChatRoom[0].group);
     for (var cr in filterChatRoom) {
       var temp = filterChatRoom[cr];
+      //Users can have multiple groups with same members but no single chats with same members
+      if (temp.group === "True") {
+        continue;
+      }
       for (var tr in temp.chatRoomUsers.items) {
         var tuser = temp.chatRoomUsers.items[tr];
         if (tuser.user.id == user.id) {
@@ -48,36 +53,37 @@ export default function ContactsScreen() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersData= await API.graphql(graphqlOperation(listUsers));
-        const currentUser= await Auth.currentAuthenticatedUser();
-        const filteredUsers= usersData.data.listUsers.items.map((i: User) => mapUsers(i, currentUser.attributes.sub)).filter(Boolean);
-         setUsers(filteredUsers);
-      }catch(err) {
-      console.warn(err);
+        const usersData = await API.graphql(graphqlOperation(listUsers));
+        const currentUser = await Auth.currentAuthenticatedUser();
+        const filteredUsers = usersData.data.listUsers.items
+          .map((i: User) => mapUsers(i, currentUser.attributes.sub))
+          .filter(Boolean);
+        setUsers(filteredUsers);
+      } catch (err) {
+        console.warn(err);
       }
     };
 
-  fetchUsers();
-  },[]);
+    fetchUsers();
+  }, []);
 
   return (
-  <View style={styles.container}>
-    <FlatList
-      style={{ width: '100%' }}
-      data={users}
-      renderItem={({ item }) => <ContactListItem user={item} />}
-      keyExtractor={(item: User) => item.id}
-    />
-  </View>
+    <View style={styles.container}>
+      <FlatList
+        style={{ width: "100%" }}
+        data={users}
+        renderItem={({ item }) => <ContactListItem user={item} />}
+        keyExtractor={(item: User) => item.id}
+      />
+    </View>
   );
 }
 
-
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
   },
 });
