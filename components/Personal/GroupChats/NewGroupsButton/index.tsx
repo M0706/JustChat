@@ -8,7 +8,7 @@ const NewGroupsButton = () => {
   const navigation = useNavigation();
 
   const onPress = () => {
-    navigation.navigate("Contacts");
+    navigation.navigate("AddContacts");
   };
 
   return (

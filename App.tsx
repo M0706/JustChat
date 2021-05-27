@@ -4,8 +4,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
-import Navigation from "./navigation";
-import LoginNavigator from "./navigation/LoginNavigator";
+import LoginNavigator, {
+  MainStackNavigator,
+} from "./navigation/LoginNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { withAuthenticator } from "aws-amplify-react-native";
@@ -60,7 +61,7 @@ function App() {
     return (
       <SafeAreaProvider>
         <NavigationContainer>
-          <Navigation colorScheme={colorScheme} />
+          <MainStackNavigator colorScheme={colorScheme} />
         </NavigationContainer>
         <StatusBar />
       </SafeAreaProvider>
@@ -69,7 +70,9 @@ function App() {
     return (
       <SafeAreaProvider>
         {/* <Navigation colorScheme={colorScheme} /> */}
-        <LoginNavigator colorScheme={colorScheme} />
+        <NavigationContainer>
+          <LoginNavigator colorScheme={colorScheme} />
+        </NavigationContainer>
         <StatusBar />
       </SafeAreaProvider>
     );
