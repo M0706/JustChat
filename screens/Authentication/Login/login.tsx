@@ -17,6 +17,10 @@ export default function LoginScreen() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [forgotPass, setForgotPass] = useState(false);
+  const [forgotPassUser, setForgotPassUser] = useState("");
+  const [otpSending, setOtpSending] = useState(false)
+  const [enterOTP, setEnterOTP] = useState(false)
   const navigation = useNavigation();
 
   const login = async () => {
@@ -31,47 +35,106 @@ export default function LoginScreen() {
     setLoading(false);
   };
 
+
+
+
+
+  
   return (
+  
     <View style={styles.container}>
-      <Text style={styles.logo}>JustChat</Text>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="UserName"
-          placeholderTextColor="#003f5c"
-          onChangeText={(text) => setUserName(text)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          secureTextEntry
-          style={styles.inputText}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          onChangeText={(text) => setPassword(text)}
-        />
-      </View>
-      <TouchableOpacity>
-        <Text style={styles.forgot}>Forgot Password?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        disabled={loading}
-        style={styles.loginBtn}
-        onPress={login}
-      >
-        {loading ? (
-          <ActivityIndicator />
-        ) : (
-          <Text style={styles.loginText}>Sigin</Text>
-        )}
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("SignUpScreen");
-        }}
-      >
-        <Text style={styles.navigate}>Don't Have an acount?</Text>
-      </TouchableOpacity>
-    </View>
+    <Text style={styles.logo}>JustChat</Text>
+    
+ 
+   <View style={styles.inputView}>
+     <TextInput
+       style={styles.inputText}
+       placeholder="UserName"
+       placeholderTextColor="#003f5c"
+       onChangeText={(text) => setUserName(text)}
+     />
+   </View>
+   <View style={styles.inputView}>
+     <TextInput
+       secureTextEntry
+       style={styles.inputText}
+       placeholder="Password"
+       placeholderTextColor="#003f5c"
+       onChangeText={(text) => setPassword(text)}
+     />
+   </View>
+   <TouchableOpacity onPress={()=>{
+     navigation.navigate("ForgotPassword");
+   }}>
+     <Text style={styles.forgot}>Forgot Password?</Text>
+   </TouchableOpacity>
+   <TouchableOpacity
+     disabled={loading}
+     style={styles.loginBtn}
+     onPress={login}
+   >
+     {loading ? (
+       <ActivityIndicator />
+     ) : (
+       <Text style={styles.loginText}>Sigin</Text>
+     )}
+   </TouchableOpacity>
+   <TouchableOpacity
+     onPress={() => {
+       navigation.navigate("SignUpScreen");
+     }}
+   >
+     <Text style={styles.navigate}>Don't Have an acount?</Text>
+   </TouchableOpacity>
+  </View>
+
+
   );
+
+
 }
+
+
+    // <View style={styles.container}>
+    //   <Text style={styles.logo}>JustChat</Text>
+    //   <View style={styles.inputView}>
+    //     <TextInput
+    //       style={styles.inputText}
+    //       placeholder="UserName"
+    //       placeholderTextColor="#003f5c"
+    //       onChangeText={(text) => setUserName(text)}
+    //     />
+    //   </View>
+    //   <View style={styles.inputView}>
+    //     <TextInput
+    //       secureTextEntry
+    //       style={styles.inputText}
+    //       placeholder="Password"
+    //       placeholderTextColor="#003f5c"
+    //       onChangeText={(text) => setPassword(text)}
+    //     />
+    //   </View>
+    //   <TouchableOpacity onPress={()=>{
+    //     setForgotPass(true);
+    //   }}>
+    //     <Text style={styles.forgot}>Forgot Password?</Text>
+    //   </TouchableOpacity>
+    //   <TouchableOpacity
+    //     disabled={loading}
+    //     style={styles.loginBtn}
+    //     onPress={login}
+    //   >
+    //     {loading ? (
+    //       <ActivityIndicator />
+    //     ) : (
+    //       <Text style={styles.loginText}>Sigin</Text>
+    //     )}
+    //   </TouchableOpacity>
+    //   <TouchableOpacity
+    //     onPress={() => {
+    //       navigation.navigate("SignUpScreen");
+    //     }}
+    //   >
+    //     <Text style={styles.navigate}>Don't Have an acount?</Text>
+    //   </TouchableOpacity>
+    // </View>
