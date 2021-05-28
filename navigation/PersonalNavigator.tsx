@@ -14,7 +14,7 @@ import {
 } from "@expo/vector-icons";
 
 import PersonalCall from "../screens/Personal/CallsScreen/PersonalCall";
-import GroupChatScreen from "../screens/Personal/GroupChats/ChatScreen";
+import GroupChatScreen from "../screens/Personal/GroupChats/GroupChatScreen";
 import PersonalStories from "../screens/Personal/StoryScreen/PersonalStories";
 import ChatsScreen from "../screens/Personal/SingleChats/ChatsScreen";
 import OtherUserInfo from "../screens/Personal/OtherUserInfo";

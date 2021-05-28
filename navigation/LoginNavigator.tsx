@@ -10,7 +10,6 @@ import ContactsScreen from "../screens/Personal/SingleChats/ContactsScreen";
 import ChatRoomScreen from "../screens/Personal/SingleChats/ChatRoomScreen";
 import ForgotPassword from "../screens/Authentication/ForgotPassword";
 
-import { useNavigation } from "@react-navigation/native";
 import {
   FontAwesome5,
   Entypo,
@@ -93,7 +92,7 @@ export function MainStackNavigator() {
         options={({ route, navigation }) => chatsHeader(route, navigation)}
       />
       <MainStack.Screen name="LoginScreen" component={LoginNavigator} />
-      <MainStack.Screen name="AddContacts" component={AddContactsScreen} />
+      <MainStack.Screen name="AddContacts" component={AddContactsScreen} options={{ headerShown: true, title:"Select Contacts" }}/>
     </MainStack.Navigator>
   );
 }

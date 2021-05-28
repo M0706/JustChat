@@ -7,7 +7,7 @@ import { listUsers } from "../../../graphql/queries";
 import { User } from "../../../types";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../../../constants/Colors";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons ,Entypo} from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -84,7 +84,17 @@ export default function AddContactsScreen() {
                 onPressContact(item);
               }}
             >
+              
               <View style={styles.container}>
+              {item.selected==true ?
+                    <>
+                      <AntDesign name="checkcircleo" size={24} color="blue" style={styles.tick}/>
+                    </>
+                  :
+                    <>
+                      <Entypo name="circle" size={24} color="black" style={styles.tick}/>
+                    </>
+                  }
                 <View style={styles.leftContainer}>
                   <Image
                     style={styles.avatar}
@@ -93,8 +103,9 @@ export default function AddContactsScreen() {
                   <View style={styles.midContainer}>
                     {item.selected == true ? (
                       <>
+                        
                         <Text style={styles.userName}>
-                          {item.name} Selected
+                          {item.name}
                         </Text>
                         <Text style={styles.status}>{item.status}</Text>
                       </>
@@ -141,6 +152,11 @@ const styles = StyleSheet.create({
 
   leftContainer: {
     flexDirection: "row",
+  },
+
+  tick:{
+    marginTop:25,
+    marginRight:10
   },
 
   midContainer: {

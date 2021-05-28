@@ -84,7 +84,7 @@ const ChatRoomScreen = () => {
         onEndReachedThreshold={0}
         //ListHeaderComponent={renderLoader}
         renderItem={({ item }) => (
-          <ChatMessage currentUserId={currentUserId} message={item} />
+          <ChatMessage currentUserId={currentUserId} message={item} group={route.params.group} />
         )}
         inverted
       />

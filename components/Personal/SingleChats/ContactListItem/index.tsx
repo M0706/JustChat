@@ -59,6 +59,7 @@ const ContactListItem = (props: ContactListItemProps) => {
           ? user.previousChatID
           : newChatRoomData?.data.createChatRoom.id || "",
         name: user.name,
+        group:"False",
       });
     } catch (err) {
       console.warn(err);

@@ -64,6 +64,7 @@ const GroupInfo = (props) => {
       navigation.navigate("ChatRoom", {
         id: newChatRoomData?.data.createChatRoom.id || "",
         name: groupName,
+        group:"True",
       });
     } catch (err) {
       console.log(err);
