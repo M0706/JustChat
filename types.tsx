@@ -39,6 +39,7 @@ export type User = {
 export type Message = {
   id: string;
   content: string;
+  media: string;
   user: User;
   createdAt: string;
 };

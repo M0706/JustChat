@@ -31,5 +31,11 @@
         }
       }
     }
+  },
+  "storage": {
+    "Manav31May": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

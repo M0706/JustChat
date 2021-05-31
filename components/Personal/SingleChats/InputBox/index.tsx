@@ -11,6 +11,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Auth, API, Storage, graphqlOperation } from "aws-amplify";
 import { createMessage, updateChatRoom } from "../../../../graphql/mutations";
 import styles from "./styles";
+import * as ImagePicker from 'expo-image-picker';
+import uuid from "uuid-random";
+
 
 export type InputBoxProps = {
   chatRoomID: string;
@@ -22,7 +25,7 @@ const InputBox = (props: InputBoxProps) => {
   const { chatRoomID } = props;
 
   const [message, setMessage] = useState("");
-  const [image, setImage] = useState(null);
+  const [media, setMedia] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -31,6 +34,17 @@ const InputBox = (props: InputBoxProps) => {
     };
 
     fetchUser();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
   }, []);
 
   const onMicrophonePress = () => {
@@ -53,14 +67,13 @@ const InputBox = (props: InputBoxProps) => {
   };
 
   //Add media in schema before sending images
-  const sendPress = async (Imagekey: object) => {
-    //console.log("key in onSendPress ==>",Imagekey)
+  const sendPress = async (mediaKey: object) => {
     try {
       const newMessageData = await API.graphql(
         graphqlOperation(createMessage, {
           input: {
             content: message,
-            //media:Imagekey,
+            media:mediaKey,
             userID: userID,
             chatRoomID,
           },
@@ -76,18 +89,18 @@ const InputBox = (props: InputBoxProps) => {
     //setMessage('');
   };
 
-  const uploadImage = async () => {
+  const uploadMedia = async () => {
     try {
-      const response = await fetch(image);
+      const response = await fetch(media);
       const blob = await response.blob();
-      const urlParts = image.split(".");
+      const urlParts = media.split(".");
       const extension = urlParts[urlParts.length - 1];
       const uniqueId = uuid();
-      console.log(uniqueId);
+      //console.log("uuid --->",uniqueId);
       const key = `${uniqueId}.${extension}`;
-      console.log("Key -->", key);
+      //console.log("Key -->", key);
       await Storage.put(key, blob).then((result) => {
-        console.log("Uploaded image to S3");
+      //console.log("Uploaded image to S3");
       });
 
       return key;
@@ -97,7 +110,7 @@ const InputBox = (props: InputBoxProps) => {
     return "";
   };
 
-  const pickImage = async () => {
+  const pickMedia = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -108,19 +121,17 @@ const InputBox = (props: InputBoxProps) => {
     //console.log(result);
 
     if (!result.cancelled) {
-      //console.log(result)
-      setImage(result.uri);
+      setMedia(result.uri);
     }
   };
 
   const onPressAttachment = async () => {
     //console.warn("Send Attachment")
-    await pickImage();
-    const imagekey = await uploadImage();
-    //console.log("Image key in OnpressAttachment -->",imagekey);
-    const signedUrl = await Storage.get(imagekey);
+    await pickMedia();
+    const mediaKey = await uploadMedia();
+    const signedUrl = await Storage.get(mediaKey);
     //console.log("Signed Url --->",signedUrl);
-    //sendPress(signedUrl);
+    sendPress(signedUrl);
   };
 
   const onCameraPress = () => {

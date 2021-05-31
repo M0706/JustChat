@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, Image } from 'react-native';
 import moment from 'moment';
 import styles from './styles';
 //import Clipboard from '@react-native-community/clipboard';
@@ -26,25 +26,25 @@ const ChatMessage = (props: ChatMessageProps) => {
   };
 
 
-  // const messageDelete=async()=>{
-  //   try{
-  //     const deletedmessageData = await API.graphql(
-  //       graphqlOperation(
-  //         deleteMessage, {
-  //           input: {
-  //             id:myId
-  //           }
-  //         }
-  //       )
-  //     )
-  //     console.log("Deletemessage===>",deletedmessageData)
 
-  //   }
-  //   catch(e){ 
-  //     console.log("Message cannot be deleted")
-  //   }
-  // }
+  const messageType=(message)=>{
+    console.log(message.media);
+    if(message.content!==""){
+      return(<Text>{message.content}</Text>);
+    }
+    else{
+      return(
+        <Image
+          source={{ uri: message.media }}
+          style={{ width: 100, height: 100 }}
+        />
+      )
+    }
+ 
+  }
 
+
+ 
   const copyToClipboard = async () => {
     Clipboard.setString(message.content);
     // await fetchCopiedText();
@@ -74,10 +74,10 @@ const ChatMessage = (props: ChatMessageProps) => {
         { group==="True" && !isMyMessage() && <Text style={styles.name}>{message.user.name}</Text> }
         {/* convert next line after adding media */}
         
-        <Text >{message.content}</Text>
+        {/* <Text >{message.content}</Text> */}
+        {messageType(message)}
 
-        {/* {message.media==="" ? <Text style={styles.message}>{message.content}</Text>
-           :<Image source={{uri: message.media}} style={{ width: 100, height: 100 }} /> */}
+        
 
         <Text style={styles.time}>{moment(message.createdAt).fromNow()}</Text>
       </View>
