@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { ActivityIndicator } from "react-native-paper";
+import {Cache} from 'aws-amplify';
 
 export default function PersonalProfile() {
   const navigation = useNavigation();
@@ -16,6 +17,7 @@ export default function PersonalProfile() {
         setSigningOut(true);
         try {
           await Auth.signOut();
+          await Cache.clear();
           navigation.navigate("LoginScreen");
         } catch (err) {
           Alert.alert("Error!", "An error ocurred while signing out");

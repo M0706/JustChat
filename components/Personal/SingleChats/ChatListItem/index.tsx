@@ -18,7 +18,7 @@ const ChatListItem = (props: ChatListItemProps) => {
   useEffect(() => {
     const getOtherUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser();
-      console.log(chatRoom);
+      //console.log(chatRoom);
       if (chatRoom.group === "True") {
         setOtherUser({
           name: chatRoom.name,

@@ -8,6 +8,9 @@ import BG from "../../../assets/images/BG.png";
 import InputBox from "../../../components/Personal/SingleChats/InputBox";
 import { messagesByChatRoom } from "../../../graphql/queries";
 import { onCreateMessage } from "../../../graphql/subscriptions";
+import { authClient } from "../../../graphqlCustom/client";
+import { getUser, listUsers } from "../../../graphqlCustom/queries";
+import { Cache } from "aws-amplify";
 
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
@@ -43,8 +46,13 @@ const ChatRoomScreen = () => {
   };
 
   const fetchUserId = async () => {
-    const currentUser = await Auth.currentAuthenticatedUser();
-    setCurrentUserId(currentUser.attributes.sub);
+    let currentUserID =  await Cache.getItem("UserID")
+    if(!currentUserID){
+      const user= await Auth.currentAuthenticatedUser();
+      currentUserID = user.attributes.sub;
+      Cache.setItem("UserID",currentUserID);
+    }
+    setCurrentUserId(currentUserID);
   };
 
   useEffect(() => {
@@ -52,9 +60,7 @@ const ChatRoomScreen = () => {
     fetchUserId();
   }, []);
 
-  // useEffect(() => {
-  //   fetchUserId();
-  // }, []);
+
 
   useEffect(() => {
     const subscription = API.graphql(

@@ -16,8 +16,9 @@ import {
 } from "../../../graphql/subscriptions";
 import moment from "moment";
 import { ChatRoom } from "../../../types";
+import {Cache} from "aws-amplify"
 
-function comapre_time(a, b) {
+function compare_time(a, b) {
   if (moment(a.chatRoom.updatedAt).isBefore(b.chatRoom.updatedAt)) {
     return 1;
   } else if (moment(a.chatRoom.updatedAt).isAfter(b.chatRoom.updatedAt)) {
@@ -32,11 +33,22 @@ export default function ChatsScreen() {
 
   const fetchChatRooms = async () => {
     try {
-      const currentUser = await Auth.currentAuthenticatedUser();
+
+      //const currentUser = await Auth.currentAuthenticatedUser();
+      let currentUserID =  await Cache.getItem("UserID")
+      if(!currentUserID){
+        const user= await Auth.currentAuthenticatedUser();
+        currentUserID = user.attributes.sub;
+        Cache.setItem("UserID",currentUserID);
+      }
+      //console.log("Check==>", await Cache.getItem("userData"));
 
       let userData = await API.graphql(
-        graphqlOperation(getUser, { id: currentUser.attributes.sub })
+        graphqlOperation(getUser, { id: currentUserID})
       );
+      await Cache.setItem("UserData", userData);
+      //const userData = await Cache.getItem("userData");
+      //console.log("userData in chatscreen",userData);
 
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
@@ -45,7 +57,7 @@ export default function ChatsScreen() {
         }
       });
 
-      tempChatRoomArr.sort(comapre_time);
+      tempChatRoomArr.sort(compare_time);
 
       setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
     } catch (err) {

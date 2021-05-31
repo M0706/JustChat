@@ -14,16 +14,23 @@ import { ChatRoom } from "../../../types";
 import { useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ChatListItem from "../../../components/Personal/SingleChats/ChatListItem";
+import { Cache } from "aws-amplify";
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
 
   const fetchChatRooms = async () => {
     try {
-      const currentUser = await Auth.currentAuthenticatedUser();
+      //const currentUser = await Auth.currentAuthenticatedUser();
+      let currentUserID =  await Cache.getItem("UserID")
+      if(!currentUserID){
+        const user= await Auth.currentAuthenticatedUser();
+        currentUserID = user.attributes.sub;
+        Cache.setItem("UserID",currentUserID);
+      }
 
-      let userData = await API.graphql(
-        graphqlOperation(getUser, { id: currentUser.attributes.sub })
+       let userData = await API.graphql(
+       graphqlOperation(getUser, { id: currentUserID})
       );
 
       let tempChatRoomArr: any = [];

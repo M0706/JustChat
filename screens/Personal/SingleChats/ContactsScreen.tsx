@@ -7,6 +7,7 @@ import ContactListItem from "../../../components/Personal/SingleChats/ContactLis
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import { listUsers } from "../../../graphql/queries";
 import { User } from "../../../types";
+import { Cache } from "aws-amplify";
 
 export default function ContactsScreen() {
   const [users, setUsers] = useState([]);
@@ -54,9 +55,14 @@ export default function ContactsScreen() {
     const fetchUsers = async () => {
       try {
         const usersData = await API.graphql(graphqlOperation(listUsers));
-        const currentUser = await Auth.currentAuthenticatedUser();
+        let currentUser =  await Cache.getItem("UserID");
+        if(!currentUser){
+          const user= await Auth.currentAuthenticatedUser();
+          currentUser = user.attributes.sub;
+          Cache.setItem("UserID",currentUser);
+        }
         const filteredUsers = usersData.data.listUsers.items
-          .map((i: User) => mapUsers(i, currentUser.attributes.sub))
+          .map((i: User) => mapUsers(i, currentUser))
           .filter(Boolean);
         setUsers(filteredUsers);
       } catch (err) {
