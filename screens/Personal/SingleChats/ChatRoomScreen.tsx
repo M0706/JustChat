@@ -6,10 +6,8 @@ import { API, Auth, graphqlOperation } from "aws-amplify";
 import ChatMessage from "../../../components/Personal/SingleChats/ChatMessage";
 import BG from "../../../assets/images/BG.png";
 import InputBox from "../../../components/Personal/SingleChats/InputBox";
-import { messagesByChatRoom } from "../../../graphql/queries";
-import { onCreateMessage } from "../../../graphql/subscriptions";
-import { authClient } from "../../../graphqlCustom/client";
-import { getUser, listUsers } from "../../../graphqlCustom/queries";
+import { messagesByChatRoom } from "../../../src/graphql/queries";
+import { onCreateMessage } from "../../../src/graphql/subscriptions";
 import { Cache } from "aws-amplify";
 
 const ChatRoomScreen = () => {

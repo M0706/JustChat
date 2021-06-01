@@ -13,7 +13,7 @@ import {
   onCreateChatRoom,
   onCreateMessage,
   onUpdateMessage,
-} from "../../../graphql/subscriptions";
+} from "../../../src/graphql/subscriptions";
 import moment from "moment";
 import { ChatRoom } from "../../../types";
 import {Cache} from "aws-amplify"

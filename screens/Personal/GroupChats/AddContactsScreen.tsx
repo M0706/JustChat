@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, View, Text, Image, Alert } from "react-native";
 import { Auth, API, graphqlOperation } from "aws-amplify";
-import { listUsers } from "../../../graphql/queries";
+import { listUsers } from "../../../src/graphql/queries";
 import { User } from "../../../types";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../../../constants/Colors";

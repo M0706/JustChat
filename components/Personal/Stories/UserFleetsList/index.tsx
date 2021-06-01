@@ -10,7 +10,7 @@ import { API, graphqlOperation,Auth } from "aws-amplify";
 import {listUsers} from './queries'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {  useNavigation} from "@react-navigation/native";
-import {getUser} from '../../graphql/queries'
+import {getUser} from '../../../../src/graphql/queries'
 import ProfilePicture from '../ProfilePicture';
 
 const UserFleetsList = () => {

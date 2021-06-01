@@ -9,7 +9,7 @@ import {
 import { View, KeyboardAvoidingView, TextInput, Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Auth, API, Storage, graphqlOperation } from "aws-amplify";
-import { createMessage, updateChatRoom } from "../../../../graphql/mutations";
+import { createMessage, updateChatRoom } from "../../../../src/graphql/mutations";
 import styles from "./styles";
 import * as ImagePicker from 'expo-image-picker';
 import uuid from "uuid-random";
@@ -98,7 +98,7 @@ const InputBox = (props: InputBoxProps) => {
       const uniqueId = uuid();
       //console.log("uuid --->",uniqueId);
       const key = `${uniqueId}.${extension}`;
-      //console.log("Key -->", key);
+      console.log("Key -->", key);
       await Storage.put(key, blob).then((result) => {
       //console.log("Uploaded image to S3");
       });

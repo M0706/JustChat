@@ -39,7 +39,7 @@ type Message
   ) {
   id: ID!
   createdAt: String!
-  content: String
+  content: String!
   media: String
   userID: ID!
   chatRoomID: ID!

@@ -5,7 +5,7 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 import {
   createChatRoomUser,
   createChatRoom,
-} from "../../../../graphql/mutations";
+} from "../../../../src/graphql/mutations";
 
 import { User } from "../../../../types";
 import styles from "./style";

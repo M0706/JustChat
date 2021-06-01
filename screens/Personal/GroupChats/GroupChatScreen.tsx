@@ -9,7 +9,7 @@ import { getUser } from "../../../graphqlCustom/queries";
 import {
   onUpdateChatRoom,
   onCreateChatRoom,
-} from "../../../graphql/subscriptions";
+} from "../../../src/graphql/subscriptions";
 import { ChatRoom } from "../../../types";
 import { useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";

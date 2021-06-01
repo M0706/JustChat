@@ -6,7 +6,7 @@ import styles from './styles';
 import Clipboard from 'expo-clipboard';
 
 
-import { Message } from '../../types';
+import { Message } from '../../../../types';
 import { useState } from 'react';
 
 export type ChatMessageProps = {
@@ -28,21 +28,21 @@ const ChatMessage = (props: ChatMessageProps) => {
 
 
   const messageType=(message)=>{
-    console.log(message.media);
     if(message.content!==""){
       return(<Text>{message.content}</Text>);
     }
-    else{
+    else if(message.media!==""){
+      const mediaLink = String(message.media);
+      //console.log("media--->",mediaLink);
+      
       return(
         <Image
-          source={{ uri: message.media }}
-          style={{ width: 100, height: 100 }}
+          source = {{ uri: message.media }}
+          style={{ width: 300, height: 200 }}
         />
       )
     }
- 
   }
-
 
  
   const copyToClipboard = async () => {

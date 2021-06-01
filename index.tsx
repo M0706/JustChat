@@ -10,8 +10,8 @@ import LoginNavigator, {
 import { NavigationContainer } from "@react-navigation/native";
 
 import Amplify, { Auth, API, graphqlOperation, Hub } from "aws-amplify";
-import { getUser } from "./graphql/queries";
-import { createUser } from "./graphql/mutations";
+import { getUser } from "./graphqlCustom/queries";
+import { createUser } from "./src/graphql/mutations";
 import config from "./aws-exports";
 import { Cache } from 'aws-amplify';
 

@@ -7,7 +7,6 @@ import {authClient} from "./graphqlCustom/client";
 import {ApolloProvider, gql, useQuery} from "@apollo/client";
 import {resolvers} from "./graphqlCustom/clientResolvers/sessionResolvers"
 import Index from './index'
-import { listUsers } from "./graphqlCustom/queries";
 
 
 
