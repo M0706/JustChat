@@ -1,7 +1,7 @@
 //This is Personal ChatScreen
 
 import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList, Text } from "react-native";
+import { StyleSheet, FlatList, Text, ScrollView } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { View } from "../../../components/Themed";
 import ChatListItem from "../../../components/Personal/SingleChats/ChatListItem";
@@ -94,6 +94,7 @@ export default function ChatsScreen() {
 
   return (
     <View style={styles.container}>
+      
       {chatRooms.length === 0 ? (
         <View>
           <FontAwesome5

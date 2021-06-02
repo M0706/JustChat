@@ -6,7 +6,7 @@ import {
   Fontisto,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { View, KeyboardAvoidingView, TextInput, Platform } from "react-native";
+import { View, KeyboardAvoidingView, TextInput, Platform, Alert, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Auth, API, Storage, graphqlOperation } from "aws-amplify";
 import { createMessage, updateChatRoom } from "../../../../src/graphql/mutations";
@@ -26,6 +26,7 @@ const InputBox = (props: InputBoxProps) => {
 
   const [message, setMessage] = useState("");
   const [media, setMedia] = useState(null);
+  const [error,setError] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -68,7 +69,9 @@ const InputBox = (props: InputBoxProps) => {
 
   //Add media in schema before sending images
   const sendPress = async (mediaKey: object) => {
+
     try {
+
       const newMessageData = await API.graphql(
         graphqlOperation(createMessage, {
           input: {
@@ -79,8 +82,8 @@ const InputBox = (props: InputBoxProps) => {
           },
         })
       );
-      //console.log("NewMessage Data --->",newMessageData)
       setMessage("");
+      setMedia(null);
       await updateChatRoomAsync(newMessageData.data.createMessage.id);
     } catch (e) {
       console.log(e);
@@ -90,38 +93,38 @@ const InputBox = (props: InputBoxProps) => {
   };
 
   const uploadMedia = async () => {
+    // setError(false);
     try {
       const response = await fetch(media);
       const blob = await response.blob();
+      console.log("Blog--->",blob);
       const urlParts = media.split(".");
       const extension = urlParts[urlParts.length - 1];
       const uniqueId = uuid();
       //console.log("uuid --->",uniqueId);
       const key = `${uniqueId}.${extension}`;
-      console.log("Key -->", key);
+      //console.log("Key -->", key);
       await Storage.put(key, blob).then((result) => {
-      //console.log("Uploaded image to S3");
       });
 
       return key;
     } catch (e) {
+      setError(true);
       console.log(e);
     }
     return "";
   };
 
   const pickMedia = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    let mediaFile = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
-    //console.log(result);
-
-    if (!result.cancelled) {
-      setMedia(result.uri);
+    if (!mediaFile.cancelled) {
+      setMedia(mediaFile.uri);
     }
   };
 
@@ -129,9 +132,17 @@ const InputBox = (props: InputBoxProps) => {
     //console.warn("Send Attachment")
     await pickMedia();
     const mediaKey = await uploadMedia();
-    const signedUrl = await Storage.get(mediaKey);
-    //console.log("Signed Url --->",signedUrl);
-    sendPress(signedUrl);
+    //console.log("mediakey-->",mediaKey);
+    if(mediaKey){
+      const signedUrl = await Storage.get(mediaKey);
+      console.log("signed url-->",signedUrl);
+      //sendPress(signedUrl);
+    }
+    else{
+      setMedia(null);
+      Alert.alert("Network error, try again later");
+    }
+
   };
 
   const onCameraPress = () => {
@@ -142,7 +153,7 @@ const InputBox = (props: InputBoxProps) => {
     if (!message) {
       onMicrophonePress();
     } else {
-      sendPress("");
+      sendPress({});
     }
   };
 
@@ -180,7 +191,7 @@ const InputBox = (props: InputBoxProps) => {
             />
           )}
         </View>
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={onPress} >
           <View style={styles.buttonContainer}>
             {!message ? (
               <MaterialCommunityIcons

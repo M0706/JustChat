@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ImageBackground } from "react-native";
+import { FlatList, ImageBackground, ScrollView, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 
@@ -85,8 +85,9 @@ const ChatRoomScreen = () => {
       <FlatList
         data={messages}
         onEndReached={HandleScroll}
-        onEndReachedThreshold={0}
-        //ListHeaderComponent={renderLoader}
+        refreshing={true}
+        onEndReachedThreshold={0.5}
+        
         renderItem={({ item }) => (
           <ChatMessage currentUserId={currentUserId} message={item} group={route.params.group} />
         )}

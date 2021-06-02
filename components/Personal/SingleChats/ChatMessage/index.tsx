@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, Image } from 'react-native';
+import { Text, TouchableOpacity, View, Image, ActivityIndicator } from 'react-native';
 import moment from 'moment';
 import styles from './styles';
 //import Clipboard from '@react-native-community/clipboard';
@@ -8,6 +8,7 @@ import Clipboard from 'expo-clipboard';
 
 import { Message } from '../../../../types';
 import { useState } from 'react';
+import { color } from 'react-native-elements/dist/helpers';
 
 export type ChatMessageProps = {
   message: Message
@@ -29,17 +30,20 @@ const ChatMessage = (props: ChatMessageProps) => {
 
   const messageType=(message)=>{
     if(message.content!==""){
-      return(<Text>{message.content}</Text>);
+      return(<Text style = {[{color: isMyMessage()? "white": "black"}]}>{message.content}</Text>);
     }
     else if(message.media!==""){
       const mediaLink = String(message.media);
       //console.log("media--->",mediaLink);
       
       return(
+        <>
+        {message.media!==''?
         <Image
           source = {{ uri: message.media }}
-          style={{ width: 300, height: 200 }}
-        />
+          style={styles.image}
+        />: <ActivityIndicator /> }
+        </>
       )
     }
   }
@@ -65,21 +69,19 @@ const ChatMessage = (props: ChatMessageProps) => {
       <View style={[
         styles.messageBox,
         {
-          backgroundColor: isMyMessage() ? '#DCF8C5' : 'white',
-          marginLeft: isMyMessage() ? 50 : 0,
-          marginRight: isMyMessage() ? 0 : 50,
+          backgroundColor: !isMyMessage() ? '#ECECEC' : '#4169E1',
+          marginLeft: isMyMessage() ? 70 : 0,
+          marginRight: isMyMessage() ? 0 : 70,
         }
       
       ]}>
         { group==="True" && !isMyMessage() && <Text style={styles.name}>{message.user.name}</Text> }
-        {/* convert next line after adding media */}
-        
-        {/* <Text >{message.content}</Text> */}
+
         {messageType(message)}
 
         
 
-        <Text style={styles.time}>{moment(message.createdAt).fromNow()}</Text>
+        <Text style={[styles.time, {color: isMyMessage()? "white": "black"}]}>{moment(message.createdAt).fromNow()}</Text>
       </View>
       </TouchableOpacity>
 
