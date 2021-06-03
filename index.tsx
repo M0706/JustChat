@@ -12,7 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Amplify, { Auth, API, graphqlOperation, Hub } from "aws-amplify";
 import { getUser } from "./graphqlCustom/queries";
 import { createUser } from "./src/graphql/mutations";
-import config from "./aws-exports";
+import config from "./src/aws-exports";
 import { Cache } from 'aws-amplify';
 
 Amplify.configure(config);
@@ -110,7 +110,6 @@ export default Index;
 // import { getUser } from "./graphql/queries";
 // import { createUser } from "./graphql/mutations";
 // import config from "./aws-exports";
-// import { useMutation, useQuery } from "@apollo/client";
 // import { LOGIN } from "./graphqlCustom/mutations";
 // import { GET_SESSION } from "./graphqlCustom/queries";
 

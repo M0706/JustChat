@@ -97,8 +97,8 @@ const ChatMessage = (props: ChatMessageProps) => {
   };
 
   const forwardPress = () => {
-    //console.warn("message to be forward--->", message.content);\
-    // console.log("hi");
+    //console.warn("message to be forward--->", message.content);
+    toggleOverlay();
     navigation.navigate("ForwardScreen", {
       forwardMessage: message.content,
       chatRooms: props.chatRooms,
