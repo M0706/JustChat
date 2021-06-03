@@ -7,6 +7,8 @@ import { authClient } from "./graphqlCustom/client";
 import { ApolloProvider, gql, useQuery } from "@apollo/client";
 import { resolvers } from "./graphqlCustom/clientResolvers/sessionResolvers";
 import Index from "./index";
+import { Provider } from "react-redux";
+import store from "./store";
 
 Amplify.configure(config);
 
@@ -54,8 +56,8 @@ authClient.addResolvers(resolvers);
 
 export default function App() {
   return (
-    <ApolloProvider client={authClient}>
+    <Provider store={store}>
       <Index />
-    </ApolloProvider>
+    </Provider>
   );
 }
