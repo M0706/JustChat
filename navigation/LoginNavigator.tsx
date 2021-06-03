@@ -9,6 +9,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import ContactsScreen from "../screens/Personal/SingleChats/ContactsScreen";
 import ChatRoomScreen from "../screens/Personal/SingleChats/ChatRoomScreen";
 import ForgotPassword from "../screens/Authentication/ForgotPassword";
+import ForwardScreen from "../screens/Personal/ForwardScreen";
 
 import {
   FontAwesome5,
@@ -69,8 +70,6 @@ export default function LoginNavigator() {
       <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
       <LoginStack.Screen name="SignUpScreen" component={SignUpScreen} />
       <LoginStack.Screen name="ForgotPassword" component={ForgotPassword} />
-
-
     </LoginStack.Navigator>
   );
 }
@@ -92,7 +91,16 @@ export function MainStackNavigator() {
         options={({ route, navigation }) => chatsHeader(route, navigation)}
       />
       <MainStack.Screen name="LoginScreen" component={LoginNavigator} />
-      <MainStack.Screen name="AddContacts" component={AddContactsScreen} options={{ headerShown: true, title:"Select Contacts" }}/>
+      <MainStack.Screen
+        name="AddContacts"
+        component={AddContactsScreen}
+        options={{ headerShown: true, title: "Select Contacts" }}
+      />
+      <MainStack.Screen
+        name="ForwardScreen"
+        component={ForwardScreen}
+        options={{ headerShown: true, title: "Select Contacts" }}
+      />
     </MainStack.Navigator>
   );
 }

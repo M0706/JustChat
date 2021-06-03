@@ -126,7 +126,7 @@ export type UpdateUserInput = {
 };
 
 export type DeleteUserInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type CreateChatRoomUserInput = {
@@ -166,7 +166,7 @@ export type UpdateChatRoomUserInput = {
 };
 
 export type DeleteChatRoomUserInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type CreateChatRoomInput = {
@@ -193,7 +193,7 @@ export type UpdateChatRoomInput = {
 };
 
 export type DeleteChatRoomInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type CreateMessageInput = {
@@ -226,7 +226,7 @@ export type UpdateMessageInput = {
 };
 
 export type DeleteMessageInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type ModelUserFilterInput = {

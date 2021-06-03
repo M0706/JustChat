@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ImageBackground, ScrollView, View } from "react-native";
+import {
+  FlatList,
+  ImageBackground,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+} from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 
@@ -9,16 +17,66 @@ import InputBox from "../../../components/Personal/SingleChats/InputBox";
 import { messagesByChatRoom } from "../../../src/graphql/queries";
 import { onCreateMessage } from "../../../src/graphql/subscriptions";
 import { Cache } from "aws-amplify";
+import Colors from "../../../constants/Colors";
+import { MaterialIcons, Entypo } from "@expo/vector-icons";
+import { getUser } from "../../../graphqlCustom/queries";
+import moment from "moment";
+// import styles from "../../Authentication/Login/styles";
 
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
   const [currentUserId, setCurrentUserId] = useState("");
   const [nextToken, setNextToken] = useState(null);
+  const [pressed, setPressed] = useState(false);
+  const [chatRooms, setChatRooms] = useState([]);
 
   const route = useRoute();
   const HandleScroll = () => {
     if (nextToken !== null) {
       fetchMessages(nextToken);
+    }
+  };
+
+  function compare_time(a, b) {
+    if (moment(a.chatRoom.updatedAt).isBefore(b.chatRoom.updatedAt)) {
+      return 1;
+    } else if (moment(a.chatRoom.updatedAt).isAfter(b.chatRoom.updatedAt)) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
+  const fetchChatRooms = async () => {
+    try {
+      //const currentUser = await Auth.currentAuthenticatedUser();
+      let currentUserID = await Cache.getItem("UserID");
+      if (!currentUserID) {
+        const user = await Auth.currentAuthenticatedUser();
+        currentUserID = user.attributes.sub;
+        Cache.setItem("UserID", currentUserID);
+      }
+      //console.log("Check==>", await Cache.getItem("userData"));
+
+      let userData = await API.graphql(
+        graphqlOperation(getUser, { id: currentUserID })
+      );
+      await Cache.setItem("UserData", userData);
+      //const userData = await Cache.getItem("userData");
+      //console.log("userData in chatscreen",userData);
+
+      let tempChatRoomArr: any = [];
+      userData.data.getUser.chatRoomUser.items.map((room) => {
+        if (room.chatRoom.group === "False") {
+          tempChatRoomArr.push(room);
+        }
+      });
+
+      tempChatRoomArr.sort(compare_time);
+
+      setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -44,21 +102,20 @@ const ChatRoomScreen = () => {
   };
 
   const fetchUserId = async () => {
-    let currentUserID =  await Cache.getItem("UserID")
-    if(!currentUserID){
-      const user= await Auth.currentAuthenticatedUser();
+    let currentUserID = await Cache.getItem("UserID");
+    if (!currentUserID) {
+      const user = await Auth.currentAuthenticatedUser();
       currentUserID = user.attributes.sub;
-      Cache.setItem("UserID",currentUserID);
+      Cache.setItem("UserID", currentUserID);
     }
     setCurrentUserId(currentUserID);
   };
 
   useEffect(() => {
     fetchMessages(nextToken);
+    fetchChatRooms();
     fetchUserId();
   }, []);
-
-
 
   useEffect(() => {
     const subscription = API.graphql(
@@ -82,21 +139,98 @@ const ChatRoomScreen = () => {
 
   return (
     <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
+      {/* <View> */}
       <FlatList
         data={messages}
         onEndReached={HandleScroll}
         refreshing={true}
         onEndReachedThreshold={0.5}
-        
         renderItem={({ item }) => (
-          <ChatMessage currentUserId={currentUserId} message={item} group={route.params.group} />
+          <View style={styles.container}>
+            {/* {pressed ? (
+              <>
+                <Entypo
+                  name="circle"
+                  size={24}
+                  color="black"
+                  style={styles.tick}
+                />
+              </>
+            ) : (
+              <Entypo
+                name="circle"
+                size={24}
+                color="black"
+                style={styles.tick}
+              />
+            )} */}
+
+            <ChatMessage
+              currentUserId={currentUserId}
+              message={item}
+              group={route.params.group}
+              pressed={setPressed}
+              chatRooms={chatRooms}
+            />
+          </View>
         )}
         inverted
       />
+      {/* </View> */}
 
       <InputBox chatRoomID={route.params.id} />
     </ImageBackground>
   );
 };
+
+const styles = StyleSheet.create({
+  next: {
+    backgroundColor: Colors.light.tint,
+    width: 50,
+    borderRadius: 25,
+    left: 340,
+    bottom: 40,
+  },
+  container: {
+    // flex: 1,
+    // flexDirection: "row",
+    // width: "100%",
+    // padding: 10,
+    // top: 20,
+  },
+
+  leftContainer: {
+    flexDirection: "row",
+  },
+
+  tick: {
+    marginTop: 25,
+    marginRight: 30,
+  },
+
+  midContainer: {
+    justifyContent: "space-around",
+  },
+
+  userName: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
+  status: {
+    fontSize: 16,
+    color: "grey",
+    paddingTop: 10,
+    height: 50,
+  },
+
+  avatar: {
+    width: 60,
+    height: 70,
+    marginLeft: 5,
+    marginRight: 10,
+    borderRadius: 60,
+  },
+});
 
 export default ChatRoomScreen;
