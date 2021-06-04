@@ -12,8 +12,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import Amplify, { Auth, API, graphqlOperation, Hub } from "aws-amplify";
 import { getUser } from "./graphqlCustom/queries";
 import { createUser } from "./src/graphql/mutations";
-import { useDispatch } from "react-redux";
-import config from "./aws-exports";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthDetails } from "./store/actions/auth-actions";
+
+import config from "./src/aws-exports";
 
 import { Cache } from "aws-amplify";
 
@@ -23,47 +25,21 @@ function Index() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
   const [isAuth, setIsAuth] = useState(false);
-  const [loadingAuth, setLoadingAuth] = useState(false);
   const dispatch = useDispatch();
 
+  const currentState = useSelector((state) => state.currentUserInfo);
+
+
   useEffect(() => {
-    const fetchUser = async () => {
-      const userInfo = await Auth.currentAuthenticatedUser({
-        bypassCache: false,
-      });
-      if (userInfo) {
-        setIsAuth(true);
-        const userData = await API.graphql(
-          graphqlOperation(getUser, { id: userInfo.attributes.sub })
-        );
+    dispatch(AuthDetails());
+  }, [dispatch]);
 
-        await Cache.setItem("UserID", userInfo.attributes.sub);
 
-        if (userData.data.getUser) {
-          console.log("User registered");
-          return;
-        }
 
-        const newUser = {
-          id: userInfo.attributes.sub,
-          name: userInfo.username,
-          imageUri:
-            "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/3.jpg",
-          status: "Hey, Im a tree",
-        };
-
-        await API.graphql(graphqlOperation(createUser, { input: newUser }));
-      }
-
-      setLoadingAuth(true);
-    };
-
-    fetchUser();
-  }, []);
 
   if (!isLoadingComplete) {
     return null;
-  } else if (isAuth) {
+  } else if (currentState.isAuth) {
     return (
       <SafeAreaProvider>
         <NavigationContainer>

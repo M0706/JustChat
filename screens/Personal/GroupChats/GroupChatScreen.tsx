@@ -15,23 +15,17 @@ import { useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ChatListItem from "../../../components/Personal/SingleChats/ChatListItem";
 import { Cache } from "aws-amplify";
+import { useSelector } from "react-redux";
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
+  const currentUser = useSelector(state => state.currentUserInfo);
+
 
   const fetchChatRooms = async () => {
     try {
-      //const currentUser = await Auth.currentAuthenticatedUser();
-      let currentUserID =  await Cache.getItem("UserID")
-      if(!currentUserID){
-        const user= await Auth.currentAuthenticatedUser();
-        currentUserID = user.attributes.sub;
-        Cache.setItem("UserID",currentUserID);
-      }
 
-       let userData = await API.graphql(
-       graphqlOperation(getUser, { id: currentUserID})
-      );
+      let userData = currentUser.userData;
 
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {

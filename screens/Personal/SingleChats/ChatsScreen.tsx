@@ -17,6 +17,7 @@ import {
 import moment from "moment";
 import { ChatRoom } from "../../../types";
 import {Cache} from "aws-amplify"
+import { useSelector } from "react-redux";
 
 function compare_time(a, b) {
   if (moment(a.chatRoom.updatedAt).isBefore(b.chatRoom.updatedAt)) {
@@ -30,26 +31,13 @@ function compare_time(a, b) {
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
+  const currentUser = useSelector(state => state.currentUserInfo);
 
   const fetchChatRooms = async () => {
     try {
 
-      //const currentUser = await Auth.currentAuthenticatedUser();
-      let currentUserID =  await Cache.getItem("UserID")
-      if(!currentUserID){
-        const user= await Auth.currentAuthenticatedUser();
-        currentUserID = user.attributes.sub;
-        Cache.setItem("UserID",currentUserID);
-      }
-      //console.log("Check==>", await Cache.getItem("userData"));
 
-      let userData = await API.graphql(
-        graphqlOperation(getUser, { id: currentUserID})
-      );
-      await Cache.setItem("UserData", userData);
-      //const userData = await Cache.getItem("userData");
-      //console.log("userData in chatscreen",userData);
-
+      let userData = currentUser.userData;
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
         if (room.chatRoom.group === "False") {

@@ -21,6 +21,7 @@ import Colors from "../../../constants/Colors";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { getUser } from "../../../graphqlCustom/queries";
 import moment from "moment";
+import { useSelector } from "react-redux";
 // import styles from "../../Authentication/Login/styles";
 
 const ChatRoomScreen = () => {
@@ -29,6 +30,7 @@ const ChatRoomScreen = () => {
   const [nextToken, setNextToken] = useState(null);
   const [pressed, setPressed] = useState(false);
   const [chatRooms, setChatRooms] = useState([]);
+  const currentUser = useSelector((state) => state.currentUserInfo);
 
   const route = useRoute();
   const HandleScroll = () => {
