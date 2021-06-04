@@ -17,7 +17,8 @@ import {
 import moment from "moment";
 import { ChatRoom } from "../../../types";
 import {Cache} from "aws-amplify"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { AuthDetails } from "../../../store/actions/auth-actions";
 
 function compare_time(a, b) {
   if (moment(a.chatRoom.updatedAt).isBefore(b.chatRoom.updatedAt)) {
@@ -31,7 +32,21 @@ function compare_time(a, b) {
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
-  const currentUser = useSelector(state => state.currentUserInfo);
+  // const User = useSelector(state => state.currentUserInfo)
+  const currentUser = useSelector(state => state.currentUserInfo)
+  const dispatch = useDispatch();
+
+  // const {userData, isAuth, userID, changed} = currentUser;
+
+  // useEffect(() => {
+  //   dispatch(AuthDetails());
+  // }, [dispatch]);
+  
+  // useEffect(() => {
+  //   if (currentUser.changed === false) {
+      
+  //   }
+  // }, [currentUser,dispatch]);
 
   const fetchChatRooms = async () => {
     try {

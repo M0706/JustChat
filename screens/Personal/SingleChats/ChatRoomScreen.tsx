@@ -21,7 +21,8 @@ import Colors from "../../../constants/Colors";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import { getUser } from "../../../graphqlCustom/queries";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { AuthDetails } from "../../../store/actions/auth-actions";
 // import styles from "../../Authentication/Login/styles";
 
 const ChatRoomScreen = () => {
@@ -31,6 +32,7 @@ const ChatRoomScreen = () => {
   const [pressed, setPressed] = useState(false);
   const [chatRooms, setChatRooms] = useState([]);
   const currentUser = useSelector((state) => state.currentUserInfo);
+  const dispatch = useDispatch();
 
   const route = useRoute();
   const HandleScroll = () => {
@@ -51,21 +53,13 @@ const ChatRoomScreen = () => {
 
   const fetchChatRooms = async () => {
     try {
-      //const currentUser = await Auth.currentAuthenticatedUser();
-      let currentUserID = await Cache.getItem("UserID");
-      if (!currentUserID) {
-        const user = await Auth.currentAuthenticatedUser();
-        currentUserID = user.attributes.sub;
-        Cache.setItem("UserID", currentUserID);
-      }
-      //console.log("Check==>", await Cache.getItem("userData"));
 
-      let userData = await API.graphql(
-        graphqlOperation(getUser, { id: currentUserID })
-      );
-      await Cache.setItem("UserData", userData);
-      //const userData = await Cache.getItem("userData");
-      //console.log("userData in chatscreen",userData);
+
+      // let userData = await API.graphql(
+      //   graphqlOperation(getUser, { id: currentUser.userID })
+      // );
+      let userData = currentUser.userData;
+   
 
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
@@ -103,21 +97,16 @@ const ChatRoomScreen = () => {
     // );
   };
 
-  const fetchUserId = async () => {
-    let currentUserID = await Cache.getItem("UserID");
-    if (!currentUserID) {
-      const user = await Auth.currentAuthenticatedUser();
-      currentUserID = user.attributes.sub;
-      Cache.setItem("UserID", currentUserID);
-    }
-    setCurrentUserId(currentUserID);
-  };
-
   useEffect(() => {
-    fetchMessages(nextToken);
-    fetchChatRooms();
-    fetchUserId();
-  }, []);
+    dispatch(AuthDetails());
+  }, [dispatch]);
+  
+  useEffect(() => {
+    if (currentUser.changed === false) {
+      fetchMessages(nextToken);
+      fetchChatRooms();
+    }
+  }, [currentUser,dispatch]);
 
   useEffect(() => {
     const subscription = API.graphql(
@@ -168,7 +157,7 @@ const ChatRoomScreen = () => {
             )} */}
 
             <ChatMessage
-              currentUserId={currentUserId}
+              currentUserId={currentUser.userID}
               message={item}
               group={route.params.group}
               pressed={setPressed}

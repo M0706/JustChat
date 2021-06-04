@@ -6,7 +6,8 @@ import {
   createChatRoomUser,
   createChatRoom,
 } from "../../../../src/graphql/mutations";
-
+import { authActions } from '../../../../store/slices/Auth-slice'
+import { useDispatch, useSelector } from "react-redux";
 import { User } from "../../../../types";
 import styles from "./style";
 
@@ -16,9 +17,10 @@ export type ContactListItemProps = {
 
 const ContactListItem = (props: ContactListItemProps) => {
   const { user } = props;
-  //console.log("User ====>", user);
   const navigation = useNavigation();
-
+  const currentUserID = useSelector((state) => state.currentUserInfo.userID);
+  const dispatch = useDispatch();
+  
   const onClick = async () => {
     try {
       let newChatRoomData;
@@ -34,6 +36,9 @@ const ContactListItem = (props: ContactListItemProps) => {
           return;
         }
 
+        //dispatched action to tell store that state has been changed
+        dispatch(authActions.userInfoChanged);
+
         await API.graphql(
           graphqlOperation(createChatRoomUser, {
             input: {
@@ -43,15 +48,15 @@ const ContactListItem = (props: ContactListItemProps) => {
           })
         );
 
-        const userInfo = await Auth.currentAuthenticatedUser();
         await API.graphql(
           graphqlOperation(createChatRoomUser, {
             input: {
-              userID: userInfo.attributes.sub,
+              userID: currentUserID,
               chatRoomID: newChatRoomData.data.createChatRoom.id,
             },
           })
         );
+        
       }
 
       navigation.navigate("ChatRoom", {

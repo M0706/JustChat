@@ -45,9 +45,11 @@ export const AuthDetails = () => {
       const userData = await userDetails(userInfo);
     
 
-      dispatch(authActions.updateAuthinfo({
+      dispatch(authActions.updateAuthInfo({
         userData: userData,
-        isAuth: true
+        userID: userInfo.attributes.sub,
+        isAuth: true,
+        changed:false
       }))
 
     } catch (error) {
@@ -55,5 +57,9 @@ export const AuthDetails = () => {
     } 
     
   }
+}
+
+export const getCurrentDetails = ()=>{
+
 }
 
