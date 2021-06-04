@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     display: 'flex',
-    // maxWidth: "80%" ,
     flexDirection: 'column',
     position: 'relative'      
   

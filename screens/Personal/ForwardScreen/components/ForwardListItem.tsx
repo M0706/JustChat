@@ -43,6 +43,7 @@ const ContactListItem = (props: ContactListItemProps) => {
   //Add media in schema before sending images
   const createMess = async (mediaKey: object) => {
     try {
+      console.log("chatRoomID",chatRoomID);
       const forwardMessageData = await API.graphql(
         graphqlOperation(createMessage, {
           input: {
@@ -63,7 +64,7 @@ const ContactListItem = (props: ContactListItemProps) => {
         group: "False",
       });
     } catch (e) {
-      console.log(e);
+      console.log("sdhck sdnks--->",e);
     }
 
     //setMessage('');
@@ -114,7 +115,7 @@ const ContactListItem = (props: ContactListItemProps) => {
 
       createMess({});
     } catch (err) {
-      console.warn(err);
+      console.warn("error in line 117-->",err);
     }
   };
 
