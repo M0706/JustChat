@@ -32,27 +32,33 @@ function compare_time(a, b) {
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
-  // const User = useSelector(state => state.currentUserInfo)
-  const currentUser = useSelector(state => state.currentUserInfo)
+  const User = useSelector(state => state.currentUserInfo)
+  const [currentUser,setCurrentUser] = useState(User)
   const dispatch = useDispatch();
+  // console.log("hi--->",currentUser.userData);
+  // console.log("In line 39");
 
-  // const {userData, isAuth, userID, changed} = currentUser;
 
-  // useEffect(() => {
-  //   dispatch(AuthDetails());
-  // }, [dispatch]);
-  
-  // useEffect(() => {
-  //   if (currentUser.changed === false) {
-      
-  //   }
-  // }, [currentUser,dispatch]);
+
+ 
 
   const fetchChatRooms = async () => {
     try {
 
+      
+     
+   
+        const user= await Auth.currentAuthenticatedUser();
+        const currentUserID = user.attributes.sub;
+  
 
-      let userData = currentUser.userData;
+      //console.log("Check==>", await Cache.getItem("userData"));
+
+      let userData = await API.graphql(
+        graphqlOperation(getUser, { id: currentUserID})
+      );
+
+      
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
         if (room.chatRoom.group === "False") {
