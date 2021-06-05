@@ -18,16 +18,38 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import AddContactsScreen from "../screens/Personal/GroupChats/AddContactsScreen";
+import { Overlay } from "react-native-elements";
+
+const CustomMenu = ({ visible, toggleOverlay }) => {
+  return (
+    <Overlay
+      isVisible={visible}
+      onBackdropPress={toggleOverlay}
+      overlayStyle={{
+        position: "absolute",
+        top: 10,
+        right: 10,
+      }}
+      animationType="fade"
+    >
+      <Text style={{ padding: 10 }} >
+        Copy
+      </Text>
+      <Text style={{ padding: 10 }} >
+        Forward
+      </Text>
+
+      <Text style={{ padding: 10 }}>Delete</Text>
+    </Overlay>
+  );
+};
+
 
 const chatsHeader = (route, navigation) => {
   return {
     title: route.params.name,
     headerShown: true,
-    // header: () => (
-    //   <>
-    //     <Button>Hi</Button>
-    //   </>
-    // ),
+
     headerRight: () => (
       <>
         <View

@@ -86,7 +86,6 @@ const ChatRoomScreen = () => {
       })
     );
 
-    //console.log("dfssdff--->",loadmessages.data.messagesByChatRoom.items)
     let messageArr = [...messages].concat(
       loadmessages.data.messagesByChatRoom.items
     );
@@ -98,7 +97,9 @@ const ChatRoomScreen = () => {
   };
 
   useEffect(() => {
-    dispatch(AuthDetails());
+    if(currentUser.changed===true){
+      dispatch(AuthDetails());
+    }
   }, [dispatch]);
   
   useEffect(() => {

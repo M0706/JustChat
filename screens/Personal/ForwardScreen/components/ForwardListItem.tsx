@@ -11,17 +11,21 @@ import {
 
 import { User, Message } from "../../../../types";
 import { StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
-export type ContactListItemProps = {
+export type ForwardListItemProps = {
   user: User;
   forwardMessage: Message;
 };
 
-const ContactListItem = (props: ContactListItemProps) => {
+const ForwardListItem = (props: ForwardListItemProps) => {
   const { user } = props;
   const { forwardMessage } = props;
   const [userID, setUserID] = useState("");
-  const [chatRoomID, setChatRoomID] = useState(null);
+  // const [chatRoomID, setChatRoomID] = useState("");
+  let chatRoomID = ""
+  const currentUser = useSelector((state) => state.currentUserInfo);
+
 
   const navigation = useNavigation();
 
@@ -35,51 +39,32 @@ const ContactListItem = (props: ContactListItemProps) => {
           },
         })
       );
+
+    navigation.navigate("ChatRoom", {
+        id: chatRoomID,
+        name: user.name,
+        group: "False",
+    });
+      
     } catch (err) {
       console.log(err);
     }
   };
 
-  //Add media in schema before sending images
-  const createMess = async (mediaKey: object) => {
-    try {
-      console.log("chatRoomID",chatRoomID);
-      const forwardMessageData = await API.graphql(
-        graphqlOperation(createMessage, {
-          input: {
-            content: forwardMessage,
-            media: mediaKey,
-            userID: userID,
-            chatRoomID,
-          },
-        })
-      );
-      // setMessage("");
-      // setMedia(null);
-      await updateChatRoomAsync(forwardMessageData.data.createMessage.id);
 
-      navigation.navigate("ChatRoom", {
-        id: chatRoomID,
-        name: user.name,
-        group: "False",
-      });
-    } catch (e) {
-      console.log("sdhck sdnks--->",e);
-    }
-
-    //setMessage('');
-  };
 
   const onClick = async () => {
     try {
       let newChatRoomData;
-      const userInfo = await Auth.currentAuthenticatedUser();
+
+      console.log("1");
       if (!user.previousChatID) {
         newChatRoomData = await API.graphql(
           graphqlOperation(createChatRoom, {
             input: { lastMessageID: "", group: "False" },
           })
         );
+        console.log("2");
 
         if (!newChatRoomData.data) {
           console.log("Failed to create chat room");
@@ -94,28 +79,44 @@ const ContactListItem = (props: ContactListItemProps) => {
             },
           })
         );
+        console.log("3");
 
         //const userInfo = await Auth.currentAuthenticatedUser();
         await API.graphql(
           graphqlOperation(createChatRoomUser, {
             input: {
-              userID: userInfo.attributes.sub,
+              userID: currentUser.userID,
               chatRoomID: newChatRoomData.data.createChatRoom.id,
             },
           })
         );
+
+        console.log("4");
+  
       }
 
-      setUserID(userInfo.attributes.sub);
-      setChatRoomID(
-        user.previousChatID
-          ? user.previousChatID
-          : newChatRoomData?.data.createChatRoom.id || ""
-      );
 
-      createMess({});
+      chatRoomID = user.previousChatID ? user.previousChatID : newChatRoomData?.data.createChatRoom.id || ""
+
+      console.log("5",forwardMessage,"userID --->",currentUser.userID,"charoom --->",chatRoomID);
+
+      const forwardMessageData = await API.graphql(
+        graphqlOperation(createMessage, {
+          input: {
+            content: forwardMessage,
+            media: "",
+            userID: currentUser.userID,
+            chatRoomID,
+          },
+        })
+      );
+      console.log("6");
+
+      await updateChatRoomAsync(forwardMessageData.data.createMessage.id);
+      console.log("7");
+
     } catch (err) {
-      console.warn("error in line 117-->",err);
+      console.warn("error in line 121 in ForwrdListItem-->",err);
     }
   };
 
@@ -135,7 +136,7 @@ const ContactListItem = (props: ContactListItemProps) => {
   );
 };
 
-export default ContactListItem;
+export default ForwardListItem;
 
 const styles = StyleSheet.create({
   container: {

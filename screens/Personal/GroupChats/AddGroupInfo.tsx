@@ -14,12 +14,15 @@ import Colors from "../../../constants/Colors";
 import { ActivityIndicator } from "react-native-paper";
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import { createChatRoom, createChatRoomUser } from "../../../graphql/mutations";
+import { useSelector } from "react-redux";
 
 const GroupInfo = (props) => {
   const navigation = useNavigation();
   const groupUsers = props.route.params.GroupUsers;
   const [loading, setLoading] = useState(false);
   const [groupName, setGroupName] = useState("");
+  const currentUser = useSelector((state) => state.currentUserInfo);
+
 
   const makeGroup = async () => {
     if (groupName == "") {
@@ -52,11 +55,10 @@ const GroupInfo = (props) => {
         );
       });
 
-      const userInfo = await Auth.currentAuthenticatedUser();
       await API.graphql(
         graphqlOperation(createChatRoomUser, {
           input: {
-            userID: userInfo.attributes.sub,
+            userID: currentUser.userID,
             chatRoomID: newChatRoomData.data.createChatRoom.id,
           },
         })

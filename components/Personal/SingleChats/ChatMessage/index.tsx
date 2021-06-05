@@ -72,8 +72,6 @@ const ChatMessage = (props: ChatMessageProps) => {
         </Text>
       );
     } else if (message.media !== "") {
-      const mediaLink = String(message.media);
-      //console.log("media--->",mediaLink);
 
       return (
         <>

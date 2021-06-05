@@ -20,12 +20,15 @@ import { useSelector } from "react-redux";
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
   const currentUser = useSelector(state => state.currentUserInfo);
-
+  
 
   const fetchChatRooms = async () => {
     try {
 
-      let userData = currentUser.userData;
+      let userData = await API.graphql(
+        graphqlOperation(getUser, { id: currentUser.userID})
+      );
+
 
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {

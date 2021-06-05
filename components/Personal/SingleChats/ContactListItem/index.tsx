@@ -37,7 +37,7 @@ const ContactListItem = (props: ContactListItemProps) => {
         }
 
         //dispatched action to tell store that state has been changed
-        dispatch(authActions.userInfoChanged);
+        dispatch(authActions.userInfoChanged());
 
         await API.graphql(
           graphqlOperation(createChatRoomUser, {

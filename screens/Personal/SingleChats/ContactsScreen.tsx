@@ -4,14 +4,17 @@ import { useRoute } from "@react-navigation/native";
 
 import { View } from "../../../components/Themed";
 import ContactListItem from "../../../components/Personal/SingleChats/ContactListItem";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { listUsers } from "../../../src/graphql/queries";
 import { User } from "../../../types";
 import { Cache } from "aws-amplify";
+import { useSelector } from "react-redux";
 
 export default function ContactsScreen() {
   const [users, setUsers] = useState([]);
   const route = useRoute();
+  const currentUser = useSelector((state) => state.currentUserInfo);
+
 
   const chatRooms = route.params.chatRooms;
 
@@ -19,6 +22,7 @@ export default function ContactsScreen() {
     if (user.id === currentAuthedUser) {
       return null;
     }
+
     // console.log("hi")
     let filterChatRoom = chatRooms.filter(
       (value: {}) => Object.keys(value).length !== 0
@@ -55,14 +59,8 @@ export default function ContactsScreen() {
     const fetchUsers = async () => {
       try {
         const usersData = await API.graphql(graphqlOperation(listUsers));
-        let currentUser =  await Cache.getItem("UserID");
-        if(!currentUser){
-          const user= await Auth.currentAuthenticatedUser();
-          currentUser = user.attributes.sub;
-          Cache.setItem("UserID",currentUser);
-        }
         const filteredUsers = usersData.data.listUsers.items
-          .map((i: User) => mapUsers(i, currentUser))
+          .map((i: User) => mapUsers(i, currentUser.userID))
           .filter(Boolean);
         setUsers(filteredUsers);
       } catch (err) {

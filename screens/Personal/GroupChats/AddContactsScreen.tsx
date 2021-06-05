@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, View, Text, Image, Alert } from "react-native";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { listUsers } from "../../../src/graphql/queries";
 import { User } from "../../../types";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -10,11 +10,14 @@ import Colors from "../../../constants/Colors";
 import { MaterialIcons ,Entypo} from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../../store/slices/Auth-slice";
 
 export default function AddContactsScreen() {
   const [users, setUsers] = useState([]);
   const [click, setClick] = useState(0);
-  const members = useRef([]);
+  const currentUser = useSelector((state) => state.currentUserInfo);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   // let members = [];
 
@@ -30,9 +33,9 @@ export default function AddContactsScreen() {
     const fetchUsers = async () => {
       try {
         const usersData = await API.graphql(graphqlOperation(listUsers));
-        const currentUser = await Auth.currentAuthenticatedUser();
+   
         const filteredUsers = usersData.data.listUsers.items
-          .map((i: User) => mapUsers(i, currentUser.attributes.sub))
+          .map((i: User) => mapUsers(i, currentUser.userID))
           .filter(Boolean);
         setUsers(filteredUsers);
       } catch (err) {
@@ -56,7 +59,7 @@ export default function AddContactsScreen() {
   };
 
   const makeGroup = async () => {
-    let selectedUsers = [];
+    let selectedUsers: never[] = [];
     console.log("hi");
     users.forEach((user) => {
       if (user.selected == true) {
@@ -67,6 +70,8 @@ export default function AddContactsScreen() {
       Alert.alert("Error!", "You have to select atleast one user");
       return;
     }
+    dispatch(authActions.userInfoChanged());
+
     navigation.navigate("AddGroupInfo", {
       GroupUsers: selectedUsers,
     });
