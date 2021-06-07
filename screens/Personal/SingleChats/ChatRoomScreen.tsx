@@ -23,6 +23,7 @@ import { getUser } from "../../../graphqlCustom/queries";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { AuthDetails } from "../../../store/actions/auth-actions";
+import ChatsRoomHeader from "../../../components/Personal/shared/ChatRoomHeader";
 // import styles from "../../Authentication/Login/styles";
 
 const ChatRoomScreen = () => {
@@ -53,11 +54,7 @@ const ChatRoomScreen = () => {
 
   const fetchChatRooms = async () => {
     try {
-
-
       let userData = currentUser.userData;
-   
-
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
         if (room.chatRoom.group === "False") {
@@ -130,7 +127,7 @@ const ChatRoomScreen = () => {
 
   return (
     <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
-      {/* <View> */}
+      <ChatsRoomHeader Name={route.params.name}/>
       <FlatList
         data={messages}
         onEndReached={HandleScroll}
@@ -167,7 +164,6 @@ const ChatRoomScreen = () => {
         )}
         inverted
       />
-      {/* </View> */}
 
       <InputBox chatRoomID={route.params.id} />
     </ImageBackground>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, HeaderTitle } from "@react-navigation/stack";
 
 import LoginScreen from "../screens/Authentication/Login/login";
 import SignUpScreen from "../screens/Authentication/SignUp/signup";
@@ -10,7 +10,7 @@ import ContactsScreen from "../screens/Personal/SingleChats/ContactsScreen";
 import ChatRoomScreen from "../screens/Personal/SingleChats/ChatRoomScreen";
 import ForgotPassword from "../screens/Authentication/ForgotPassword";
 import ForwardScreen from "../screens/Personal/ForwardScreen";
-
+import ChatsRoomHeader from "../components/Personal/shared/ChatRoomHeader";
 import {
   FontAwesome5,
   Entypo,
@@ -110,7 +110,8 @@ export function MainStackNavigator() {
       <MainStack.Screen
         name="ChatRoom"
         component={ChatRoomScreen}
-        options={({ route, navigation }) => chatsHeader(route, navigation)}
+        //options={({ route, navigation }) => chatsHeader(route, navigation)}
+        //options={{ headerTitle:({route})=> <ChatsRoomHeader /> , headerShown: true}}
       />
       <MainStack.Screen name="LoginScreen" component={LoginNavigator} />
       <MainStack.Screen
