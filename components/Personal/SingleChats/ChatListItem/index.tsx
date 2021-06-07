@@ -24,7 +24,8 @@ const ChatListItem = (props: ChatListItemProps) => {
           name: chatRoom.name,
           imageUri: "",
         });
-      } else {
+      }
+      else {
         const user = chatRoom.chatRoomUsers.items.find(
           (i) => i.user.id !== userInfo.attributes.sub
         ).user;

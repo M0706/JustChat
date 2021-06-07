@@ -56,6 +56,7 @@ const ContactListItem = (props: ContactListItemProps) => {
             },
           })
         );
+
         
       }
 

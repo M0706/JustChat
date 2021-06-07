@@ -23,7 +23,7 @@ export default function ContactsScreen() {
       return null;
     }
 
-    // console.log("hi")
+ 
     let filterChatRoom = chatRooms.filter(
       (value: {}) => Object.keys(value).length !== 0
     );

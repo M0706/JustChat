@@ -11,7 +11,8 @@ import {
 
 import { User, Message } from "../../../../types";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../../../store/slices/Auth-slice";
 
 export type ForwardListItemProps = {
   user: User;
@@ -22,6 +23,7 @@ const ForwardListItem = (props: ForwardListItemProps) => {
   const { user } = props;
   const { forwardMessage } = props;
   const [userID, setUserID] = useState("");
+  const dispatch = useDispatch();
   // const [chatRoomID, setChatRoomID] = useState("");
   let chatRoomID = ""
   const currentUser = useSelector((state) => state.currentUserInfo);
@@ -40,11 +42,11 @@ const ForwardListItem = (props: ForwardListItemProps) => {
         })
       );
 
-    navigation.navigate("ChatRoom", {
+      navigation.navigate("ChatRoom", {
         id: chatRoomID,
         name: user.name,
-        group: "False",
-    });
+        group:"False",
+      });
       
     } catch (err) {
       console.log(err);
@@ -56,32 +58,31 @@ const ForwardListItem = (props: ForwardListItemProps) => {
   const onClick = async () => {
     try {
       let newChatRoomData;
-
-      console.log("1");
+      console.log("User previous ID-->", user.previousChatID);
       if (!user.previousChatID) {
         newChatRoomData = await API.graphql(
           graphqlOperation(createChatRoom, {
             input: { lastMessageID: "", group: "False" },
           })
         );
-        console.log("2");
 
         if (!newChatRoomData.data) {
           console.log("Failed to create chat room");
           return;
         }
 
-        await API.graphql(
-          graphqlOperation(createChatRoomUser, {
-            input: {
-              userID: user.id,
-              chatRoomID: newChatRoomData.data.createChatRoom.id,
-            },
-          })
-        );
-        console.log("3");
+        dispatch(authActions.userInfoChanged());
+      
+          await API.graphql(
+            graphqlOperation(createChatRoomUser, {
+              input: {
+                userID: user.id,
+                chatRoomID: newChatRoomData.data.createChatRoom.id,
+              },
+            })
+          );
+ 
 
-        //const userInfo = await Auth.currentAuthenticatedUser();
         await API.graphql(
           graphqlOperation(createChatRoomUser, {
             input: {
@@ -90,15 +91,11 @@ const ForwardListItem = (props: ForwardListItemProps) => {
             },
           })
         );
-
-        console.log("4");
-  
       }
 
+      
 
       chatRoomID = user.previousChatID ? user.previousChatID : newChatRoomData?.data.createChatRoom.id || ""
-
-      console.log("5",forwardMessage,"userID --->",currentUser.userID,"charoom --->",chatRoomID);
 
       const forwardMessageData = await API.graphql(
         graphqlOperation(createMessage, {
@@ -110,10 +107,8 @@ const ForwardListItem = (props: ForwardListItemProps) => {
           },
         })
       );
-      console.log("6");
 
       await updateChatRoomAsync(forwardMessageData.data.createMessage.id);
-      console.log("7");
 
     } catch (err) {
       console.warn("error in line 121 in ForwrdListItem-->",err);

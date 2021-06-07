@@ -10,7 +10,7 @@ import { User } from "../../../types";
 import { Cache } from "aws-amplify";
 import { useSelector } from "react-redux";
 
-export default function ContactsScreen() {
+export default function ForwardScreen() {
   const [users, setUsers] = useState([]);
   const route = useRoute();
   const currentUser = useSelector((state) => state.currentUserInfo);
@@ -24,7 +24,6 @@ export default function ContactsScreen() {
     if (user.id === currentAuthedUser) {
       return null;
     }
-    // console.log("hi")
     let filterChatRoom = chatRooms.filter(
       (value: {}) => Object.keys(value).length !== 0
     );
@@ -53,11 +52,10 @@ export default function ContactsScreen() {
     const fetchUsers = async () => {
       try {
         const usersData = await API.graphql(graphqlOperation(listUsers));
-    
         const filteredUsers = usersData.data.listUsers.items
           .map((i: User) => mapUsers(i, currentUser.userID))
           .filter(Boolean);
-        setUsers(filteredUsers);
+          setUsers(filteredUsers);
       } catch (err) {
         console.warn(err);
       }

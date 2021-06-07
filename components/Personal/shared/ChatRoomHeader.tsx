@@ -6,7 +6,7 @@ import {
   Fontisto,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { View, Text,Button, KeyboardAvoidingView, TextInput, Platform, Alert, Image } from "react-native";
+import { View, Text,Button, KeyboardAvoidingView, TextInput, Platform, Alert, Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
@@ -23,3 +23,9 @@ const ChatsRoomHeader = () => {
 }
 
 export default ChatsRoomHeader;
+
+const styles = StyleSheet.create({
+  header: {
+    
+  }
+})

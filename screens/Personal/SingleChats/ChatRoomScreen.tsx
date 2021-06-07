@@ -55,9 +55,6 @@ const ChatRoomScreen = () => {
     try {
 
 
-      // let userData = await API.graphql(
-      //   graphqlOperation(getUser, { id: currentUser.userID })
-      // );
       let userData = currentUser.userData;
    
 
@@ -105,11 +102,13 @@ const ChatRoomScreen = () => {
   useEffect(() => {
     if (currentUser.changed === false) {
       fetchMessages(nextToken);
+      // console.log("Messsages in chatroom screen==>",messages);
       fetchChatRooms();
     }
-  }, [currentUser,dispatch]);
-
+  }, [currentUser, dispatch]);
+  
   useEffect(() => {
+    // console.log("Messsages in chatroom screen==>",messages);
     const subscription = API.graphql(
       graphqlOperation(onCreateMessage)
     ).subscribe({
