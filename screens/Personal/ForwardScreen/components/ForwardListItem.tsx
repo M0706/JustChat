@@ -28,7 +28,6 @@ const ForwardListItem = (props: ForwardListItemProps) => {
   let chatRoomID = "";
   const currentUser = useSelector((state) => state.currentUserInfo);
 
-
   const navigation = useNavigation();
 
   const updateChatRoomAsync = async (lastMessageID: string) => {
@@ -41,21 +40,22 @@ const ForwardListItem = (props: ForwardListItemProps) => {
           },
         })
       );
-
-
-      
     } catch (err) {
       console.log(err);
     }
   };
 
-
-
   const onClick = async () => {
     try {
       let newChatRoomData;
       // console.log("User -->", user);
-      if (!user.previousChatID) {
+      let groupCheck: boolean = false;
+      if (user.chatRoom) {
+        if (user.chatRoom.group == "True") {
+          groupCheck = true;
+        }
+      }
+      if (!groupCheck && !user.previousChatID) {
         newChatRoomData = await API.graphql(
           graphqlOperation(createChatRoom, {
             input: { lastMessageID: "", group: "False" },
@@ -68,16 +68,15 @@ const ForwardListItem = (props: ForwardListItemProps) => {
         }
 
         dispatch(authActions.userInfoChanged());
-      
-          await API.graphql(
-            graphqlOperation(createChatRoomUser, {
-              input: {
-                userID: user.id,
-                chatRoomID: newChatRoomData.data.createChatRoom.id,
-              },
-            })
-          );
- 
+
+        await API.graphql(
+          graphqlOperation(createChatRoomUser, {
+            input: {
+              userID: user.id,
+              chatRoomID: newChatRoomData.data.createChatRoom.id,
+            },
+          })
+        );
 
         await API.graphql(
           graphqlOperation(createChatRoomUser, {
@@ -89,14 +88,15 @@ const ForwardListItem = (props: ForwardListItemProps) => {
         );
       }
 
-      
-
-      chatRoomID = user.previousChatID ? user.previousChatID : newChatRoomData?.data.createChatRoom.id || ""
-      // console.log("chatroomID--->", chatRoomID);
+      if (groupCheck) {
+        chatRoomID = user.chatRoomID;
+      } else {
+        chatRoomID = user.previousChatID
+          ? user.previousChatID
+          : newChatRoomData?.data.createChatRoom.id || "";
+      }
       navigation.navigate("ChatScreen");
 
-  
-      
       const forwardMessageData = await API.graphql(
         graphqlOperation(createMessage, {
           input: {
@@ -109,9 +109,8 @@ const ForwardListItem = (props: ForwardListItemProps) => {
       );
 
       await updateChatRoomAsync(forwardMessageData.data.createMessage.id);
-
     } catch (err) {
-      console.warn("error in line 121 in ForwrdListItem-->",err);
+      console.warn("error in line 121 in ForwrdListItem-->", err);
     }
   };
 
@@ -122,7 +121,9 @@ const ForwardListItem = (props: ForwardListItemProps) => {
           <Image style={styles.avatar} source={{ uri: user.imageUri }} />
 
           <View style={styles.midContainer}>
-            <Text style={styles.userName}>{user.name}</Text>
+            <Text style={styles.userName}>
+              {user.chatRoom?.group == "True" ? user.chatRoom.name : user.name}
+            </Text>
             <Text style={styles.status}>{user.status}</Text>
           </View>
         </View>

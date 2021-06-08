@@ -51,11 +51,24 @@ export default function ForwardScreen() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersData = await API.graphql(graphqlOperation(listUsers));
-        const filteredUsers = usersData.data.listUsers.items
+        const userList = await API.graphql(graphqlOperation(listUsers));
+        // console.log(
+        //   "userdata in ForwardScreen-->",
+        //   currentUser.userData.data.getUser.chatRoomUser
+        // );
+        let filteredUsers = userList.data.listUsers.items
           .map((i: User) => mapUsers(i, currentUser.userID))
           .filter(Boolean);
-          setUsers(filteredUsers);
+        // setUsers(filteredUsers);
+
+        // let tempGroupArr: any = [];
+        currentUser.userData.data.getUser.chatRoomUser.items.map((room) => {
+          if (room.chatRoom.group === "True") {
+            filteredUsers.push(room);
+          }
+        });
+
+        setUsers(filteredUsers);
       } catch (err) {
         console.warn(err);
       }
