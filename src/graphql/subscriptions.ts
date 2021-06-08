@@ -89,7 +89,6 @@ export const onCreateChatRoomUser = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -135,7 +134,6 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -181,7 +179,6 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -212,7 +209,6 @@ export const onCreateChatRoom = /* GraphQL */ `
       id
       group
       name
-      imageUri
       chatRoomUsers {
         items {
           id
@@ -255,7 +251,6 @@ export const onCreateChatRoom = /* GraphQL */ `
           id
           group
           name
-          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -273,7 +268,6 @@ export const onUpdateChatRoom = /* GraphQL */ `
       id
       group
       name
-      imageUri
       chatRoomUsers {
         items {
           id
@@ -316,7 +310,6 @@ export const onUpdateChatRoom = /* GraphQL */ `
           id
           group
           name
-          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -334,7 +327,6 @@ export const onDeleteChatRoom = /* GraphQL */ `
       id
       group
       name
-      imageUri
       chatRoomUsers {
         items {
           id
@@ -377,7 +369,6 @@ export const onDeleteChatRoom = /* GraphQL */ `
           id
           group
           name
-          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -413,7 +404,6 @@ export const onCreateMessage = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -461,7 +451,6 @@ export const onUpdateMessage = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -509,7 +498,6 @@ export const onDeleteMessage = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }

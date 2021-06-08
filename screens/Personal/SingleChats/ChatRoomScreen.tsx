@@ -53,10 +53,7 @@ const ChatRoomScreen = () => {
 
   const fetchChatRooms = async () => {
     try {
-
-
       let userData = currentUser.userData;
-   
 
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
@@ -94,11 +91,11 @@ const ChatRoomScreen = () => {
   };
 
   useEffect(() => {
-    if(currentUser.changed===true){
+    if (currentUser.changed === true) {
       dispatch(AuthDetails());
     }
   }, [dispatch]);
-  
+
   useEffect(() => {
     if (currentUser.changed === false) {
       fetchMessages(nextToken);
@@ -106,7 +103,7 @@ const ChatRoomScreen = () => {
       fetchChatRooms();
     }
   }, [currentUser, dispatch]);
-  
+
   useEffect(() => {
     // console.log("Messsages in chatroom screen==>",messages);
     const subscription = API.graphql(

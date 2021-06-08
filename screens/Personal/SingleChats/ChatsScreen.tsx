@@ -16,7 +16,7 @@ import {
 } from "../../../src/graphql/subscriptions";
 import moment from "moment";
 import { ChatRoom } from "../../../types";
-import {Cache} from "aws-amplify"
+import { Cache } from "aws-amplify";
 import { useSelector, useDispatch } from "react-redux";
 import { AuthDetails } from "../../../store/actions/auth-actions";
 
@@ -32,27 +32,21 @@ function compare_time(a, b) {
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
-  const User = useSelector(state => state.currentUserInfo)
-  const [currentUser,setCurrentUser] = useState(User)
+  const User = useSelector((state) => state.currentUserInfo);
+  const [currentUser, setCurrentUser] = useState(User);
   const dispatch = useDispatch();
   // console.log("hi--->",currentUser.userData);
   // console.log("In line 39");
 
-
-
- 
-
   const fetchChatRooms = async () => {
     try {
-   
-      const user= await Auth.currentAuthenticatedUser();
+      const user = await Auth.currentAuthenticatedUser();
       const currentUserID = user.attributes.sub;
 
       let userData = await API.graphql(
-        graphqlOperation(getUser, { id: currentUserID})
+        graphqlOperation(getUser, { id: currentUserID })
       );
 
-      
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
         if (room.chatRoom.group === "False") {
@@ -97,7 +91,6 @@ export default function ChatsScreen() {
 
   return (
     <View style={styles.container}>
-      
       {chatRooms.length === 0 ? (
         <View>
           <FontAwesome5
@@ -113,7 +106,9 @@ export default function ChatsScreen() {
         <FlatList
           style={styles.list}
           data={chatRooms}
-          renderItem={({ item }) => <ChatListItem chatRoom={item} group="False"/>}
+          renderItem={({ item }) => (
+            <ChatListItem chatRoom={item} group="False" />
+          )}
           keyExtractor={(item: ChatRoom) => item.id}
         />
       )}
