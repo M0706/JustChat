@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
   ImageBackground,
@@ -23,6 +23,7 @@ import { getUser } from "../../../graphqlCustom/queries";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { AuthDetails } from "../../../store/actions/auth-actions";
+import ChatsRoomHeader from "../../../components/Personal/shared/ChatRoomHeader";
 // import styles from "../../Authentication/Login/styles";
 
 const ChatRoomScreen = () => {
@@ -33,6 +34,8 @@ const ChatRoomScreen = () => {
   const [chatRooms, setChatRooms] = useState([]);
   const currentUser = useSelector((state) => state.currentUserInfo);
   const dispatch = useDispatch();
+  const [temp, setTemp] = useState("");
+  const latestUpdateMessage = useRef(null);
 
   const route = useRoute();
   const HandleScroll = () => {
@@ -54,7 +57,6 @@ const ChatRoomScreen = () => {
   const fetchChatRooms = async () => {
     try {
       let userData = currentUser.userData;
-
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
         if (room.chatRoom.group === "False") {
@@ -99,26 +101,24 @@ const ChatRoomScreen = () => {
   useEffect(() => {
     if (currentUser.changed === false) {
       fetchMessages(nextToken);
-      // console.log("Messsages in chatroom screen==>",messages);
       fetchChatRooms();
     }
   }, [currentUser, dispatch]);
 
   useEffect(() => {
-    // console.log("Messsages in chatroom screen==>",messages);
     const subscription = API.graphql(
       graphqlOperation(onCreateMessage)
     ).subscribe({
       next: async (data) => {
         const newMessage = data.value.data.onCreateMessage;
-
+        setTemp("123");
+        console.log("Line 123", route.params);
         if (newMessage.chatRoomID !== route.params.id) {
-          // console.log('Message is in another room');
+          console.log("Message is in another room");
           return;
         }
 
         setMessages([newMessage, ...messages]);
-        //console.log(messages);
       },
     });
 
@@ -127,7 +127,7 @@ const ChatRoomScreen = () => {
 
   return (
     <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
-      {/* <View> */}
+      <ChatsRoomHeader Name={route.params.name} isGroup={route.params.group} />
       <FlatList
         data={messages}
         onEndReached={HandleScroll}
@@ -164,7 +164,6 @@ const ChatRoomScreen = () => {
         )}
         inverted
       />
-      {/* </View> */}
 
       <InputBox chatRoomID={route.params.id} />
     </ImageBackground>

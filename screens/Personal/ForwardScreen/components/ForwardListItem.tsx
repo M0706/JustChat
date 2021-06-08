@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import {
   createChatRoomUser,
   createChatRoom,
@@ -48,8 +48,14 @@ const ForwardListItem = (props: ForwardListItemProps) => {
   const onClick = async () => {
     try {
       let newChatRoomData;
-      // console.log("User previous ID-->", user.previousChatID);
-      if (!user.previousChatID) {
+      // console.log("User -->", user);
+      let groupCheck: boolean = false;
+      if (user.chatRoom) {
+        if (user.chatRoom.group == "True") {
+          groupCheck = true;
+        }
+      }
+      if (!groupCheck && !user.previousChatID) {
         newChatRoomData = await API.graphql(
           graphqlOperation(createChatRoom, {
             input: { lastMessageID: "", group: "False" },
@@ -82,9 +88,14 @@ const ForwardListItem = (props: ForwardListItemProps) => {
         );
       }
 
-      chatRoomID = user.previousChatID
-        ? user.previousChatID
-        : newChatRoomData?.data.createChatRoom.id || "";
+      if (groupCheck) {
+        chatRoomID = user.chatRoomID;
+      } else {
+        chatRoomID = user.previousChatID
+          ? user.previousChatID
+          : newChatRoomData?.data.createChatRoom.id || "";
+      }
+      navigation.navigate("ChatScreen");
 
       const forwardMessageData = await API.graphql(
         graphqlOperation(createMessage, {
@@ -98,14 +109,6 @@ const ForwardListItem = (props: ForwardListItemProps) => {
       );
 
       await updateChatRoomAsync(forwardMessageData.data.createMessage.id);
-
-      navigation.navigate("ChatRoom", {
-        id: user.previousChatID
-          ? user.previousChatID
-          : newChatRoomData?.data.createChatRoom.id || "",
-        name: user.name,
-        group: "False",
-      });
     } catch (err) {
       console.warn("error in line 121 in ForwrdListItem-->", err);
     }
@@ -118,7 +121,9 @@ const ForwardListItem = (props: ForwardListItemProps) => {
           <Image style={styles.avatar} source={{ uri: user.imageUri }} />
 
           <View style={styles.midContainer}>
-            <Text style={styles.userName}>{user.name}</Text>
+            <Text style={styles.userName}>
+              {user.chatRoom?.group == "True" ? user.chatRoom.name : user.name}
+            </Text>
             <Text style={styles.status}>{user.status}</Text>
           </View>
         </View>

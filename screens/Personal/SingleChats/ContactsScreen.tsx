@@ -15,7 +15,6 @@ export default function ContactsScreen() {
   const route = useRoute();
   const currentUser = useSelector((state) => state.currentUserInfo);
 
-
   const chatRooms = route.params.chatRooms;
 
   const mapUsers = (user: User, currentAuthedUser: string) => {
@@ -23,7 +22,6 @@ export default function ContactsScreen() {
       return null;
     }
 
- 
     let filterChatRoom = chatRooms.filter(
       (value: {}) => Object.keys(value).length !== 0
     );

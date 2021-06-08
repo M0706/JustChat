@@ -40,6 +40,7 @@ export default function ChatsScreen() {
 
   const fetchChatRooms = async () => {
     try {
+      // console.log("forward--->");
       const user = await Auth.currentAuthenticatedUser();
       const currentUserID = user.attributes.sub;
 
