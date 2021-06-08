@@ -67,7 +67,6 @@ export const getChatRoomUser = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -115,7 +114,6 @@ export const listChatRoomUsers = /* GraphQL */ `
           id
           group
           name
-          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -133,7 +131,6 @@ export const getChatRoom = /* GraphQL */ `
       id
       group
       name
-      imageUri
       chatRoomUsers {
         items {
           id
@@ -176,7 +173,6 @@ export const getChatRoom = /* GraphQL */ `
           id
           group
           name
-          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -199,7 +195,6 @@ export const listChatRooms = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -247,7 +242,6 @@ export const getMessage = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -297,7 +291,6 @@ export const listMessages = /* GraphQL */ `
           id
           group
           name
-          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -327,7 +320,6 @@ export const chatRoomsByGroups = /* GraphQL */ `
         id
         group
         name
-        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -387,7 +379,6 @@ export const messagesByChatRoom = /* GraphQL */ `
           id
           group
           name
-          imageUri
           lastMessageID
           createdAt
           updatedAt

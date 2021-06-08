@@ -34,7 +34,7 @@ const ChatRoomScreen = () => {
   const [chatRooms, setChatRooms] = useState([]);
   const currentUser = useSelector((state) => state.currentUserInfo);
   const dispatch = useDispatch();
-  const [temp,setTemp] = useState("")
+  const [temp, setTemp] = useState("");
   const latestUpdateMessage = useRef(null);
 
   const route = useRoute();
@@ -73,7 +73,6 @@ const ChatRoomScreen = () => {
   };
 
   const fetchMessages = async (nextToken) => {
-    
     const loadmessages = await API.graphql(
       graphqlOperation(messagesByChatRoom, {
         chatRoomID: route.params.id,
@@ -94,11 +93,11 @@ const ChatRoomScreen = () => {
   };
 
   useEffect(() => {
-    if(currentUser.changed===true){
+    if (currentUser.changed === true) {
       dispatch(AuthDetails());
     }
   }, [dispatch]);
-  
+
   useEffect(() => {
     if (currentUser.changed === false) {
       fetchMessages(nextToken);
@@ -106,8 +105,6 @@ const ChatRoomScreen = () => {
     }
   }, [currentUser, dispatch]);
 
-
-  
   useEffect(() => {
     const subscription = API.graphql(
       graphqlOperation(onCreateMessage)
@@ -117,12 +114,11 @@ const ChatRoomScreen = () => {
         setTemp("123");
         console.log("Line 123", route.params);
         if (newMessage.chatRoomID !== route.params.id) {
-          console.log('Message is in another room');
+          console.log("Message is in another room");
           return;
         }
 
         setMessages([newMessage, ...messages]);
-
       },
     });
 
@@ -131,7 +127,7 @@ const ChatRoomScreen = () => {
 
   return (
     <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
-      <ChatsRoomHeader Name={route.params.name} isGroup={ route.params.group}/>
+      <ChatsRoomHeader Name={route.params.name} isGroup={route.params.group} />
       <FlatList
         data={messages}
         onEndReached={HandleScroll}

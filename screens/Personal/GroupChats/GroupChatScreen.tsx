@@ -16,19 +16,27 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import ChatListItem from "../../../components/Personal/SingleChats/ChatListItem";
 import { Cache } from "aws-amplify";
 import { useSelector } from "react-redux";
+import moment from "moment";
+
+function compare_time(a, b) {
+  if (moment(a.chatRoom.updatedAt).isBefore(b.chatRoom.updatedAt)) {
+    return 1;
+  } else if (moment(a.chatRoom.updatedAt).isAfter(b.chatRoom.updatedAt)) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
-  const currentUser = useSelector(state => state.currentUserInfo);
-  
+  const currentUser = useSelector((state) => state.currentUserInfo);
 
   const fetchChatRooms = async () => {
     try {
-
       let userData = await API.graphql(
-        graphqlOperation(getUser, { id: currentUser.userID})
+        graphqlOperation(getUser, { id: currentUser.userID })
       );
-
 
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
@@ -36,6 +44,8 @@ export default function ChatsScreen() {
           tempChatRoomArr.push(room);
         }
       });
+
+      tempChatRoomArr.sort(compare_time);
 
       setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
     } catch (err) {
@@ -91,7 +101,9 @@ export default function ChatsScreen() {
         <FlatList
           style={styles.list}
           data={chatRooms}
-          renderItem={({ item }) => <ChatListItem chatRoom={item} group="True"/>}
+          renderItem={({ item }) => (
+            <ChatListItem chatRoom={item} group="True" />
+          )}
           keyExtractor={(item: ChatRoom) => item.id}
         />
       )}
