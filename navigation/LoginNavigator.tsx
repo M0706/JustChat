@@ -20,70 +20,70 @@ import {
 import AddContactsScreen from "../screens/Personal/GroupChats/AddContactsScreen";
 import { Overlay } from "react-native-elements";
 
-const CustomMenu = ({ visible, toggleOverlay }) => {
-  return (
-    <Overlay
-      isVisible={visible}
-      onBackdropPress={toggleOverlay}
-      overlayStyle={{
-        position: "absolute",
-        top: 10,
-        right: 10,
-      }}
-      animationType="fade"
-    >
-      <Text style={{ padding: 10 }} >
-        Copy
-      </Text>
-      <Text style={{ padding: 10 }} >
-        Forward
-      </Text>
+// const CustomMenu = ({ visible, toggleOverlay }) => {
+//   return (
+//     <Overlay
+//       isVisible={visible}
+//       onBackdropPress={toggleOverlay}
+//       overlayStyle={{
+//         position: "absolute",
+//         top: 10,
+//         right: 10,
+//       }}
+//       animationType="fade"
+//     >
+//       <Text style={{ padding: 10 }} >
+//         Copy
+//       </Text>
+//       <Text style={{ padding: 10 }} >
+//         Forward
+//       </Text>
 
-      <Text style={{ padding: 10 }}>Delete</Text>
-    </Overlay>
-  );
-};
+//       <Text style={{ padding: 10 }}>Delete</Text>
+//     </Overlay>
+//   );
+// };
 
 
-const chatsHeader = (route, navigation) => {
-  return {
-    title: route.params.name,
-    headerShown: true,
+// const chatsHeader = (route, navigation) => {
+//   return {
+//     title: route.params.name,
+//     headerShown: true,
 
-    headerRight: () => (
-      <>
-        <View
-          style={{
-            flexDirection: "row",
-            width: 100,
-            justifyContent: "space-between",
-            marginRight: 10,
-          }}
-        >
-          <FontAwesome5 name="video" size={22} color={"black"} />
-          <MaterialIcons
-            name="call"
-            size={22}
-            color={"black"}
-            onPress={() => {
-              navigation.navigate("OtherUserInfo");
-            }}
-          />
-          <MaterialCommunityIcons
-            name="dots-vertical"
-            size={22}
-            color={"black"}
-          />
-        </View>
-      </>
-    ),
-    headerLeft: () => (
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <MaterialCommunityIcons name="arrow-left" size={22} color={"black"} />
-      </TouchableOpacity>
-    ),
-  };
-};
+//     headerRight: () => (
+//       <>
+//         <View
+//           style={{
+//             flexDirection: "row",
+//             width: 100,
+//             justifyContent: "space-between",
+//             marginRight: 10,
+//           }}
+//         >
+//           <FontAwesome5 name="video" size={22} color={"black"} />
+//           <MaterialIcons
+//             name="call"
+//             size={22}
+//             color={"black"}
+//             onPress={() => {
+//               navigation.navigate("OtherUserInfo");
+//             }}
+//           />
+//           <MaterialCommunityIcons
+//             name="dots-vertical"
+//             size={22}
+//             color={"black"}
+//           />
+//         </View>
+//       </>
+//     ),
+//     headerLeft: () => (
+//       <TouchableOpacity onPress={() => navigation.goBack()}>
+//         <MaterialCommunityIcons name="arrow-left" size={22} color={"black"} />
+//       </TouchableOpacity>
+//     ),
+//   };
+// };
 
 const LoginStack = createStackNavigator();
 export default function LoginNavigator() {

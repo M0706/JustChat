@@ -14,9 +14,25 @@ import Colors from "../../../constants/Colors";
 
 const ChatsRoomHeader = (props) => {
   const navigation = useNavigation();
+  //console.log(props.isGroup);
+  
+  const backButtonHandler = () => {
+    console.log(props)
+    if (props.isGroup ==="True") {
+      return (
+        <AntDesign name="back" size={24} color="black" style={styles.backButton} onPress={()=> navigation.navigate("GroupChatScreen")}/>
+       )
+    }
+    else if(props.isGroup ==="False"){
+      return (
+        <AntDesign name="back" size={24} color="black" style={styles.backButton} onPress={() => navigation.navigate("ChatScreen")} />
+      )
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <AntDesign name="back" size={24} color="black" style={styles.backButton} onPress={()=> navigation.navigate("ChatScreen")}/>
+      {backButtonHandler()}
       <Text style={styles.headerText} >{props.Name}</Text>
       <View
           style={styles.right}
