@@ -64,7 +64,6 @@ const ChatsNavigator = () => {
       }}
     >
       <ChatsStack.Screen name="ChatScreen" component={ChatsScreen} />
-      <ChatsStack.Screen name="OtherUserInfo" component={OtherUserInfo} />
     </ChatsStack.Navigator>
   );
 };

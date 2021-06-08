@@ -12,12 +12,11 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import Colors from "../../../constants/Colors";
 
-const ChatsRoomHeader = (props) => {
+const ChatRoomHeader = (props) => {
   const navigation = useNavigation();
   //console.log(props.isGroup);
   
   const backButtonHandler = () => {
-    console.log(props)
     if (props.isGroup ==="True") {
       return (
         <AntDesign name="back" size={24} color="black" style={styles.backButton} onPress={()=> navigation.navigate("GroupChatScreen")}/>
@@ -30,10 +29,18 @@ const ChatsRoomHeader = (props) => {
     }
   }
 
+  // const customMenu = () = {
+    
+  // }
+
   return (
     <View style={styles.container}>
       {backButtonHandler()}
-      <Text style={styles.headerText} >{props.Name}</Text>
+
+        <Text style={styles.headerText} onPress= {() => {
+              navigation.navigate("OtherUserInfo");
+            }} >{props.Name}</Text>
+     
       <View
           style={styles.right}
         >
@@ -42,9 +49,6 @@ const ChatsRoomHeader = (props) => {
             name="call"
             size={22}
             color={"black"}
-            onPress={() => {
-              navigation.navigate("OtherUserInfo");
-            }}
           />
           <MaterialCommunityIcons
             name="dots-vertical"
@@ -59,15 +63,15 @@ const ChatsRoomHeader = (props) => {
   
 }
 
-export default ChatsRoomHeader;
+export default ChatRoomHeader;
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingStart: 20,
-    paddingVertical: 20,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    padding:20,
+    paddingBottom:10,
   },
   headerText: {
     fontWeight: "bold",

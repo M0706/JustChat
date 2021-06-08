@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import {
   createChatRoomUser,
   createChatRoom,
@@ -25,7 +25,7 @@ const ForwardListItem = (props: ForwardListItemProps) => {
   const [userID, setUserID] = useState("");
   const dispatch = useDispatch();
   // const [chatRoomID, setChatRoomID] = useState("");
-  let chatRoomID = ""
+  let chatRoomID = "";
   const currentUser = useSelector((state) => state.currentUserInfo);
 
 
@@ -42,11 +42,7 @@ const ForwardListItem = (props: ForwardListItemProps) => {
         })
       );
 
-      navigation.navigate("ChatRoom", {
-        id: chatRoomID,
-        name: user.name,
-        group:"False",
-      });
+
       
     } catch (err) {
       console.log(err);
@@ -58,7 +54,7 @@ const ForwardListItem = (props: ForwardListItemProps) => {
   const onClick = async () => {
     try {
       let newChatRoomData;
-      console.log("User previous ID-->", user.previousChatID);
+      // console.log("User -->", user);
       if (!user.previousChatID) {
         newChatRoomData = await API.graphql(
           graphqlOperation(createChatRoom, {
@@ -96,7 +92,11 @@ const ForwardListItem = (props: ForwardListItemProps) => {
       
 
       chatRoomID = user.previousChatID ? user.previousChatID : newChatRoomData?.data.createChatRoom.id || ""
+      // console.log("chatroomID--->", chatRoomID);
+      navigation.navigate("ChatScreen");
 
+  
+      
       const forwardMessageData = await API.graphql(
         graphqlOperation(createMessage, {
           input: {
