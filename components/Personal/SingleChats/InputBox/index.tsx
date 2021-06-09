@@ -25,7 +25,6 @@ const InputBox = (props: InputBoxProps) => {
   const { chatRoomID } = props;
 
   const [message, setMessage] = useState("");
-  const [media, setMedia] = useState(null);
   const [error,setError] = useState(false);
 
   useEffect(() => {
@@ -83,7 +82,6 @@ const InputBox = (props: InputBoxProps) => {
         })
       );
       setMessage("");
-      setMedia(null);
       await updateChatRoomAsync(newMessageData.data.createMessage.id);
     } catch (e) {
       console.log(e);
@@ -92,18 +90,17 @@ const InputBox = (props: InputBoxProps) => {
     //setMessage('');
   };
 
-  const uploadMedia = async () => {
+  const uploadMedia = async (mediaUri) => {
     // setError(false);
     try {
-      const response = await fetch(media);
+      const response = await fetch(mediaUri);
+      console.log(response);
       const blob = await response.blob();
       console.log("Blog--->",blob);
-      const urlParts = media.split(".");
+      const urlParts = mediaUri.split(".");
       const extension = urlParts[urlParts.length - 1];
       const uniqueId = uuid();
-      //console.log("uuid --->",uniqueId);
       const key = `${uniqueId}.${extension}`;
-      //console.log("Key -->", key);
       await Storage.put(key, blob).then((result) => {
       });
 
@@ -116,30 +113,27 @@ const InputBox = (props: InputBoxProps) => {
   };
 
   const pickMedia = async () => {
-    let mediaFile = await ImagePicker.launchImageLibraryAsync({
+    const mediaFile = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-
     if (!mediaFile.cancelled) {
-      setMedia(mediaFile.uri);
+      return mediaFile
     }
+
   };
 
   const onPressAttachment = async () => {
-    //console.warn("Send Attachment")
-    await pickMedia();
-    const mediaKey = await uploadMedia();
+    const mediaFile = await pickMedia();
+    const mediaKey = await uploadMedia(mediaFile.uri);
     //console.log("mediakey-->",mediaKey);
     if(mediaKey){
       const signedUrl = await Storage.get(mediaKey);
-      console.log("signed url-->",signedUrl);
-      //sendPress(signedUrl);
+      sendPress(signedUrl);
     }
     else{
-      setMedia(null);
       Alert.alert("Network error, try again later");
     }
 

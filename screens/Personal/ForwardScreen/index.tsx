@@ -32,7 +32,7 @@ export default function ForwardScreen() {
 
   // console.log(route);
   const chatRooms = route.params.chatRooms;
-
+  const forwardMedia = route.params.forwardMedia
   const forwardMessage = route.params.forwardMessage;
 
   const mapUsers = (user: User, currentAuthedUser: string) => {
@@ -163,7 +163,7 @@ export default function ForwardScreen() {
         graphqlOperation(createMessage, {
           input: {
             content: forwardMessage,
-            media: "",
+            media: forwardMedia,
             userID: currentUser.userID,
             chatRoomID,
           },

@@ -99,6 +99,7 @@ const ChatMessage = (props: ChatMessageProps) => {
     toggleOverlay();
     navigation.navigate("ForwardScreen", {
       forwardMessage: message.content,
+      forwardMedia: message.media,
       chatRooms: props.chatRooms,
     });
   };
