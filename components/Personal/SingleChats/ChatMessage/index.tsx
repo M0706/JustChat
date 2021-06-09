@@ -16,6 +16,8 @@ import { Message } from "../../../../types";
 import { color } from "react-native-elements/dist/helpers";
 import { useNavigation } from "@react-navigation/core";
 import { ChatRoom } from "../../../../types";
+import VideoPlay from "./components/video";
+import ImageDisplay from "./components/image";
 
 export type ChatMessageProps = {
   message: Message;
@@ -77,16 +79,13 @@ const ChatMessage = (props: ChatMessageProps) => {
       //console.log(extension);
       if (extension === "jpg" || extension === "png") {
         return (
-          <>
-            {message.media !== "" ? (
-              <View style={styles.imageView}>
-                <Image source={{ uri: message.media }} style={styles.image} />
-              </View>
-            ) : (
-              <ActivityIndicator />
-            )}
-          </>
+          <ImageDisplay uri={message.media} />
         );
+      }
+      else if (extension === "mp4") {
+        return (
+          <VideoPlay uri={ message.media}/>
+        )
       }
     }
   };

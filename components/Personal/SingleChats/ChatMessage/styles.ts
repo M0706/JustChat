@@ -33,13 +33,7 @@ const styles = StyleSheet.create({
   recieverTexts: {
     color: "black"
   },
-  image:{
-    width: "100%", 
-    height: 200,
-    resizeMode: 'repeat',
-  },
-  imageView: {
-  }
+
 });
 
 export default styles;
