@@ -79,7 +79,14 @@ const ChatMessage = (props: ChatMessageProps) => {
       //console.log(extension);
       if (extension === "jpg" || extension === "png") {
         return (
-          <ImageDisplay uri={message.media} />
+          <ImageDisplay
+            uri={message.media}
+            forwardScreenProps = {{
+              forwardMessage: message.content,
+            forwardMedia: message.media,
+            chatRooms: props.chatRooms
+          }}
+      />
         );
       }
       else if (extension === "mp4") {
@@ -109,9 +116,10 @@ const ChatMessage = (props: ChatMessageProps) => {
     });
   };
 
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onLongPress={toggleOverlay}>
+      <TouchableOpacity onLongPress={toggleOverlay} >
         <CustomMenu visible={visible} toggleOverlay={toggleOverlay} />
 
         <View

@@ -23,9 +23,11 @@ export default function VideoPlay(props: { uri: any; }) {
           <Video
             source={{ uri: uri }}
             shouldPlay={shouldPlay}
-            resizeMode="cover"
-            style={styles.video}
-            isMuted={mute}
+            resizeMode="contain"
+          style={styles.video}
+          isMuted={mute}
+          isLooping
+
           />
           <View style={styles.controlBar}>
             <MaterialIcons 

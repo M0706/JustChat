@@ -31,9 +31,7 @@ export default function ForwardScreen() {
   const navigation = useNavigation();
 
   // console.log(route);
-  const chatRooms = route.params.chatRooms;
-  const forwardMedia = route.params.forwardMedia
-  const forwardMessage = route.params.forwardMessage;
+  const {chatRooms,forwardMedia,forwardMessage} = route.params;
 
   const mapUsers = (user: User, currentAuthedUser: string) => {
     if (user.id === currentAuthedUser) {

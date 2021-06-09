@@ -20,6 +20,7 @@ import {
 import AddContactsScreen from "../screens/Personal/GroupChats/AddContactsScreen";
 import { Overlay } from "react-native-elements";
 import OtherUserInfo from "../screens/Personal/OtherUserInfo";
+import ImageViewer from "../screens/Personal/Shared/ImageViewer";
 
 
 const LoginStack = createStackNavigator();
@@ -62,7 +63,7 @@ export function MainStackNavigator() {
         options={{ headerShown: true, title: "Select Contacts" }}
       />
       <MainStack.Screen name="OtherUserInfo" component={OtherUserInfo} />
-
+      <MainStack.Screen name="ImageViewer" component={ImageViewer} />
 
     </MainStack.Navigator>
   );
