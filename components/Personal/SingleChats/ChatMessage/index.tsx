@@ -72,16 +72,22 @@ const ChatMessage = (props: ChatMessageProps) => {
         </Text>
       );
     } else if (message.media !== "") {
-
-      return (
-        <>
-          {message.media !== "" ? (
-            <Image source={{ uri: message.media }} style={styles.image} />
-          ) : (
-            <ActivityIndicator />
-          )}
-        </>
-      );
+      const extensionArr = message.media.split("?")[0].split(".");
+      const extension = extensionArr[extensionArr.length - 1];
+      //console.log(extension);
+      if (extension === "jpg" || extension === "png") {
+        return (
+          <>
+            {message.media !== "" ? (
+              <View style={styles.imageView}>
+                <Image source={{ uri: message.media }} style={styles.image} />
+              </View>
+            ) : (
+              <ActivityIndicator />
+            )}
+          </>
+        );
+      }
     }
   };
 
