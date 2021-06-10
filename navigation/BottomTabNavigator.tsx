@@ -4,7 +4,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 
 import PersonalNavigator from "./PersonalNavigator";
 import WorkNavigator from "./WorkNavigator";
-import Camera from "../screens/Camera";
+import Camera from "../screens/CameraScreen";
 
 import {
   Entypo,

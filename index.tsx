@@ -9,7 +9,7 @@ import LoginNavigator, {
 } from "./navigation/LoginNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 
-import Amplify, { Auth, API, graphqlOperation, Hub } from "aws-amplify";
+import Amplify, { Analytics } from "aws-amplify";
 import { getUser } from "./graphqlCustom/queries";
 import { createUser } from "./src/graphql/mutations";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,6 +40,7 @@ function Index() {
   if (!isLoadingComplete) {
     return null;
   } else if (currentState.isAuth) {
+    Analytics.record("LoginScreen Visit");
     return (
       <SafeAreaProvider>
         <NavigationContainer>
@@ -49,6 +50,8 @@ function Index() {
       </SafeAreaProvider>
     );
   } else {
+    Analytics.record("MainChatScreen Visit");
+
     return (
       <SafeAreaProvider>
         {/* <Navigation colorScheme={colorScheme} /> */}
