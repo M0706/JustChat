@@ -15,7 +15,7 @@ import Colors from "../../../constants/Colors";
 const ImageHeader = (props) => {
   const navigation = useNavigation();
 //   //console.log(props.isGroup);
-  const {forwardMedia,forwardMessage,chatRooms} = props.forwardScreenProps;
+  const {forwardMedia,forwardMessage} = props.forwardScreenProps;
 //   console.log("media---->", props.forwardScreenProps.forwardMedia);
 //   console.log("message--->", props.forwardScreenProps.forwardMessage);
 //   console.log("chatrooms--->", props.forwardScreenProps.chatRooms);
@@ -48,7 +48,6 @@ const ImageHeader = (props) => {
                 navigation.navigate("ForwardScreen", {
                     forwardMessage,
                     forwardMedia,
-                    chatRooms,
                   });
             }}
             />

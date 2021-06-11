@@ -82,9 +82,8 @@ const ChatMessage = (props: ChatMessageProps) => {
           <ImageDisplay
             uri={message.media}
             forwardScreenProps = {{
-              forwardMessage: message.content,
+            forwardMessage: message.content,
             forwardMedia: message.media,
-            chatRooms: props.chatRooms
           }}
       />
         );
@@ -111,8 +110,7 @@ const ChatMessage = (props: ChatMessageProps) => {
     toggleOverlay();
     navigation.navigate("ForwardScreen", {
       forwardMessage: message.content,
-      forwardMedia: message.media,
-      chatRooms: props.chatRooms,
+      forwardMedia: message.media
     });
   };
 

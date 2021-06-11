@@ -25,19 +25,34 @@ export default function ForwardScreen() {
   const [users, setUsers] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const route = useRoute();
-  // let chatRoomID = "";
   const currentUser = useSelector((state) => state.currentUserInfo);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  let chatRoomGroups: any[] = []
+  let groupsFetched = false;
 
   // console.log(route);
-  const {chatRooms,forwardMedia,forwardMessage} = route.params;
+  const {forwardMedia, forwardMessage } = route.params;
+  
 
   const mapUsers = (user: User, currentAuthedUser: string) => {
     if (user.id === currentAuthedUser) {
       return null;
     }
-    let filterChatRoom = chatRooms.filter(
+    let chatRoomSingle: any[] = [];
+    
+    currentUser.userData.data.getUser.chatRoomUser.items.map((room) => {
+      if (room.chatRoom.group === "False") {
+        chatRoomSingle.push(room.chatRoom);
+      }
+      else if(!groupsFetched){
+        chatRoomGroups.push(room);
+      }
+    });
+    groupsFetched = true;
+    
+
+    let filterChatRoom = chatRoomSingle.filter(
       (value: {}) => Object.keys(value).length !== 0
     );
 
@@ -49,11 +64,11 @@ export default function ForwardScreen() {
       }
       for (var tr in temp.chatRoomUsers.items) {
         var tuser = temp.chatRoomUsers.items[tr];
-        if (tuser.user.id == user.id) {
+        if (tuser.user.id === user.id) {
           return {
             ...user,
-            previousChatID: temp.id,
-          };
+            previousChatID: temp.id
+          }
         }
       }
     }
@@ -65,17 +80,14 @@ export default function ForwardScreen() {
     const fetchUsers = async () => {
       try {
         const userList = await API.graphql(graphqlOperation(listUsers));
-
+        
         let filteredUsers = userList.data.listUsers.items
           .map((i: User) => mapUsers(i, currentUser.userID))
           .filter(Boolean);
 
-        currentUser.userData.data.getUser.chatRoomUser.items.map((room) => {
-          if (room.chatRoom.group === "True") {
-            filteredUsers.push(room);
-          }
-        });
-
+        filteredUsers.push(...chatRoomGroups);
+       
+        
         setUsers(filteredUsers);
       } catch (err) {
         console.warn(err);

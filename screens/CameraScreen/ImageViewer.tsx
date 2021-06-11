@@ -11,7 +11,10 @@ export default function ImageViewer(props) {
       <View style={styles.container} >
             <Image source={{ uri: imageURI }} style={styles.image} />
             <View style={styles.send} >
-                <MaterialIcons name="send" size={28} color="white" onPress={()=>{console.warn("Hi")}}/>
+                <MaterialIcons name="send" size={28} color="white" onPress={() => navigation.navigate("ForwardScreen", {
+                    forwardMedia: imageURI,
+                    forwardMessage: ""
+                })}/>
             </View>
         </View>
     )
