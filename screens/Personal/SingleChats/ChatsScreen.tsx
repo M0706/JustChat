@@ -32,11 +32,8 @@ function compare_time(a, b) {
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
-  const User = useSelector((state) => state.currentUserInfo);
-  const [currentUser, setCurrentUser] = useState(User);
-  const dispatch = useDispatch();
-  // console.log("hi--->",currentUser.userData);
-  // console.log("In line 39");
+
+
 
   const fetchChatRooms = async () => {
     try {

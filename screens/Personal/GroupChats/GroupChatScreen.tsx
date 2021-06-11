@@ -37,6 +37,7 @@ export default function ChatsScreen() {
       let userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUser.userID })
       );
+      console.log("Hello")
 
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
@@ -80,10 +81,7 @@ export default function ChatsScreen() {
   }, [chatRooms]);
 
   return (
-    // <View style={styles.container}>
-    //   <Text>Ongoing Group Chats</Text>
-    //   <NewGroupsButton />
-    // </View>
+
 
     <View style={styles.container}>
       {chatRooms.length === 0 ? (
