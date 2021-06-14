@@ -89,6 +89,7 @@ export const onCreateChatRoomUser = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -103,6 +104,7 @@ export const onCreateChatRoomUser = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -134,6 +136,7 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -148,6 +151,7 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -179,6 +183,7 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -193,6 +198,7 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -209,6 +215,7 @@ export const onCreateChatRoom = /* GraphQL */ `
       id
       group
       name
+      imageUri
       chatRoomUsers {
         items {
           id
@@ -227,6 +234,7 @@ export const onCreateChatRoom = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         nextToken
@@ -239,6 +247,7 @@ export const onCreateChatRoom = /* GraphQL */ `
         media
         userID
         chatRoomID
+        read
         user {
           id
           name
@@ -251,6 +260,7 @@ export const onCreateChatRoom = /* GraphQL */ `
           id
           group
           name
+          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -268,6 +278,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
       id
       group
       name
+      imageUri
       chatRoomUsers {
         items {
           id
@@ -286,6 +297,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         nextToken
@@ -298,6 +310,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
         media
         userID
         chatRoomID
+        read
         user {
           id
           name
@@ -310,6 +323,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
           id
           group
           name
+          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -327,6 +341,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
       id
       group
       name
+      imageUri
       chatRoomUsers {
         items {
           id
@@ -345,6 +360,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         nextToken
@@ -357,6 +373,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
         media
         userID
         chatRoomID
+        read
         user {
           id
           name
@@ -369,6 +386,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
           id
           group
           name
+          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -389,6 +407,7 @@ export const onCreateMessage = /* GraphQL */ `
       media
       userID
       chatRoomID
+      read
       user {
         id
         name
@@ -404,6 +423,7 @@ export const onCreateMessage = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -418,6 +438,7 @@ export const onCreateMessage = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -436,6 +457,7 @@ export const onUpdateMessage = /* GraphQL */ `
       media
       userID
       chatRoomID
+      read
       user {
         id
         name
@@ -451,6 +473,7 @@ export const onUpdateMessage = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -465,6 +488,7 @@ export const onUpdateMessage = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -483,6 +507,7 @@ export const onDeleteMessage = /* GraphQL */ `
       media
       userID
       chatRoomID
+      read
       user {
         id
         name
@@ -498,6 +523,7 @@ export const onDeleteMessage = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -512,6 +538,7 @@ export const onDeleteMessage = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt

@@ -31,6 +31,8 @@ export const getUser = /* GraphQL */ `
             lastMessage {
               id
               content
+              read
+              media
               updatedAt
               user {
                 id

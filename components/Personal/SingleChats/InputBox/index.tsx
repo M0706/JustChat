@@ -79,6 +79,7 @@ const InputBox = (props: InputBoxProps) => {
             content: message,
             media:mediaKey,
             userID: userID,
+            read: false,
             chatRoomID,
           },
         })

@@ -13,7 +13,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Colors from "../../../constants/Colors";
 import { ActivityIndicator } from "react-native-paper";
 import { Auth, API, graphqlOperation } from "aws-amplify";
-import { createChatRoom, createChatRoomUser } from "../../../graphql/mutations";
+import { createChatRoom, createChatRoomUser } from "../../../src/graphql/mutations";
 import { useSelector } from "react-redux";
 
 const GroupInfo = (props) => {

@@ -24,6 +24,7 @@ import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { AuthDetails } from "../../../store/actions/auth-actions";
 import ChatsRoomHeader from "../../../components/Personal/shared/ChatRoomHeader";
+import { updateMessage } from "../../../src/graphql/mutations";
 // import styles from "../../Authentication/Login/styles";
 
 const ChatRoomScreen = () => {
@@ -34,8 +35,6 @@ const ChatRoomScreen = () => {
   const [chatRooms, setChatRooms] = useState([]);
   const currentUser = useSelector((state) => state.currentUserInfo);
   const dispatch = useDispatch();
-  const [temp, setTemp] = useState("");
-  const latestUpdateMessage = useRef(null);
 
   const route = useRoute();
   const HandleScroll = () => {
@@ -44,7 +43,7 @@ const ChatRoomScreen = () => {
     }
   };
 
-  function compare_time(a, b) {
+  function compare_time(a: { chatRoom: { updatedAt: moment.MomentInput; }; }, b: { chatRoom: { updatedAt: moment.MomentInput; }; }) {
     if (moment(a.chatRoom.updatedAt).isBefore(b.chatRoom.updatedAt)) {
       return 1;
     } else if (moment(a.chatRoom.updatedAt).isAfter(b.chatRoom.updatedAt)) {
@@ -58,7 +57,7 @@ const ChatRoomScreen = () => {
     try {
       let userData = currentUser.userData;
       let tempChatRoomArr: any = [];
-      userData.data.getUser.chatRoomUser.items.map((room) => {
+      userData.data.getUser.chatRoomUser.items.map((room: { chatRoom: { group: string; }; }) => {
         if (room.chatRoom.group === "False") {
           tempChatRoomArr.push(room);
         }
@@ -66,18 +65,18 @@ const ChatRoomScreen = () => {
 
       tempChatRoomArr.sort(compare_time);
 
-      setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
+      setChatRooms(tempChatRoomArr.map((i: { chatRoom: any; }) => ({ ...i.chatRoom })));
     } catch (err) {
       console.log(err);
     }
   };
 
-  const fetchMessages = async (nextToken) => {
+  const fetchMessages = async (nextToken: null) => {
     const loadmessages = await API.graphql(
       graphqlOperation(messagesByChatRoom, {
         chatRoomID: route.params.id,
         sortDirection: "DESC",
-        limit: 15,
+        limit: 40,
         nextToken,
       })
     );
@@ -87,10 +86,28 @@ const ChatRoomScreen = () => {
     );
     setMessages(messageArr);
     setNextToken(loadmessages.data.messagesByChatRoom.nextToken);
-    // console.log("Next Token --->",
-    //   messages.data.messagesByChatRoom.nextToken
-    // );
+    updateReadAsync(messageArr);
   };
+
+  const updateReadAsync = async (loadedMessages) => {
+  
+    loadedMessages.every(async (message) => {
+      if(message.read===true|| message.user.id===currentUser.userID){
+        return false;
+      }
+        await API.graphql(
+          graphqlOperation(updateMessage, {
+            input: {
+              id: message.id,
+              chatRoomID: message.chatRoomID,
+              read: true
+            }
+          })
+        )
+        return true;
+    })
+    //console.log(loadedMessages);
+  }
 
   useEffect(() => {
     if (currentUser.changed === true) {
@@ -109,16 +126,15 @@ const ChatRoomScreen = () => {
     const subscription = API.graphql(
       graphqlOperation(onCreateMessage)
     ).subscribe({
-      next: async (data) => {
+      next: async (data: { value: { data: { onCreateMessage: any; }; }; }) => {
         const newMessage = data.value.data.onCreateMessage;
-        setTemp("123");
-        console.log("Line 123", route.params);
         if (newMessage.chatRoomID !== route.params.id) {
           console.log("Message is in another room");
           return;
         }
-
+        
         setMessages([newMessage, ...messages]);
+        
       },
     });
 

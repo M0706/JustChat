@@ -32,8 +32,8 @@ export default function ForwardScreen() {
   let groupsFetched = false;
 
   // console.log(route);
-  const {forwardMedia, forwardMessage } = route.params;
-  
+  const { forwardMedia, forwardMessage } = route.params;
+  //console.log(forwardMedia, forwardMessage)
 
   const mapUsers = (user: User, currentAuthedUser: string) => {
     if (user.id === currentAuthedUser) {
@@ -121,6 +121,7 @@ export default function ForwardScreen() {
       let chatRoomID = "";
 
       let groupCheck: boolean = false;
+
       if (user.chatRoom) {
         if (user.chatRoom.group == "True") {
           groupCheck = true;
@@ -133,6 +134,7 @@ export default function ForwardScreen() {
             input: { lastMessageID: "", group: "False" },
           })
         );
+
 
         if (!newChatRoomData.data) {
           console.log("Failed to create chat room");
@@ -168,7 +170,6 @@ export default function ForwardScreen() {
           : newChatRoomData?.data.createChatRoom.id || "";
       }
       // navigation.navigate("ChatScreen");
-
       const forwardMessageData = await API.graphql(
         graphqlOperation(createMessage, {
           input: {
@@ -176,10 +177,11 @@ export default function ForwardScreen() {
             media: forwardMedia,
             userID: currentUser.userID,
             chatRoomID,
+            read: false
           },
         })
       );
-
+      
       await updateChatRoomAsync(
         forwardMessageData.data.createMessage.id,
         chatRoomID

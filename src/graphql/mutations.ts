@@ -101,6 +101,7 @@ export const createChatRoomUser = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -115,6 +116,7 @@ export const createChatRoomUser = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -149,6 +151,7 @@ export const updateChatRoomUser = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -163,6 +166,7 @@ export const updateChatRoomUser = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -197,6 +201,7 @@ export const deleteChatRoomUser = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -211,6 +216,7 @@ export const deleteChatRoomUser = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -230,6 +236,7 @@ export const createChatRoom = /* GraphQL */ `
       id
       group
       name
+      imageUri
       chatRoomUsers {
         items {
           id
@@ -248,6 +255,7 @@ export const createChatRoom = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         nextToken
@@ -260,6 +268,7 @@ export const createChatRoom = /* GraphQL */ `
         media
         userID
         chatRoomID
+        read
         user {
           id
           name
@@ -272,6 +281,7 @@ export const createChatRoom = /* GraphQL */ `
           id
           group
           name
+          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -292,6 +302,7 @@ export const updateChatRoom = /* GraphQL */ `
       id
       group
       name
+      imageUri
       chatRoomUsers {
         items {
           id
@@ -310,6 +321,7 @@ export const updateChatRoom = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         nextToken
@@ -322,6 +334,7 @@ export const updateChatRoom = /* GraphQL */ `
         media
         userID
         chatRoomID
+        read
         user {
           id
           name
@@ -334,6 +347,7 @@ export const updateChatRoom = /* GraphQL */ `
           id
           group
           name
+          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -354,6 +368,7 @@ export const deleteChatRoom = /* GraphQL */ `
       id
       group
       name
+      imageUri
       chatRoomUsers {
         items {
           id
@@ -372,6 +387,7 @@ export const deleteChatRoom = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         nextToken
@@ -384,6 +400,7 @@ export const deleteChatRoom = /* GraphQL */ `
         media
         userID
         chatRoomID
+        read
         user {
           id
           name
@@ -396,6 +413,7 @@ export const deleteChatRoom = /* GraphQL */ `
           id
           group
           name
+          imageUri
           lastMessageID
           createdAt
           updatedAt
@@ -419,6 +437,7 @@ export const createMessage = /* GraphQL */ `
       media
       userID
       chatRoomID
+      read
       user {
         id
         name
@@ -434,6 +453,7 @@ export const createMessage = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -448,6 +468,7 @@ export const createMessage = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -469,6 +490,7 @@ export const updateMessage = /* GraphQL */ `
       media
       userID
       chatRoomID
+      read
       user {
         id
         name
@@ -484,6 +506,7 @@ export const updateMessage = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -498,6 +521,7 @@ export const updateMessage = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt
@@ -519,6 +543,7 @@ export const deleteMessage = /* GraphQL */ `
       media
       userID
       chatRoomID
+      read
       user {
         id
         name
@@ -534,6 +559,7 @@ export const deleteMessage = /* GraphQL */ `
         id
         group
         name
+        imageUri
         chatRoomUsers {
           nextToken
         }
@@ -548,6 +574,7 @@ export const deleteMessage = /* GraphQL */ `
           media
           userID
           chatRoomID
+          read
           updatedAt
         }
         createdAt

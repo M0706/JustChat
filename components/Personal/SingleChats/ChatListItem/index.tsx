@@ -5,7 +5,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { ChatRoom } from "../../../../types";
 import styles from "./style";
 import { Auth } from "aws-amplify";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons,Octicons } from "@expo/vector-icons";
+
 
 export type ChatListItemProps = {
   chatRoom: ChatRoom;
@@ -13,9 +14,11 @@ export type ChatListItemProps = {
 
 const ChatListItem = (props: ChatListItemProps) => {
   const { chatRoom } = props;
+ 
   const [otherUser, setOtherUser] = useState(null);
+  const [read,setRead] = useState(false);
   const navigation = useNavigation();
-
+  
   useEffect(() => {
     const getOtherUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser();
@@ -36,14 +39,37 @@ const ChatListItem = (props: ChatListItemProps) => {
 
     getOtherUser();
   }, []);
+  
+ 
+ 
 
-  const onClick = () => {
+  const onClick = async () => {
     navigation.navigate("ChatRoom", {
       id: chatRoom.id,
       name: otherUser.name,
       group: props.group,
     });
   };
+
+  const displayDetails = () => {
+    if(chatRoom.lastMessage){
+      if(chatRoom.lastMessage.content!=""){
+        if(props.group=="True"){
+          return`${chatRoom.lastMessage.user.name}: ${chatRoom.lastMessage.content}`
+        }
+        else{
+          return`${chatRoom.lastMessage.content}`
+        }
+      }else{
+        return (
+          <View style={{ flexDirection: 'row' }}>
+            <MaterialIcons name="insert-photo" size={18} color="black" />
+            <Text>  Media</Text>
+          </View>
+        )
+      }
+    }
+  }
 
   if (!otherUser) return null;
 
@@ -56,18 +82,12 @@ const ChatListItem = (props: ChatListItemProps) => {
           <View style={styles.midContainer}>
             <Text style={styles.userName}>{otherUser.name}</Text>
             <Text numberOfLines={1} style={styles.lastMessage}>
-              {chatRoom.lastMessage ?
-                <>{
-                  chatRoom.lastMessage.content !== ""
-                    ? `${chatRoom.lastMessage.user.name}: ${chatRoom.lastMessage.content}`
-                    : (
-                      <View style={{ flexDirection: 'row' }}>
-                        <MaterialIcons name="insert-photo" size={18} color="black" />
-                        <Text>  Media</Text>
-                      </View>
-                    )
-                }</> : ""}
+              {displayDetails()}
+              {props.chatRoom.lastMessage?.read===false?
+              <Octicons name="primitive-dot" size={24} color="blue" style={styles.newMessage} />
+               :<>{null}</>} 
             </Text>
+           
           </View>
 
           <Text style={styles.time}>

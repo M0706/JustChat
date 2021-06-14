@@ -47,6 +47,13 @@ const style = StyleSheet.create({
     marginRight: 5,
     marginTop: 3,
     borderRadius: 60
+  },
+
+  newMessage:{
+    marginRight: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+
   }
 });
 export default style;
