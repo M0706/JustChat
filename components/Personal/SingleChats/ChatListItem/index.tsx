@@ -5,7 +5,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { ChatRoom } from "../../../../types";
 import styles from "./style";
 import { Auth } from "aws-amplify";
-import { MaterialIcons,Octicons } from "@expo/vector-icons";
+import { MaterialIcons, Octicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 
 export type ChatListItemProps = {
@@ -14,6 +15,9 @@ export type ChatListItemProps = {
 
 const ChatListItem = (props: ChatListItemProps) => {
   const { chatRoom } = props;
+  const currentUser = useSelector((state) => state.currentUserInfo);
+
+  //console.log("Mera hai last message-->",chatRoom.lastMessage.user.id===currentUser.userID);
  
   const [otherUser, setOtherUser] = useState(null);
   const [read,setRead] = useState(false);
@@ -83,17 +87,21 @@ const ChatListItem = (props: ChatListItemProps) => {
             <Text style={styles.userName}>{otherUser.name}</Text>
             <Text numberOfLines={1} style={styles.lastMessage}>
               {displayDetails()}
-              {props.chatRoom.lastMessage?.read===false?
-              <Octicons name="primitive-dot" size={24} color="blue" style={styles.newMessage} />
-               :<>{null}</>} 
+
             </Text>
            
           </View>
 
-          <Text style={styles.time}>
+          <View style={styles.time}>
+          <Text >
             {chatRoom.lastMessage &&
               moment(chatRoom.lastMessage.createdAt).format("DD/MM/YYYY")}
           </Text>
+          {props.chatRoom.lastMessage?.user?.id!==currentUser.userID && props.chatRoom.lastMessage?.read===false?
+              <Octicons name="primitive-dot" size={29} color="blue" style={styles.newMessage} />
+               :<>{null}</>} 
+          </View>
+          
         </View>
       </View>
     </TouchableWithoutFeedback>

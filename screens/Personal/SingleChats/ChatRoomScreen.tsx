@@ -106,7 +106,6 @@ const ChatRoomScreen = () => {
         )
         return true;
     })
-    //console.log(loadedMessages);
   }
 
   useEffect(() => {

@@ -5,15 +5,16 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-around',
-    padding: 10
+    // padding: 10
+    paddingTop:19,
   },
 
   rightContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 8,
-    paddingBottom: 25,
+    // marginTop: 8,
+    paddingBottom: 19,
     borderBottomColor: 'lightgrey',
     borderBottomWidth: 1
   },
@@ -50,8 +51,7 @@ const style = StyleSheet.create({
   },
 
   newMessage:{
-    marginRight: 10,
-    flexDirection: 'row',
+    marginLeft: 62,
     justifyContent: 'space-around',
 
   }

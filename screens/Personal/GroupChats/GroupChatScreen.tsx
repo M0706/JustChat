@@ -9,6 +9,7 @@ import { getUser } from "../../../graphqlCustom/queries";
 import {
   onUpdateChatRoom,
   onCreateChatRoom,
+  onUpdateMessage,
 } from "../../../src/graphql/subscriptions";
 import { ChatRoom } from "../../../types";
 import { useEffect } from "react";
@@ -56,6 +57,18 @@ export default function ChatsScreen() {
   useEffect(() => {
     fetchChatRooms();
   }, []);
+
+  useEffect(() => {
+    const onUpdateMessageSubscription = API.graphql(
+      graphqlOperation(onUpdateMessage)
+    ).subscribe({
+      next: (data) => {
+        fetchChatRooms();
+      },
+    });
+
+    return () => onUpdateMessageSubscription.unsubscribe();
+  }, [chatRooms]);
 
   useEffect(() => {
     const onUpdateChatRoomSubscription = API.graphql(

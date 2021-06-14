@@ -32,13 +32,11 @@ function compare_time(a, b) {
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
-
-
+  const currentUser = useSelector((state) => state.currentUserInfo);
 
   const fetchChatRooms = async () => {
     try {
-      const user = await Auth.currentAuthenticatedUser();
-      const currentUserID = user.attributes.sub;
+      const currentUserID = currentUser.userID;
 
       let userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUserID })
@@ -62,6 +60,18 @@ export default function ChatsScreen() {
   useEffect(() => {
     fetchChatRooms();
   }, []);
+
+  useEffect(() => {
+    const onUpdateMessageSubscription = API.graphql(
+      graphqlOperation(onUpdateMessage)
+    ).subscribe({
+      next: (data) => {
+        fetchChatRooms();
+      },
+    });
+
+    return () => onUpdateMessageSubscription.unsubscribe();
+  }, [chatRooms]);
 
   useEffect(() => {
     const onUpdateChatRoomSubscription = API.graphql(
