@@ -8,6 +8,7 @@ export const onCreateUser = /* GraphQL */ `
       id
       name
       imageUri
+      lastSeen
       status
       chatRoomUser {
         items {
@@ -30,6 +31,7 @@ export const onUpdateUser = /* GraphQL */ `
       id
       name
       imageUri
+      lastSeen
       status
       chatRoomUser {
         items {
@@ -52,6 +54,7 @@ export const onDeleteUser = /* GraphQL */ `
       id
       name
       imageUri
+      lastSeen
       status
       chatRoomUser {
         items {
@@ -78,6 +81,7 @@ export const onCreateChatRoomUser = /* GraphQL */ `
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
           nextToken
@@ -125,6 +129,7 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
           nextToken
@@ -172,6 +177,7 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
           nextToken
@@ -252,6 +258,7 @@ export const onCreateChatRoom = /* GraphQL */ `
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -315,6 +322,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -378,6 +386,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -412,6 +421,7 @@ export const onCreateMessage = /* GraphQL */ `
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
           nextToken
@@ -462,6 +472,7 @@ export const onUpdateMessage = /* GraphQL */ `
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
           nextToken
@@ -512,6 +523,7 @@ export const onDeleteMessage = /* GraphQL */ `
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
           nextToken

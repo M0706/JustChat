@@ -2,11 +2,14 @@ import { authActions } from '../slices/Auth-slice'
 
 import Amplify, { Auth, API, graphqlOperation, Hub } from "aws-amplify";
 import { getUser } from '../../graphqlCustom/queries';
-import { createUser } from '../../src/graphql/mutations';
+import { createUser, updateUser } from '../../src/graphql/mutations';
+import moment from 'moment';
 
 
 export const AuthDetails = () => {
-  return async (dispatch) => {
+  return async (dispatch: (arg0: { payload: any; type: string; }) => void) => {
+
+    console.log("In Auth Details--->","Hi");
     
     const authDetails = async() => {
       const userInfo = await Auth.currentAuthenticatedUser({
@@ -14,23 +17,31 @@ export const AuthDetails = () => {
       });
       return userInfo
     }
-
-    const userDetails = async (userInfo) => {
+  
+    const userDetails = async (userInfo: { attribute: string; attributes: string; username: any; }) => {
       if (userInfo) {
+        await API.graphql(
+          graphqlOperation(updateUser,{
+            input:{
+              id:userInfo.attributes.sub,
+              lastSeen: new Date().toISOString()
+            }
+          })
+        )
+        
         const userData = await API.graphql(
           graphqlOperation(getUser, { id: userInfo.attributes.sub })
         );
 
         if (userData.data.getUser) {
           console.log("User registered");
+          console.log(moment(userData.data.getUser.lastSeen).format('YYYY-MM-DD h:mm:ss a'));
           return userData;
         }
-
         const newUser = {
           id: userInfo.attributes.sub,
           name: userInfo.username,
-          imageUri:
-            "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/3.jpg",
+          imageUri:"",
           status: "Hey, Im a tree",
         };
 
@@ -43,7 +54,7 @@ export const AuthDetails = () => {
     try {
       const userInfo = await authDetails();
       const userData = await userDetails(userInfo);
-    
+      
 
       dispatch(authActions.updateAuthInfo({
         userData: userData,

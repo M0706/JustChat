@@ -5,6 +5,7 @@ export const getUser = /* GraphQL */ `
       id
       name
       imageUri
+      lastSeen
       status
       chatRoomUser {
         items {
@@ -24,6 +25,7 @@ export const getUser = /* GraphQL */ `
                   id
                   name
                   imageUri
+                  lastSeen
                   status
                 }
               }

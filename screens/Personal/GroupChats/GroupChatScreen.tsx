@@ -38,7 +38,6 @@ export default function ChatsScreen() {
       let userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUser.userID })
       );
-      console.log("Hello")
 
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {

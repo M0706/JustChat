@@ -27,6 +27,7 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       const res = await Auth.signIn(userName, password);
+      // console.log("res-->",res);
       navigation.navigate("MainScreen");
     } catch (err) {
       console.log(err);

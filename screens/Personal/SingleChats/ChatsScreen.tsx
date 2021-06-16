@@ -33,6 +33,13 @@ function compare_time(a, b) {
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
   const currentUser = useSelector((state) => state.currentUserInfo);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(!currentUser.isAuth){
+      dispatch(AuthDetails());
+    }
+  }, [dispatch]);
 
   const fetchChatRooms = async () => {
     try {
@@ -146,3 +153,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+

@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
+import { AppState } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
@@ -18,6 +19,7 @@ import { AuthDetails } from "./store/actions/auth-actions";
 import config from "./src/aws-exports";
 
 import { Cache } from "aws-amplify";
+import AddProfilePhoto from "./screens/Personal/Shared/AddProfilePhoto";
 
 Amplify.configure(config);
 
@@ -28,6 +30,8 @@ function Index() {
   const dispatch = useDispatch();
 
   const currentState = useSelector((state) => state.currentUserInfo);
+
+  // console.log("currentState-->",currentState.userData?.data?.getUser);
 
 
   useEffect(() => {
@@ -40,15 +44,15 @@ function Index() {
   if (!isLoadingComplete) {
     return null;
   } else if (currentState.isAuth) {
-    Analytics.record("LoginScreen Visit");
-    return (
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <MainStackNavigator colorScheme={colorScheme} />
-        </NavigationContainer>
-        <StatusBar />
-      </SafeAreaProvider>
-    );
+      return (
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <MainStackNavigator colorScheme={colorScheme} />
+          </NavigationContainer>
+          <StatusBar />
+        </SafeAreaProvider>
+      );
+    
   } else {
     Analytics.record("MainChatScreen Visit");
 

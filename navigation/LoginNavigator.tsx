@@ -22,6 +22,7 @@ import { Overlay } from "react-native-elements";
 import OtherUserInfo from "../screens/Personal/OtherUserInfo";
 import ImageViewer from "../screens/Personal/Shared/ImageViewer";
 import ClickImage from "../screens/CameraScreen/ImageViewer"
+import AddProfilePhoto from "../screens/Personal/Shared/AddProfilePhoto";
 
 
 const LoginStack = createStackNavigator();
@@ -31,6 +32,7 @@ export default function LoginNavigator() {
       <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
       <LoginStack.Screen name="SignUpScreen" component={SignUpScreen} />
       <LoginStack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <LoginStack.Screen name="MainScreen" component={BottomTabNavigator} />
     </LoginStack.Navigator>
   );
 }
@@ -66,6 +68,7 @@ export function MainStackNavigator() {
       <MainStack.Screen name="OtherUserInfo" component={OtherUserInfo} />
       <MainStack.Screen name="ImageViewer" component={ImageViewer} />
       <MainStack.Screen name="ClickImage" component={ClickImage} />
+      <MainStack.Screen name="AddProfilePhoto" component={AddProfilePhoto} />
 
     </MainStack.Navigator>
   );

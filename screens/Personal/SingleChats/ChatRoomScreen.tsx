@@ -37,6 +37,7 @@ const ChatRoomScreen = () => {
   const dispatch = useDispatch();
 
   const route = useRoute();
+  //console.log("routes", route);
   const HandleScroll = () => {
     if (nextToken !== null) {
       fetchMessages(nextToken);
@@ -72,6 +73,7 @@ const ChatRoomScreen = () => {
   };
 
   const fetchMessages = async (nextToken: null) => {
+
     const loadmessages = await API.graphql(
       graphqlOperation(messagesByChatRoom, {
         chatRoomID: route.params.id,
@@ -133,7 +135,6 @@ const ChatRoomScreen = () => {
         }
         
         setMessages([newMessage, ...messages]);
-        
       },
     });
 
@@ -142,7 +143,7 @@ const ChatRoomScreen = () => {
 
   return (
     <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
-      <ChatsRoomHeader Name={route.params.name} isGroup={route.params.group} />
+      <ChatsRoomHeader Name={route.params.name} isGroup={route.params.group} lastSeen={route.params.lastSeen}/>
       <FlatList
         data={messages}
         onEndReached={HandleScroll}

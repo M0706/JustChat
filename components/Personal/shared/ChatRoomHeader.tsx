@@ -11,10 +11,16 @@ import { View, Text,Button, KeyboardAvoidingView, TextInput, Platform, Alert, Im
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import Colors from "../../../constants/Colors";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 const ChatRoomHeader = (props) => {
   const navigation = useNavigation();
-  //console.log(props.isGroup);
+  let lastSeen;
+  if (props.lastSeen) {
+    lastSeen = moment(props.lastSeen).fromNow();
+  }
+   
   
   const backButtonHandler = () => {
     if (props.isGroup ==="True") {
@@ -29,17 +35,18 @@ const ChatRoomHeader = (props) => {
     }
   }
 
-  // const customMenu = () = {
-    
-  // }
 
   return (
     <View style={styles.container}>
       {backButtonHandler()}
-
-        <Text style={styles.headerText} onPress= {() => {
-              navigation.navigate("OtherUserInfo");
-            }} >{props.Name}</Text>
+      <View style={styles.rightContainer}> 
+        <View style={styles.midContainer}>
+          <Text style={styles.headerText} onPress= {() => {
+                navigation.navigate("OtherUserInfo");
+              }} >{props.Name}</Text>
+          <Text style={styles.lastSeen}>{lastSeen}</Text>
+        </View>
+      </View>
      
       <View
           style={styles.right}
@@ -73,13 +80,19 @@ const styles = StyleSheet.create({
     padding:20,
     paddingBottom:10,
   },
+  midContainer:{
+    width:'65%',
+  },
+  rightContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop : 6,
+  },
   headerText: {
     fontWeight: "bold",
     fontSize: 20,
-    marginRight:120,
-    letterSpacing: 1,
     color: '#333',
-    paddingTop: 15,
   },
   right: {
     width: 90,
@@ -90,5 +103,9 @@ const styles = StyleSheet.create({
   },
   backButton: {
     paddingTop: 15,
+  },
+  lastSeen: {
+    fontSize: 16,
+    color: 'grey',
   }
 })

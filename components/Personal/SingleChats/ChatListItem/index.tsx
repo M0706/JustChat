@@ -34,6 +34,7 @@ const ChatListItem = (props: ChatListItemProps) => {
         });
       }
       else {
+        // console.log("chatRooms====>",chatRoom)
         const user = chatRoom.chatRoomUsers.items.find(
           (i) => i.user.id !== userInfo.attributes.sub
         ).user;
@@ -52,6 +53,7 @@ const ChatListItem = (props: ChatListItemProps) => {
       id: chatRoom.id,
       name: otherUser.name,
       group: props.group,
+      lastSeen: otherUser.lastSeen,
     });
   };
 
