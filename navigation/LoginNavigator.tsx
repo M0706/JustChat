@@ -33,6 +33,7 @@ export default function LoginNavigator() {
       <LoginStack.Screen name="SignUpScreen" component={SignUpScreen} />
       <LoginStack.Screen name="ForgotPassword" component={ForgotPassword} />
       <LoginStack.Screen name="MainScreen" component={BottomTabNavigator} />
+      <MainStack.Screen name="AddProfilePhoto" component={AddProfilePhoto} />
     </LoginStack.Navigator>
   );
 }

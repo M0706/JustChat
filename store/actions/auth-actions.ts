@@ -9,7 +9,6 @@ import moment from 'moment';
 export const AuthDetails = () => {
   return async (dispatch: (arg0: { payload: any; type: string; }) => void) => {
 
-    console.log("In Auth Details--->","Hi");
     
     const authDetails = async() => {
       const userInfo = await Auth.currentAuthenticatedUser({
@@ -35,18 +34,18 @@ export const AuthDetails = () => {
 
         if (userData.data.getUser) {
           console.log("User registered");
-          console.log(moment(userData.data.getUser.lastSeen).format('YYYY-MM-DD h:mm:ss a'));
           return userData;
         }
-        const newUser = {
-          id: userInfo.attributes.sub,
-          name: userInfo.username,
-          imageUri:"",
-          status: "Hey, Im a tree",
-        };
+        console.warn("You are not registered");
+        // const newUser = {
+        //   id: userInfo.attributes.sub,
+        //   name: userInfo.username,
+        //   imageUri:"",
+        //   status: "Hey, Im a tree",
+        // };
 
-        const newUserData = await API.graphql(graphqlOperation(createUser, { input: newUser }));
-        return newUserData;
+        // const newUserData = await API.graphql(graphqlOperation(createUser, { input: newUser }));
+        // return newUserData;
 
       }
     }

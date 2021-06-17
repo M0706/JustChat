@@ -12,6 +12,12 @@ const authSlice = createSlice({
     },
     userInfoChanged(state){
       state.changed = true;
+    },
+    logout(state){
+      state.userData = {};
+      state.isAuth = false;
+      state.userID = "";
+      state.changed = false;
     }
   },
 });

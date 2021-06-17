@@ -20,17 +20,12 @@ export default function PersonalProfile() {
         setSigningOut(true);
         try {
           await Auth.signOut();
-          dispatch(authActions.updateAuthInfo({
-            userData: {},
-            userID: "",
-            isAuth: false,
-            changed:false
-          }))
           navigation.navigate("LoginScreen");
         } catch (err) {
           Alert.alert("Error!", "An error ocurred while signing out");
         }
         setSigningOut(false);
+        dispatch(authActions.logout());
       } else {
         navigation.navigate("LoginScreen");
       }

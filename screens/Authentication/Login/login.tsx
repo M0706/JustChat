@@ -11,7 +11,11 @@ import {
 
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import { Auth } from "aws-amplify";
+import { API, Auth, graphqlOperation } from "aws-amplify";
+import { getUser } from "../../../graphqlCustom/queries";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../../store/slices/Auth-slice";
+import { createUser } from "../../../src/graphql/mutations";
 
 export default function LoginScreen() {
   const [userName, setUserName] = useState("");
@@ -22,13 +26,47 @@ export default function LoginScreen() {
   const [otpSending, setOtpSending] = useState(false)
   const [enterOTP, setEnterOTP] = useState(false)
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const login = async () => {
     setLoading(true);
     try {
-      const res = await Auth.signIn(userName, password);
-      // console.log("res-->",res);
-      navigation.navigate("MainScreen");
+      const userInfo = await Auth.signIn(userName, password);
+      let userData = await API.graphql(
+        graphqlOperation(getUser, { id: userInfo.attributes.sub })
+      );
+
+      if (userData.data.getUser) {
+        console.log("User registered");
+      }
+      else {
+        const newUser = {
+          id: userInfo.attributes.sub,
+          name: userInfo.username,
+          imageUri:"",
+          status: "Hey, Im a tree",
+        };
+  
+        userData = await API.graphql(graphqlOperation(createUser, { input: newUser }));
+      }
+   
+      
+      dispatch(authActions.updateAuthInfo({
+        userData,
+        userID: userInfo.attributes.sub,
+        isAuth: true,
+        changed:false
+      }))
+
+      //console.log(userData.data.getUser);
+      
+      if (userData.data.getUser.imageUri===""){
+        navigation.navigate("AddProfilePhoto",{userID: userInfo.attributes.sub});
+      } else {
+        console.log("navigate to mainscreen");
+        navigation.navigate("MainScreen");
+      }
+
     } catch (err) {
       console.log(err);
       Alert.alert("Error!", err.message || "An error ocurred");
@@ -37,8 +75,6 @@ export default function LoginScreen() {
   };
 
 
-
-  
   return (
   
     <View style={styles.container}>

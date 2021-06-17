@@ -1,7 +1,7 @@
 //This is Personal ChatScreen
 
 import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList, Text, ScrollView } from "react-native";
+import { StyleSheet, FlatList, Text, ScrollView, ActivityIndicator } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { View } from "../../../components/Themed";
 import ChatListItem from "../../../components/Personal/SingleChats/ChatListItem";
@@ -33,17 +33,23 @@ function compare_time(a, b) {
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
   const currentUser = useSelector((state) => state.currentUserInfo);
+  const [loading,setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!currentUser.isAuth){
+    let unmounted = false;
+    if (!currentUser.isAuth) {
       dispatch(AuthDetails());
     }
+    return () => { unmounted = true };
+
   }, [dispatch]);
 
   const fetchChatRooms = async () => {
+    setLoading(true);
     try {
       const currentUserID = currentUser.userID;
+      console.log(currentUserID);
 
       let userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUserID })
@@ -60,12 +66,17 @@ export default function ChatsScreen() {
 
       setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
     } catch (err) {
-      console.log(err);
+      console.log("Error in chatScreen");
     }
+    setLoading(false);
   };
 
   useEffect(() => {
-    fetchChatRooms();
+    let unmounted = false;
+    if (!unmounted) {
+      fetchChatRooms();
+    }
+    return () => { unmounted = true };
   }, []);
 
   useEffect(() => {
@@ -105,27 +116,31 @@ export default function ChatsScreen() {
 
   return (
     <View style={styles.container}>
-      {chatRooms.length === 0 ? (
-        <View>
-          <FontAwesome5
-            style={{ textAlign: "center" }}
-            name="rocketchat"
-            size={100}
-            color="black"
-          />
-          <Text style={styles.mainActionText}>Create a new chat using</Text>
-          <Text style={styles.subMainActionText}>the bottom below</Text>
-        </View>
-      ) : (
-        <FlatList
-          style={styles.list}
-          data={chatRooms}
-          renderItem={({ item }) => (
-            <ChatListItem chatRoom={item} group="False" />
+      {loading ? <ActivityIndicator />:
+      <>
+          {chatRooms.length === 0 ? (
+            <View>
+              <FontAwesome5
+                style={{ textAlign: "center" }}
+                name="rocketchat"
+                size={100}
+                color="black"
+              />
+              <Text style={styles.mainActionText}>Create a new chat using</Text>
+              <Text style={styles.subMainActionText}>the bottom below</Text>
+            </View>
+          ) : (
+            <FlatList
+              style={styles.list}
+              data={chatRooms}
+              renderItem={({ item }) => (
+                <ChatListItem chatRoom={item} group="False" />
+              )}
+              keyExtractor={(item: ChatRoom) => item.id}
+            />
           )}
-          keyExtractor={(item: ChatRoom) => item.id}
-        />
-      )}
+      </>}
+
       <NewMessageButton chatRooms={chatRooms} />
     </View>
   );

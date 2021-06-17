@@ -31,11 +31,14 @@ function Index() {
 
   const currentState = useSelector((state) => state.currentUserInfo);
 
-  // console.log("currentState-->",currentState.userData?.data?.getUser);
-
 
   useEffect(() => {
-    dispatch(AuthDetails());
+    let unmounted = false;
+    if (!currentState.isAuth) {
+      dispatch(AuthDetails());
+    }
+    return () => { unmounted = true };
+
   }, [dispatch]);
 
 
