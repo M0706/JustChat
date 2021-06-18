@@ -5,7 +5,6 @@ import { authActions } from '../../../store/slices/Auth-slice'
 import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { ActivityIndicator } from "react-native-paper";
-import {Cache} from 'aws-amplify';
 import {useDispatch, useSelector} from 'react-redux'
 
 export default function PersonalProfile() {

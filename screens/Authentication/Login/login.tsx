@@ -60,7 +60,7 @@ export default function LoginScreen() {
 
       //console.log(userData.data.getUser);
       
-      if (userData.data.getUser.imageUri===""){
+      if (userData.data?.getUser?.imageUri===""){
         navigation.navigate("AddProfilePhoto",{userID: userInfo.attributes.sub});
       } else {
         console.log("navigate to mainscreen");

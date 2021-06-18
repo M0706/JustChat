@@ -46,15 +46,13 @@ export default function ChatsScreen() {
   }, [dispatch]);
 
   const fetchChatRooms = async () => {
-    setLoading(true);
     try {
       const currentUserID = currentUser.userID;
-      console.log(currentUserID);
+      //console.log(currentUserID);
 
       let userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUserID })
       );
-
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
         if (room.chatRoom.group === "False") {
@@ -65,14 +63,15 @@ export default function ChatsScreen() {
       tempChatRoomArr.sort(compare_time);
 
       setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
+
     } catch (err) {
       console.log("Error in chatScreen");
     }
-    setLoading(false);
   };
 
   useEffect(() => {
     let unmounted = false;
+   // console.log(currentUser.isAuth);
     if (!unmounted) {
       fetchChatRooms();
     }
