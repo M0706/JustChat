@@ -18,6 +18,7 @@ export const createUser = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -44,6 +45,7 @@ export const updateUser = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -70,6 +72,7 @@ export const deleteUser = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -89,6 +92,7 @@ export const createChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      clearChatTime
       user {
         id
         name
@@ -121,6 +125,7 @@ export const createChatRoomUser = /* GraphQL */ `
           userID
           chatRoomID
           read
+          reply
           updatedAt
         }
         createdAt
@@ -140,6 +145,7 @@ export const updateChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      clearChatTime
       user {
         id
         name
@@ -172,6 +178,7 @@ export const updateChatRoomUser = /* GraphQL */ `
           userID
           chatRoomID
           read
+          reply
           updatedAt
         }
         createdAt
@@ -191,6 +198,7 @@ export const deleteChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      clearChatTime
       user {
         id
         name
@@ -223,6 +231,7 @@ export const deleteChatRoomUser = /* GraphQL */ `
           userID
           chatRoomID
           read
+          reply
           updatedAt
         }
         createdAt
@@ -248,6 +257,7 @@ export const createChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -262,6 +272,7 @@ export const createChatRoom = /* GraphQL */ `
           userID
           chatRoomID
           read
+          reply
           updatedAt
         }
         nextToken
@@ -275,6 +286,7 @@ export const createChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         read
+        reply
         user {
           id
           name
@@ -315,6 +327,7 @@ export const updateChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -329,6 +342,7 @@ export const updateChatRoom = /* GraphQL */ `
           userID
           chatRoomID
           read
+          reply
           updatedAt
         }
         nextToken
@@ -342,6 +356,7 @@ export const updateChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         read
+        reply
         user {
           id
           name
@@ -382,6 +397,7 @@ export const deleteChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -396,6 +412,7 @@ export const deleteChatRoom = /* GraphQL */ `
           userID
           chatRoomID
           read
+          reply
           updatedAt
         }
         nextToken
@@ -409,6 +426,7 @@ export const deleteChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         read
+        reply
         user {
           id
           name
@@ -447,6 +465,7 @@ export const createMessage = /* GraphQL */ `
       userID
       chatRoomID
       read
+      reply
       user {
         id
         name
@@ -479,6 +498,7 @@ export const createMessage = /* GraphQL */ `
           userID
           chatRoomID
           read
+          reply
           updatedAt
         }
         createdAt
@@ -501,6 +521,7 @@ export const updateMessage = /* GraphQL */ `
       userID
       chatRoomID
       read
+      reply
       user {
         id
         name
@@ -533,6 +554,7 @@ export const updateMessage = /* GraphQL */ `
           userID
           chatRoomID
           read
+          reply
           updatedAt
         }
         createdAt
@@ -555,6 +577,7 @@ export const deleteMessage = /* GraphQL */ `
       userID
       chatRoomID
       read
+      reply
       user {
         id
         name
@@ -587,6 +610,7 @@ export const deleteMessage = /* GraphQL */ `
           userID
           chatRoomID
           read
+          reply
           updatedAt
         }
         createdAt

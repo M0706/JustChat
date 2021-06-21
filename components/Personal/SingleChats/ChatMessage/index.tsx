@@ -27,7 +27,7 @@ export type ChatMessageProps = {
 };
 
 const ChatMessage = (props: ChatMessageProps) => {
-  const { message, currentUserId, group, pressed } = props;
+  const { message, currentUserId, group, pressed, changeReply } = props;
   const navigation = useNavigation();
 
   const [visible, setVisible] = useState(false);
@@ -57,6 +57,7 @@ const ChatMessage = (props: ChatMessageProps) => {
         <Text style={{ padding: 10 }} onPress={copyToClipboard}>
           Copy
         </Text>
+        <Text style={{ padding: 10 }} onPress={ReplyToMessage}>Reply</Text>
         <Text style={{ padding: 10 }} onPress={forwardPress}>
           Forward
         </Text>
@@ -113,6 +114,11 @@ const ChatMessage = (props: ChatMessageProps) => {
       forwardMedia: message.media
     });
   };
+
+  const ReplyToMessage = () => {
+    toggleOverlay();
+    changeReply(message);
+  }
 
 
   return (

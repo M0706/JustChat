@@ -1,30 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   ImageBackground,
-  ScrollView,
   View,
-  TouchableOpacity,
   Text,
   StyleSheet,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { API, Auth, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 
 import ChatMessage from "../../../components/Personal/SingleChats/ChatMessage";
 import BG from "../../../assets/images/BG.png";
 import InputBox from "../../../components/Personal/SingleChats/InputBox";
 import { messagesByChatRoom } from "../../../src/graphql/queries";
 import { onCreateMessage } from "../../../src/graphql/subscriptions";
-import { Cache } from "aws-amplify";
 import Colors from "../../../constants/Colors";
-import { MaterialIcons, Entypo } from "@expo/vector-icons";
-import { getUser } from "../../../graphqlCustom/queries";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { AuthDetails } from "../../../store/actions/auth-actions";
 import ChatsRoomHeader from "../../../components/Personal/shared/ChatRoomHeader";
 import { updateMessage } from "../../../src/graphql/mutations";
+import ReplyBox from '../../../components/Personal/shared/ReplyBox'
 // import styles from "../../Authentication/Login/styles";
 
 const ChatRoomScreen = () => {
@@ -33,6 +29,7 @@ const ChatRoomScreen = () => {
   const [nextToken, setNextToken] = useState(null);
   const [pressed, setPressed] = useState(false);
   const [chatRooms, setChatRooms] = useState([]);
+  const [reply,setReply] = useState(null);
   const currentUser = useSelector((state) => state.currentUserInfo);
   const dispatch = useDispatch();
 
@@ -87,6 +84,7 @@ const ChatRoomScreen = () => {
       loadmessages.data.messagesByChatRoom.items
     );
     setMessages(messageArr);
+    //console.log(messageArr);
     setNextToken(loadmessages.data.messagesByChatRoom.nextToken);
     updateReadAsync(messageArr);
   };
@@ -151,37 +149,29 @@ const ChatRoomScreen = () => {
         onEndReachedThreshold={0.5}
         renderItem={({ item }) => (
           <View style={styles.container}>
-            {/* {pressed ? (
-              <>
-                <Entypo
-                  name="circle"
-                  size={24}
-                  color="black"
-                  style={styles.tick}
-                />
-              </>
-            ) : (
-              <Entypo
-                name="circle"
-                size={24}
-                color="black"
-                style={styles.tick}
-              />
-            )} */}
-
+           
             <ChatMessage
               currentUserId={currentUser.userID}
               message={item}
               group={route.params.group}
               pressed={setPressed}
               chatRooms={chatRooms}
+              changeReply = {setReply}
             />
           </View>
         )}
         inverted
       />
 
-      <InputBox chatRoomID={route.params.id} />
+      {reply==null?
+        <InputBox chatRoomID={route.params.id} /> :
+        <View>
+        <ReplyBox>
+        <Text> {reply.content} </Text>
+        </ReplyBox>
+        <InputBox chatRoomID={route.params.id} />
+        </View>
+      }
     </ImageBackground>
   );
 };

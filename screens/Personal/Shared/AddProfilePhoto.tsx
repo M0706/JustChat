@@ -9,7 +9,6 @@ import { updateUser } from '../../../src/graphql/mutations';
 
 
 const AddProfile = (props) => {
-  const [img, setImg] = useState("");
   const navigation = useNavigation();
   // console.log(props);
   const userID = props.route.params.userID;
