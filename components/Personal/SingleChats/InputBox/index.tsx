@@ -21,7 +21,7 @@ export type InputBoxProps = {
 
 const InputBox = (props: InputBoxProps) => {
   const [userID, setUserID] = useState(null);
-  const { chatRoomID } = props;
+  const { chatRoomID, replyMessageID, setReply } = props;
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
   const [audioRecord, setAudioRecord] = useState(false);
@@ -81,10 +81,12 @@ const InputBox = (props: InputBoxProps) => {
             userID: userID,
             read: false,
             chatRoomID,
+            replyMessageID, setReply
           },
         })
       );
       setMessage("");
+      setReply(null);
       await updateChatRoomAsync(newMessageData.data.createMessage.id);
     } catch (e) {
       console.log(e);

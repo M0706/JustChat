@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/core";
 import { ChatRoom } from "../../../../types";
 import VideoPlay from "./components/video";
 import ImageDisplay from "./components/image";
+import ReplyMessage from "./components/replyMessage"
 
 export type ChatMessageProps = {
   message: Message;
@@ -27,7 +28,7 @@ export type ChatMessageProps = {
 };
 
 const ChatMessage = (props: ChatMessageProps) => {
-  const { message, currentUserId, group, pressed, changeReply } = props;
+  const { message, currentUserId, group, pressed, setReply } = props;
   const navigation = useNavigation();
 
   const [visible, setVisible] = useState(false);
@@ -117,7 +118,7 @@ const ChatMessage = (props: ChatMessageProps) => {
 
   const ReplyToMessage = () => {
     toggleOverlay();
-    changeReply(message);
+    setReply(message);
   }
 
 
@@ -140,6 +141,7 @@ const ChatMessage = (props: ChatMessageProps) => {
             <Text style={styles.name}>{message.user.name}</Text>
           )}
 
+          {message.replyMessageID && <ReplyMessage message={message}/>}
           {messageType(message)}
 
           <Text

@@ -84,7 +84,7 @@ const ChatRoomScreen = () => {
       loadmessages.data.messagesByChatRoom.items
     );
     setMessages(messageArr);
-    //console.log(messageArr);
+    console.log(messageArr);
     setNextToken(loadmessages.data.messagesByChatRoom.nextToken);
     updateReadAsync(messageArr);
   };
@@ -156,22 +156,21 @@ const ChatRoomScreen = () => {
               group={route.params.group}
               pressed={setPressed}
               chatRooms={chatRooms}
-              changeReply = {setReply}
+              setReply = {setReply}
             />
           </View>
         )}
         inverted
       />
 
-      {reply==null?
-        <InputBox chatRoomID={route.params.id} /> :
+      {reply==null?<></> :
         <View>
         <ReplyBox>
         <Text> {reply.content} </Text>
         </ReplyBox>
-        <InputBox chatRoomID={route.params.id} />
         </View>
       }
+      <InputBox chatRoomID={route.params.id} replyMessageID={reply?.id} setReply={setReply}/>
     </ImageBackground>
   );
 };

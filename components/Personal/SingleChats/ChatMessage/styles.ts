@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     padding: 10,
     display: 'flex',
     flexDirection: 'column',
-    position: 'relative'      
+    position: 'relative'
   
   },
   name: {
@@ -34,6 +34,35 @@ const styles = StyleSheet.create({
     color: "black"
   },
 
+  embeddedMessage: {
+    display: "flex",
+    // alignItems: "center",
+    // font-size: .875rem,
+    // lineHeight: 20,
+    //margin:"0 -.25rem .0625rem",
+    // marginTop:0,
+    // marginRight:".25",
+    // marginLeft:".25",
+    // marginBottom:"0.625",
+    // paddingTop: ".1875",
+    // paddingRight:".25", 
+    // paddingBottom:".1875",
+    // paddingLeft:".4375",
+    // borderRadius: 20,
+    // position: "relative",
+    // overflow: "hidden",
+    // cursor: pointer,
+    // direction: ltr,
+  },
+  innerText: {
+    // overflow: "hidden",
+    // marginInlineStart: ".5rem",
+    display: "flex",
+    flexDirection: "column-reverse",
+  },
+  messageTitle:{
+
+  }
 });
 
 export default styles;

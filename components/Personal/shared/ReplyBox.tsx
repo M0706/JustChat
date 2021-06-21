@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
         padding: 15,
         display: 'flex',
         flexDirection: 'column',
-        position: 'relative'  
+        marginHorizontal:10,
+        marginRight:65
     },
 })
 ReplyBox.propTypes = {
