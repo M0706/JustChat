@@ -21,6 +21,8 @@ import { AuthDetails } from "../../../store/actions/auth-actions";
 import ChatsRoomHeader from "../../../components/Personal/shared/ChatRoomHeader";
 import { updateMessage } from "../../../src/graphql/mutations";
 import ReplyBox from '../../../components/Personal/shared/ReplyBox'
+import { MaterialIcons } from '@expo/vector-icons';
+
 // import styles from "../../Authentication/Login/styles";
 
 const ChatRoomScreen = () => {
@@ -29,7 +31,7 @@ const ChatRoomScreen = () => {
   const [nextToken, setNextToken] = useState(null);
   const [pressed, setPressed] = useState(false);
   const [chatRooms, setChatRooms] = useState([]);
-  const [reply,setReply] = useState(null);
+  const [reply, setReply] = useState(null);
   const currentUser = useSelector((state) => state.currentUserInfo);
   const dispatch = useDispatch();
   const flatListRef = useRef();
@@ -91,21 +93,21 @@ const ChatRoomScreen = () => {
   };
 
   const updateReadAsync = async (loadedMessages) => {
-  
+
     loadedMessages.every(async (message) => {
-      if(message.read===true|| message.user.id===currentUser.userID){
+      if (message.read === true || message.user.id === currentUser.userID) {
         return false;
       }
-        await API.graphql(
-          graphqlOperation(updateMessage, {
-            input: {
-              id: message.id,
-              chatRoomID: message.chatRoomID,
-              read: true
-            }
-          })
-        )
-        return true;
+      await API.graphql(
+        graphqlOperation(updateMessage, {
+          input: {
+            id: message.id,
+            chatRoomID: message.chatRoomID,
+            read: true
+          }
+        })
+      )
+      return true;
     })
   }
 
@@ -132,7 +134,6 @@ const ChatRoomScreen = () => {
           console.log("Message is in another room");
           return;
         }
-        
         setMessages([newMessage, ...messages]);
       },
     });
@@ -147,18 +148,19 @@ const ChatRoomScreen = () => {
       offset: 0,
       animated: true
     });
+
   };
 
   const scrollHandler = () => {
     if (moveBottom === false) {
       setMoveBottom(true);
     }
-
   }
+
 
   return (
     <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
-      <ChatsRoomHeader Name={route.params.name} isGroup={route.params.group} lastSeen={route.params.lastSeen}/>
+      <ChatsRoomHeader Name={route.params.name} isGroup={route.params.group} lastSeen={route.params.lastSeen} />
       <FlatList
         data={messages}
         onEndReached={HandleScroll}
@@ -170,29 +172,34 @@ const ChatRoomScreen = () => {
         onEndReachedThreshold={0.5}
         renderItem={({ item }) => (
           <View style={styles.container}>
-           
+
             <ChatMessage
               currentUserId={currentUser.userID}
               message={item}
               group={route.params.group}
               pressed={setPressed}
               chatRooms={chatRooms}
-              setReply = {setReply}
+              setReply={setReply}
             />
           </View>
         )}
         inverted
       />
 
-      {reply==null?<></> :
+      {reply == null ? <></> :
         <View>
-        <ReplyBox>
-        <Text> {reply.content} </Text>
-        </ReplyBox>
+          <ReplyBox>
+            <Text> {reply.content} </Text>
+          </ReplyBox>
         </View>
       }
-      {moveBottom && <Text onPress={downButtonHandler}>scroll to bottom</Text>}
-      <InputBox chatRoomID={route.params.id} replyMessageID={reply?.id} setReply={setReply}/>
+      {moveBottom &&
+        <MaterialIcons name="arrow-drop-down-circle"
+          size={30} color="blue"
+          onPress={downButtonHandler}
+          style={styles.bottomButtom} />}
+
+      <InputBox chatRoomID={route.params.id} replyMessageID={reply?.id} setReply={setReply} />
     </ImageBackground>
   );
 };
@@ -245,6 +252,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 60,
   },
+  bottomButton: {
+    backgroundColor: "black"
+  }
 });
 
 export default ChatRoomScreen;

@@ -71,7 +71,7 @@ const ChatMessage = (props: ChatMessageProps) => {
   const messageType = (message) => {
     if (message.content !== "") {
       return (
-        <Text style={[{ color: isMyMessage() ? "white" : "black" }]}>
+        <Text style={[{ color: isMyMessage() ? "white" : "black", marginLeft: 7 }]}>
           {message.content}
         </Text>
       );
@@ -83,16 +83,16 @@ const ChatMessage = (props: ChatMessageProps) => {
         return (
           <ImageDisplay
             uri={message.media}
-            forwardScreenProps = {{
-            forwardMessage: message.content,
-            forwardMedia: message.media,
-          }}
-      />
+            forwardScreenProps={{
+              forwardMessage: message.content,
+              forwardMedia: message.media,
+            }}
+          />
         );
       }
       else if (extension === "mp4") {
         return (
-          <VideoPlay uri={ message.media}/>
+          <VideoPlay uri={message.media} />
         )
       }
     }
@@ -141,7 +141,7 @@ const ChatMessage = (props: ChatMessageProps) => {
             <Text style={styles.name}>{message.user.name}</Text>
           )}
 
-          {message.replyMessageID && <ReplyMessage message={message}/>}
+          {message.replyMessageID && <ReplyMessage message={message} />}
           {messageType(message)}
 
           <Text

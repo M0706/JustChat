@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     position: 'relative'
-  
+
   },
   name: {
     color: Colors.light.tint,
@@ -34,34 +34,22 @@ const styles = StyleSheet.create({
     color: "black"
   },
 
-  embeddedMessage: {
+  replyText: {
     display: "flex",
-    // alignItems: "center",
-    // font-size: .875rem,
-    // lineHeight: 20,
-    //margin:"0 -.25rem .0625rem",
-    // marginTop:0,
-    // marginRight:".25",
-    // marginLeft:".25",
-    // marginBottom:"0.625",
-    // paddingTop: ".1875",
-    // paddingRight:".25", 
-    // paddingBottom:".1875",
-    // paddingLeft:".4375",
-    // borderRadius: 20,
-    // position: "relative",
-    // overflow: "hidden",
-    // cursor: pointer,
-    // direction: ltr,
+    flexDirection: "column",
+    backgroundColor: "#687fa6",
+    opacity: 0.7,
+    borderLeftColor: "black",
+    borderRadius: 10,
+    borderTopLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    padding: 10,
+    borderLeftWidth: 3,
+    borderRightWidth: 3,
+    marginBottom: 4
   },
-  innerText: {
-    // overflow: "hidden",
-    // marginInlineStart: ".5rem",
-    display: "flex",
-    flexDirection: "column-reverse",
-  },
-  messageTitle:{
-    fontWeight:"bold",
+  messageTitle: {
+    fontWeight: "bold",
   }
 });
 
