@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: "column-reverse",
   },
   messageTitle:{
-
+    fontWeight:"bold",
   }
 });
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   FlatList,
   ImageBackground,
@@ -32,6 +32,8 @@ const ChatRoomScreen = () => {
   const [reply,setReply] = useState(null);
   const currentUser = useSelector((state) => state.currentUserInfo);
   const dispatch = useDispatch();
+  const flatListRef = useRef();
+  const [moveBottom, setMoveBottom] = useState(false);
 
   const route = useRoute();
   //console.log("routes", route);
@@ -84,7 +86,6 @@ const ChatRoomScreen = () => {
       loadmessages.data.messagesByChatRoom.items
     );
     setMessages(messageArr);
-    console.log(messageArr);
     setNextToken(loadmessages.data.messagesByChatRoom.nextToken);
     updateReadAsync(messageArr);
   };
@@ -139,6 +140,22 @@ const ChatRoomScreen = () => {
     return () => subscription.unsubscribe();
   }, [messages]);
 
+
+  const downButtonHandler = () => {
+    //OnCLick of Up button we scrolled the list to top
+    flatListRef.current.scrollToOffset({
+      offset: 0,
+      animated: true
+    });
+  };
+
+  const scrollHandler = () => {
+    if (moveBottom === false) {
+      setMoveBottom(true);
+    }
+
+  }
+
   return (
     <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
       <ChatsRoomHeader Name={route.params.name} isGroup={route.params.group} lastSeen={route.params.lastSeen}/>
@@ -146,6 +163,10 @@ const ChatRoomScreen = () => {
         data={messages}
         onEndReached={HandleScroll}
         refreshing={true}
+        onScroll={scrollHandler}
+        ref={(ref) => {
+          flatListRef.current = ref;
+        }}
         onEndReachedThreshold={0.5}
         renderItem={({ item }) => (
           <View style={styles.container}>
@@ -170,6 +191,7 @@ const ChatRoomScreen = () => {
         </ReplyBox>
         </View>
       }
+      {moveBottom && <Text onPress={downButtonHandler}>scroll to bottom</Text>}
       <InputBox chatRoomID={route.params.id} replyMessageID={reply?.id} setReply={setReply}/>
     </ImageBackground>
   );
