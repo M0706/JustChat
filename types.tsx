@@ -49,3 +49,13 @@ export type ChatRoom = {
   users: User[];
   lastMessage: Message;
 };
+export type Channel = {
+  id: string,
+  users: User[]
+  lastMessage: Message
+}
+
+export type Space = {
+  id: string;
+  channels: Channel[];
+}

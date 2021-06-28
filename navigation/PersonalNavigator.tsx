@@ -19,7 +19,7 @@ import PersonalStories from "../screens/Personal/StoryScreen/PersonalStories";
 import ChatsScreen from "../screens/Personal/SingleChats/ChatsScreen";
 import OtherUserInfo from "../screens/Personal/OtherUserInfo";
 import AddGroupInfo from "../screens/Personal/GroupChats/AddGroupInfo";
-import WorkProfile from "../screens/Work/WorkProfile";
+import WorkProfile from "../screens/Work/Workprofile";
 
 import Colors from "../constants/Colors";
 import Icon from "react-native-vector-icons/Ionicons";
