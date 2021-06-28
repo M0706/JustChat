@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import data from "../data";
-import SpaceListItem from "../../../components/Work/SpaceListItem";
+import SpaceListItem from "../../../components/Work/Spaces/SpaceListItem";
 
 const Spaces = () => {
   return (

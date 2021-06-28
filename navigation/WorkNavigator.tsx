@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import SpaceListDrawer  from "../components/Work/Drawer";
+import SpaceListDrawer  from "../components/Work/Spaces/ChannelDrawer";
 // import Icon from "react-native-vector-icons/Ionicons";
 import Tasks from '../screens/Work/Tasks';
 import Spaces from '../screens/Work/Spaces/SpaceScreen';

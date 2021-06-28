@@ -8,12 +8,14 @@ import {
   SectionList,
 } from 'react-native';
 
-export const SpaceList = () => {
+ const ChannelList = () => {
   /**
    * This is where we will render the channel label or row
    * @param {*} item
    */
   const renderChannelListItem = (item) => <Text>{item}</Text>;
+
+  console.log("hi");
 
   return (
     <SafeAreaView>
@@ -92,3 +94,5 @@ const styles = StyleSheet.create({
     // fontFamily: 'Lato-Regular',
   },
 });
+
+export default ChannelList;

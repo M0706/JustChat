@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
-import { Space } from "../../../types";
+import { Space } from "../../../../../../types";
 import styles from "./style";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
@@ -16,16 +16,13 @@ const SpaceListItem = (props: SpaceListItemProps) => {
 
   //   const user = space[1];
 
-  // const onClick = () => {
-  //   navigation.navigate('ChatRoom', {
-  //     id: chatRoom.id,
-  //     name: user.name,
-  //   })
-  // }
+  const onClick = () => {
+    navigation.navigate('SpaceRoom', {
+    })
+  }
 
   return (
-    <TouchableWithoutFeedback //onPress={onClick}
-    >
+    <TouchableWithoutFeedback onPress={onClick} >
       <View style={styles.container}>
         <Image source={{ uri: space.imageUri }} style={styles.avatar} />
         <View style={styles.rightContainer}>
