@@ -1,0 +1,161 @@
+type User @model {
+  id: ID!
+  name: String!
+  imageUri: String
+  lastSeen: AWSDateTime
+  status: String
+  chatRoomUser: [ChatRoomUser] @connection(keyName: "byUser", fields: ["id"])
+  channelUser: [ChannelUser]
+    @connection(keyName: "channelByUser", fields: ["id"])
+}
+
+type ChatRoomUser
+  @model
+  @key(name: "byUser", fields: ["userID", "chatRoomID"])
+  @key(name: "byChatRoom", fields: ["chatRoomID", "userID"]) {
+  id: ID!
+  userID: ID!
+  chatRoomID: ID!
+  clearChatTime: AWSDateTime
+  user: User @connection(fields: ["userID"])
+  chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
+}
+
+type ChatRoom
+  @model
+  @key(name: "byType", fields: ["group"], queryField: "chatRoomsByGroups") {
+  id: ID!
+  group: String!
+  name: String
+  imageUri: String
+  chatRoomUsers: [ChatRoomUser]
+    @connection(keyName: "byChatRoom", fields: ["id"])
+  messages: [Message] @connection(keyName: "byChatRoom", fields: ["id"])
+  lastMessageID: ID!
+  lastMessage: Message @connection(fields: ["lastMessageID"])
+}
+
+type Message
+  @model
+  @key(
+    name: "byChatRoom"
+    fields: ["chatRoomID", "createdAt"]
+    queryField: "messagesByChatRoom"
+  ) {
+  id: ID!
+  createdAt: String!
+  content: String!
+  media: String
+  userID: ID!
+  chatRoomID: ID!
+  read: Boolean!
+  replyMessageID: ID
+  replyMessage: Message @connection(fields: ["replyMessageID"])
+  user: User @connection(fields: ["userID"])
+  chatRoom: ChatRoom @connection(fields: ["chatRoomID"], sortField: "createdAt")
+  # deletedBy: []
+}
+
+type SpaceRoom @model {
+  id: ID!
+  name: String!
+  imageUri: String
+  channels: [Channel] @connection(keyName: "byChannel", fields: ["id"])
+}
+
+type ChannelUser
+  @model
+  @key(name: "channelByUser", fields: ["userID", "channelID"])
+  @key(name: "byChannel", fields: ["channelID", "userID"]) {
+  id: ID!
+  userID: ID!
+  channelID: ID!
+  user: User @connection(fields: ["userID"])
+  channel: Channel @connection(fields: ["channelID"])
+}
+
+type Channel @model @key(name: "byChannel", fields: ["spaceRoomID"]) {
+  id: ID!
+  spaceRoomID: ID!
+  name: String!
+  channelUsers: [ChannelUser] @connection(keyName: "byChannel", fields: ["id"])
+  messages: [ChannelMessage] @connection(keyName: "byChannel", fields: ["id"])
+  lastMessageID: ID!
+  lastMessage: ChannelMessage @connection(fields: ["lastMessageID"])
+  spaceRoom: SpaceRoom @connection(fields: ["spaceRoomID"])
+}
+
+type ChannelMessage
+  @model
+  @key(
+    name: "byChannel"
+    fields: ["channelID", "createdAt"]
+    queryField: "messagesByChannel"
+  ) {
+  id: ID!
+  createdAt: String!
+  content: String!
+  media: String
+  read: Boolean
+  userID: ID!
+  channelID: ID!
+  user: User @connection(fields: ["userID"])
+  channel: Channel @connection(fields: ["channelID"], sortField: "createdAt")
+}
+
+# type User @model
+# @key(name:"byMessage",fields:["id"]){
+#   id: ID!
+#   name: String!
+#   imageUri: String
+#   lastSeen: AWSDateTime
+#   status: String
+#   chatRoomUser: [ChatRoomUser] @connection(keyName: "byUser", fields: ["id"])
+# }
+
+# type ChatRoomUser
+#   @model
+#   @key(name: "byUser", fields: ["userID", "chatRoomID"])
+#   @key(name: "byChatRoom", fields: ["chatRoomID", "userID"]) {
+#   id: ID!
+#   userID: ID!
+#   chatRoomID: ID!
+#   clearChatTime: AWSDateTime
+#   user: User @connection(fields: ["userID"])
+#   chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
+# }
+
+# type ChatRoom
+#   @model
+#   @key(name: "byType", fields: ["group"], queryField: "chatRoomsByGroups") {
+#   id: ID!
+#   group: String!
+#   name: String
+#   imageUri: String
+#   chatRoomUsers: [ChatRoomUser]
+#     @connection(keyName: "byChatRoom", fields: ["id"])
+#   messages: [Message] @connection(keyName: "byChatRoom", fields: ["id"])
+#   lastMessageID: ID!
+#   lastMessage: Message @connection(fields: ["lastMessageID"])
+# }
+
+# type Message
+#   @model
+#   @key(
+#     name: "byChatRoom"
+#     fields: ["chatRoomID", "createdAt"]
+#     queryField: "messagesByChatRoom"
+#   ) {
+#   id: ID!
+#   createdAt: String!
+#   content: String!
+#   media: String
+#   userID: ID!
+#   chatRoomID: ID!
+#   read: Boolean!
+#   replyMessageID: ID
+#   replyMessage: Message @connection(fields: ["replyMessageID"])
+#   user: User @connection(fields: ["userID"])
+#   chatRoom: ChatRoom @connection(fields: ["chatRoomID"], sortField: "createdAt")
+#   deletedBy: [User] @connection(keyName:"byMessage",fields:["id"])
+# }

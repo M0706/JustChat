@@ -1,6 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React, { useEffect } from "react";
-import {SafeAreaView, Text, StyleSheet, View,Button} from 'react-native'
+import {SafeAreaView, Text, StyleSheet, View,Button, useWindowDimensions} from 'react-native'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 // import ChannelList from "../../../../components/Work/Spaces/ChannelDrawer";
 import ChannelListDrawer from "./ChannelListDrawer";
@@ -9,10 +9,12 @@ import ChannelScreen from "./ChannelScreen"
 const Drawer = createDrawerNavigator();
 
 const ChannelDrawer = ({ navigation, route }) => {
+  const dimensions = useWindowDimensions();
   return (
     <View style={styles.container}>
-        <Drawer.Navigator
-          drawerContent = {ChannelListDrawer}
+      <Drawer.Navigator
+        edgeWidth={dimensions.width}
+        drawerContent={ChannelListDrawer}
           drawerStyle={styles.drawerNavigator}>
           <Drawer.Screen name="ChannelScreen" component={ChannelScreen} />
         </Drawer.Navigator>

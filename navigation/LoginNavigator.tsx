@@ -21,14 +21,13 @@ import AddContactsScreen from "../screens/Personal/GroupChats/AddContactsScreen"
 import { Overlay } from "react-native-elements";
 import OtherUserInfo from "../screens/Personal/OtherUserInfo";
 import ImageViewer from "../screens/Personal/Shared/ImageViewer";
-import ClickImage from "../screens/CameraScreen/ImageViewer"
+import ClickImage from "../screens/CameraScreen/ImageViewer";
 import AddProfilePhoto from "../screens/Personal/Shared/AddProfilePhoto";
+import CreateSpace from "../screens/Work/Spaces/CreateSpace";
 
 // Work Tab Screen imports
 import SpaceRoomScreen from "../screens/Work/Spaces/SpaceRoom/SpaceRoomScreen";
-import Drawer from "../screens/Work/Spaces/SpaceRoom/Drawer"
-
-
+import Drawer from "../screens/Work/Spaces/SpaceRoom/Drawer";
 
 const LoginStack = createStackNavigator();
 export default function LoginNavigator() {
@@ -75,12 +74,8 @@ export function MainStackNavigator() {
       <MainStack.Screen name="ImageViewer" component={ImageViewer} />
       <MainStack.Screen name="ClickImage" component={ClickImage} />
       <MainStack.Screen name="AddProfilePhoto" component={AddProfilePhoto} />
-      <MainStack.Screen
-        name="SpaceRoom"
-        component={Drawer}
-
-      />
-
+      <MainStack.Screen name="SpaceRoom" component={Drawer} />
+      <MainStack.Screen name="CreateSpace" component={CreateSpace} />
     </MainStack.Navigator>
   );
 }

@@ -21,4 +21,3 @@ const NewGroupsButton = () => {
 };
 
 export default NewGroupsButton;
-2;

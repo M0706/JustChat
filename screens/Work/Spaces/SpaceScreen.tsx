@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import NewSpaceButton from "../../../components/Work/Spaces/NewSpaceButton";
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import data from "../data";
 import SpaceListItem from "../../../components/Work/Spaces/SpaceListItem";
@@ -7,12 +7,15 @@ import SpaceListItem from "../../../components/Work/Spaces/SpaceListItem";
 const Spaces = () => {
   return (
     <View style={styles.container}>
-      <FlatList
-        style={{ width: "100%" }}
-        data={data}
-        renderItem={({ item }) => <SpaceListItem space={item} />}
-        keyExtractor={(item) => item.id}
-      />
+      <View>
+        <FlatList
+          style={{ width: "100%" }}
+          data={data}
+          renderItem={({ item }) => <SpaceListItem space={item} />}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+      <NewSpaceButton />
     </View>
   );
 };
@@ -20,5 +23,7 @@ const Spaces = () => {
 export default Spaces;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
 });

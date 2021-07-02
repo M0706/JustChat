@@ -6,6 +6,7 @@ import config from "./src/aws-exports";
 import Index from "./index";
 import { Provider } from "react-redux";
 import store from "./store";
+import 'react-native-gesture-handler'
 
 Amplify.configure(config);
 

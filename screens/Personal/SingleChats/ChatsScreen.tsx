@@ -6,12 +6,11 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { View } from "../../../components/Themed";
 import ChatListItem from "../../../components/Personal/SingleChats/ChatListItem";
 import NewMessageButton from "../../../components/Personal/SingleChats/NewMessageButton";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import {  API, graphqlOperation } from "aws-amplify";
 import { getUser } from "../../../graphqlCustom/queries";
 import {
   onUpdateChatRoom,
   onCreateChatRoom,
-  onCreateMessage,
   onUpdateMessage,
 } from "../../../src/graphql/subscriptions";
 import moment from "moment";
@@ -48,7 +47,6 @@ export default function ChatsScreen() {
   const fetchChatRooms = async () => {
     try {
       const currentUserID = currentUser.userID;
-      //console.log(currentUserID);
 
       let userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUserID })

@@ -15,8 +15,6 @@ import {
    */
   const renderChannelListItem = (item) => <Text>{item}</Text>;
 
-  console.log("hi");
-
   return (
     <SafeAreaView>
       <View style={styles.container}>

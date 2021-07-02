@@ -1,7 +1,9 @@
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import { View,Text,Button, SafeAreaView } from 'react-native';
-import Drawer from "./Drawer"
+import Drawer from "./Drawer";
+import SpaceRoomHeader from '../../../../components/Work/Spaces/SpaceHeader';
+import InputBox from "../../../../components/Work/Spaces/InputBox"
 
 const ChannelScreen = () => {
   const navigation = useNavigation();
@@ -11,10 +13,8 @@ const ChannelScreen = () => {
   },[])
   return (
     <SafeAreaView> 
-      <Text>Work Screen</Text>
-      <Button title="Open Drawer" onPress={()=>{
-        navigation.dispatch(DrawerActions.openDrawer());
-      }}/>
+      <SpaceRoomHeader />
+      <InputBox />
     </SafeAreaView>
   );
 };
