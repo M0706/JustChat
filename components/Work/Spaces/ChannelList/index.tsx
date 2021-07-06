@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,13 +7,21 @@ import {
   StyleSheet,
   SectionList,
 } from 'react-native';
+import { useSelector } from 'react-redux';
+import { getUser } from "../../../graphqlCustom/queries";
+import { API, graphqlOperation } from "aws-amplify";
 
- const ChannelList = () => {
-  /**
-   * This is where we will render the channel label or row
-   * @param {*} item
-   */
-  const renderChannelListItem = (item) => <Text>{item}</Text>;
+import ChannelListItem from "./ChannelListItem"
+
+const ChannelList = ({ changeChannel}) => {
+  const currentUser = useSelector((state) => state.currentUserInfo);
+
+  // const channelss = [{data:{name:"JustChat"}}];
+
+   const renderChannelListItem = (channel) => {
+     console.log("channel", channel);
+    return <ChannelListItem changeChannel = {changeChannel} channel={channel} key={channel.id} />
+  };
 
   return (
     <SafeAreaView>
@@ -44,7 +52,8 @@ import {
             },
           ]}
           keyExtractor={(item, index) => item + index}
-          renderItem={({item, section}) => {
+          renderItem={({ item, section }) => {
+           console.log("item===>",item);
             return renderChannelListItem(item);
           }}
           renderSectionHeader={({section: {title}}) => (

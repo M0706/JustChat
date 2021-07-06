@@ -1,6 +1,6 @@
 {
   "auth": {
-    "manav1july0e24a6da": {
+    "manav3julyd8bea10e": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,7 +8,7 @@
     }
   },
   "api": {
-    "manav1july": {
+    "manav3july": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authmanav1july0e24a6da"
+              "userPoolId": "authmanav3julyd8bea10e"
             }
           },
           "additionalAuthenticationProviders": []
@@ -25,13 +25,13 @@
     }
   },
   "storage": {
-    "s3c06c3603": {
+    "s3c6c26c77": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }
   },
   "analytics": {
-    "manav1july": {
+    "manav3july": {
       "service": "Pinpoint",
       "providerPlugin": "awscloudformation"
     }

@@ -1,4 +1,4 @@
-import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { DrawerActions, useNavigation, useRoute } from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import { View,Text,Button, SafeAreaView } from 'react-native';
 import Drawer from "./Drawer";
@@ -7,6 +7,7 @@ import InputBox from "../../../../components/Work/Spaces/InputBox"
 
 const ChannelScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   
   useEffect(()=>{
     navigation.dispatch(DrawerActions.openDrawer());

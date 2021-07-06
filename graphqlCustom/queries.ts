@@ -45,6 +45,33 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      channelUser {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+          channel{
+            spaceRoom{
+              name
+              id
+              imageUri
+              createdAt
+              updatedAt
+              channels{
+                items{
+                  id
+                  name
+                  createdAt
+                  updatedAt
+                }
+              }
+            }
+          }
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }

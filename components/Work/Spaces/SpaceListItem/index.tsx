@@ -11,23 +11,27 @@ export type SpaceListItemProps = {
 
 const SpaceListItem = (props: SpaceListItemProps) => {
   const { space } = props;
+  
+  const spaceRoom = space.channel.spaceRoom;
 
   const navigation = useNavigation();
 
   //   const user = space[1];
 
   const onClick = () => {
+    // console.log("space---->",space.channel.spaceRoom.channels.items);
     navigation.navigate('SpaceRoom', {
+      channels :space.channel.spaceRoom.channels.items
     })
   }
 
   return (
     <TouchableWithoutFeedback onPress={onClick} >
       <View style={styles.container}>
-        <Image source={{ uri: space.imageUri }} style={styles.avatar} />
+        <Image source={{ uri: spaceRoom.imageUri }} style={styles.avatar} />
         <View style={styles.rightContainer}>
           <View style={styles.midContainer}>
-            <Text style={styles.username}>{space.name}</Text>
+            <Text style={styles.username}>{spaceRoom.name}</Text>
           </View>
         </View>
 

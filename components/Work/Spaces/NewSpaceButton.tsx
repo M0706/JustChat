@@ -8,7 +8,7 @@ const NewSpaceButton = () => {
   const navigation = useNavigation();
 
   const onPress = () => {
-    //navigation.navigate("AddContacts");
+    navigation.navigate("CreateSpace");
   };
 
   return (

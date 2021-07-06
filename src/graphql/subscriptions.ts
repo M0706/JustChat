@@ -8,12 +8,24 @@ export const onCreateUser = /* GraphQL */ `
       id
       name
       imageUri
+      lastSeen
       status
       chatRoomUser {
         items {
           id
           userID
           chatRoomID
+          clearChatTime
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      channelUser {
+        items {
+          id
+          userID
+          channelID
           createdAt
           updatedAt
         }
@@ -30,12 +42,24 @@ export const onUpdateUser = /* GraphQL */ `
       id
       name
       imageUri
+      lastSeen
       status
       chatRoomUser {
         items {
           id
           userID
           chatRoomID
+          clearChatTime
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      channelUser {
+        items {
+          id
+          userID
+          channelID
           createdAt
           updatedAt
         }
@@ -52,12 +76,24 @@ export const onDeleteUser = /* GraphQL */ `
       id
       name
       imageUri
+      lastSeen
       status
       chatRoomUser {
         items {
           id
           userID
           chatRoomID
+          clearChatTime
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      channelUser {
+        items {
+          id
+          userID
+          channelID
           createdAt
           updatedAt
         }
@@ -74,12 +110,17 @@ export const onCreateChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      clearChatTime
       user {
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
+          nextToken
+        }
+        channelUser {
           nextToken
         }
         createdAt
@@ -105,6 +146,7 @@ export const onCreateChatRoomUser = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         createdAt
@@ -121,12 +163,17 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      clearChatTime
       user {
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
+          nextToken
+        }
+        channelUser {
           nextToken
         }
         createdAt
@@ -152,6 +199,7 @@ export const onUpdateChatRoomUser = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         createdAt
@@ -168,12 +216,17 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      clearChatTime
       user {
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
+          nextToken
+        }
+        channelUser {
           nextToken
         }
         createdAt
@@ -199,6 +252,7 @@ export const onDeleteChatRoomUser = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         createdAt
@@ -221,6 +275,7 @@ export const onCreateChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -235,6 +290,7 @@ export const onCreateChatRoom = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         nextToken
@@ -248,10 +304,23 @@ export const onCreateChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
         user {
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -284,6 +353,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -298,6 +368,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         nextToken
@@ -311,10 +382,23 @@ export const onUpdateChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
         user {
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -347,6 +431,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -361,6 +446,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         nextToken
@@ -374,10 +460,23 @@ export const onDeleteChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
         user {
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -408,12 +507,57 @@ export const onCreateMessage = /* GraphQL */ `
       userID
       chatRoomID
       read
+      replyMessageID
+      replyMessage {
+        id
+        createdAt
+        content
+        media
+        userID
+        chatRoomID
+        read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          group
+          name
+          imageUri
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
       user {
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
+          nextToken
+        }
+        channelUser {
           nextToken
         }
         createdAt
@@ -439,6 +583,7 @@ export const onCreateMessage = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         createdAt
@@ -458,12 +603,57 @@ export const onUpdateMessage = /* GraphQL */ `
       userID
       chatRoomID
       read
+      replyMessageID
+      replyMessage {
+        id
+        createdAt
+        content
+        media
+        userID
+        chatRoomID
+        read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          group
+          name
+          imageUri
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
       user {
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
+          nextToken
+        }
+        channelUser {
           nextToken
         }
         createdAt
@@ -489,6 +679,7 @@ export const onUpdateMessage = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         createdAt
@@ -508,12 +699,57 @@ export const onDeleteMessage = /* GraphQL */ `
       userID
       chatRoomID
       read
+      replyMessageID
+      replyMessage {
+        id
+        createdAt
+        content
+        media
+        userID
+        chatRoomID
+        read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          group
+          name
+          imageUri
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
       user {
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
+          nextToken
+        }
+        channelUser {
           nextToken
         }
         createdAt
@@ -539,6 +775,640 @@ export const onDeleteMessage = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onCreateSpaceRoom = /* GraphQL */ `
+  subscription OnCreateSpaceRoom {
+    onCreateSpaceRoom {
+      id
+      name
+      imageUri
+      channels {
+        items {
+          id
+          spaceRoomID
+          name
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSpaceRoom = /* GraphQL */ `
+  subscription OnUpdateSpaceRoom {
+    onUpdateSpaceRoom {
+      id
+      name
+      imageUri
+      channels {
+        items {
+          id
+          spaceRoomID
+          name
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSpaceRoom = /* GraphQL */ `
+  subscription OnDeleteSpaceRoom {
+    onDeleteSpaceRoom {
+      id
+      name
+      imageUri
+      channels {
+        items {
+          id
+          spaceRoomID
+          name
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateChannelUser = /* GraphQL */ `
+  subscription OnCreateChannelUser {
+    onCreateChannelUser {
+      id
+      userID
+      channelID
+      user {
+        id
+        name
+        imageUri
+        lastSeen
+        status
+        chatRoomUser {
+          nextToken
+        }
+        channelUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      channel {
+        id
+        spaceRoomID
+        name
+        channelUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        spaceRoom {
+          id
+          name
+          imageUri
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateChannelUser = /* GraphQL */ `
+  subscription OnUpdateChannelUser {
+    onUpdateChannelUser {
+      id
+      userID
+      channelID
+      user {
+        id
+        name
+        imageUri
+        lastSeen
+        status
+        chatRoomUser {
+          nextToken
+        }
+        channelUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      channel {
+        id
+        spaceRoomID
+        name
+        channelUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        spaceRoom {
+          id
+          name
+          imageUri
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteChannelUser = /* GraphQL */ `
+  subscription OnDeleteChannelUser {
+    onDeleteChannelUser {
+      id
+      userID
+      channelID
+      user {
+        id
+        name
+        imageUri
+        lastSeen
+        status
+        chatRoomUser {
+          nextToken
+        }
+        channelUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      channel {
+        id
+        spaceRoomID
+        name
+        channelUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        spaceRoom {
+          id
+          name
+          imageUri
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateChannel = /* GraphQL */ `
+  subscription OnCreateChannel {
+    onCreateChannel {
+      id
+      spaceRoomID
+      name
+      channelUsers {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
+        id
+        createdAt
+        content
+        media
+        read
+        userID
+        channelID
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        channel {
+          id
+          spaceRoomID
+          name
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
+      spaceRoom {
+        id
+        name
+        imageUri
+        channels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateChannel = /* GraphQL */ `
+  subscription OnUpdateChannel {
+    onUpdateChannel {
+      id
+      spaceRoomID
+      name
+      channelUsers {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
+        id
+        createdAt
+        content
+        media
+        read
+        userID
+        channelID
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        channel {
+          id
+          spaceRoomID
+          name
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
+      spaceRoom {
+        id
+        name
+        imageUri
+        channels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteChannel = /* GraphQL */ `
+  subscription OnDeleteChannel {
+    onDeleteChannel {
+      id
+      spaceRoomID
+      name
+      channelUsers {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
+        id
+        createdAt
+        content
+        media
+        read
+        userID
+        channelID
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        channel {
+          id
+          spaceRoomID
+          name
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
+      spaceRoom {
+        id
+        name
+        imageUri
+        channels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateChannelMessage = /* GraphQL */ `
+  subscription OnCreateChannelMessage {
+    onCreateChannelMessage {
+      id
+      createdAt
+      content
+      media
+      read
+      userID
+      channelID
+      user {
+        id
+        name
+        imageUri
+        lastSeen
+        status
+        chatRoomUser {
+          nextToken
+        }
+        channelUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      channel {
+        id
+        spaceRoomID
+        name
+        channelUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        spaceRoom {
+          id
+          name
+          imageUri
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onUpdateChannelMessage = /* GraphQL */ `
+  subscription OnUpdateChannelMessage {
+    onUpdateChannelMessage {
+      id
+      createdAt
+      content
+      media
+      read
+      userID
+      channelID
+      user {
+        id
+        name
+        imageUri
+        lastSeen
+        status
+        chatRoomUser {
+          nextToken
+        }
+        channelUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      channel {
+        id
+        spaceRoomID
+        name
+        channelUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        spaceRoom {
+          id
+          name
+          imageUri
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const onDeleteChannelMessage = /* GraphQL */ `
+  subscription OnDeleteChannelMessage {
+    onDeleteChannelMessage {
+      id
+      createdAt
+      content
+      media
+      read
+      userID
+      channelID
+      user {
+        id
+        name
+        imageUri
+        lastSeen
+        status
+        chatRoomUser {
+          nextToken
+        }
+        channelUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      channel {
+        id
+        spaceRoomID
+        name
+        channelUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        spaceRoom {
+          id
+          name
+          imageUri
+          createdAt
           updatedAt
         }
         createdAt

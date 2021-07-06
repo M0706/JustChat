@@ -1,19 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-manav1july-dev-221839-authRole",
-      "UnauthRoleArn": "arn:aws:iam::324126362204:role/amplify-manav1july-dev-221839-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::324126362204:role/amplify-manav1july-dev-221839-authRole",
+      "AuthRoleName": "amplify-manav3july-dev-222417-authRole",
+      "UnauthRoleArn": "arn:aws:iam::324126362204:role/amplify-manav3july-dev-222417-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::324126362204:role/amplify-manav3july-dev-222417-authRole",
       "Region": "ap-south-1",
-      "DeploymentBucketName": "amplify-manav1july-dev-221839-deployment",
-      "UnauthRoleName": "amplify-manav1july-dev-221839-unauthRole",
-      "StackName": "amplify-manav1july-dev-221839",
-      "StackId": "arn:aws:cloudformation:ap-south-1:324126362204:stack/amplify-manav1july-dev-221839/33d7cf30-da8c-11eb-be5a-026167945514",
-      "AmplifyAppId": "dkbcsrvd57we9"
+      "DeploymentBucketName": "amplify-manav3july-dev-222417-deployment",
+      "UnauthRoleName": "amplify-manav3july-dev-222417-unauthRole",
+      "StackName": "amplify-manav3july-dev-222417",
+      "StackId": "arn:aws:cloudformation:ap-south-1:324126362204:stack/amplify-manav3july-dev-222417/51578840-dc1f-11eb-a28d-0a3010a7a5a4",
+      "AmplifyAppId": "d1xyytkkvuog7p"
     },
     "categories": {
       "auth": {
-        "manav1july0e24a6da": {}
+        "manav3julyd8bea10e": {}
       }
     }
   }

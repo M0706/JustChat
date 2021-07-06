@@ -14,11 +14,15 @@ import Colors from "../../../constants/Colors";
 import { ActivityIndicator } from "react-native-paper";
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import {
+  createChannel,
+  createChannelUser,
   createChatRoom,
   createChatRoomUser,
-  createSpace,
+  createSpaceRoom,
 } from "../../../src/graphql/mutations";
 import { useSelector } from "react-redux";
+import { AuthDetails } from "../../../store/actions/auth-actions";
+
 
 const GroupInfo = () => {
   const navigation = useNavigation();
@@ -33,15 +37,41 @@ const GroupInfo = () => {
       return;
     }
     try {
-      console.log("hi");
-      let newSpaceRoomData = await API.graphql(
+      const newSpaceRoomData = await API.graphql(
         graphqlOperation(createSpaceRoom, {
           input: {
             name: spaceName,
-            imageUri: "",
+            imageUri: "Empty",
           },
         })
       );
+      let spaceRoomID = newSpaceRoomData.data.createSpaceRoom.id;
+
+      const firstDefaultChannel = await API.graphql(
+        graphqlOperation(createChannel, {
+          input: {
+            spaceRoomID,
+            name: "#General",
+            lastMessageID: "null"
+          },
+        })
+      );
+      if (!firstDefaultChannel.data) {
+        return;
+      }
+
+      await API.graphql(
+        graphqlOperation(createChannelUser, {
+          input: {
+            channelID: firstDefaultChannel.data.createChannel.id,
+            userID: currentUser.userID,
+          },
+        })
+      );
+      navigation.navigate("Spaces")
+
+      
+
     } catch (err) {
       console.log(err);
     }

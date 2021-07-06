@@ -10,6 +10,7 @@ const Drawer = createDrawerNavigator();
 
 const ChannelDrawer = ({ navigation, route }) => {
   const dimensions = useWindowDimensions();
+  console.log("Route--->",route.params);
   return (
     <View style={styles.container}>
       <Drawer.Navigator

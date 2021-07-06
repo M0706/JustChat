@@ -8,12 +8,24 @@ export const getUser = /* GraphQL */ `
       id
       name
       imageUri
+      lastSeen
       status
       chatRoomUser {
         items {
           id
           userID
           chatRoomID
+          clearChatTime
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      channelUser {
+        items {
+          id
+          userID
+          channelID
           createdAt
           updatedAt
         }
@@ -35,8 +47,12 @@ export const listUsers = /* GraphQL */ `
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
+          nextToken
+        }
+        channelUser {
           nextToken
         }
         createdAt
@@ -52,12 +68,17 @@ export const getChatRoomUser = /* GraphQL */ `
       id
       userID
       chatRoomID
+      clearChatTime
       user {
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
+          nextToken
+        }
+        channelUser {
           nextToken
         }
         createdAt
@@ -83,6 +104,7 @@ export const getChatRoomUser = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         createdAt
@@ -104,10 +126,12 @@ export const listChatRoomUsers = /* GraphQL */ `
         id
         userID
         chatRoomID
+        clearChatTime
         user {
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -140,6 +164,7 @@ export const getChatRoom = /* GraphQL */ `
           id
           userID
           chatRoomID
+          clearChatTime
           createdAt
           updatedAt
         }
@@ -154,6 +179,7 @@ export const getChatRoom = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         nextToken
@@ -167,10 +193,23 @@ export const getChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
         user {
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -218,6 +257,7 @@ export const listChatRooms = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         createdAt
@@ -237,12 +277,57 @@ export const getMessage = /* GraphQL */ `
       userID
       chatRoomID
       read
+      replyMessageID
+      replyMessage {
+        id
+        createdAt
+        content
+        media
+        userID
+        chatRoomID
+        read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          group
+          name
+          imageUri
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
       user {
         id
         name
         imageUri
+        lastSeen
         status
         chatRoomUser {
+          nextToken
+        }
+        channelUser {
           nextToken
         }
         createdAt
@@ -268,6 +353,7 @@ export const getMessage = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         createdAt
@@ -292,10 +378,23 @@ export const listMessages = /* GraphQL */ `
         userID
         chatRoomID
         read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
         user {
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -305,6 +404,353 @@ export const listMessages = /* GraphQL */ `
           group
           name
           imageUri
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getSpaceRoom = /* GraphQL */ `
+  query GetSpaceRoom($id: ID!) {
+    getSpaceRoom(id: $id) {
+      id
+      name
+      imageUri
+      channels {
+        items {
+          id
+          spaceRoomID
+          name
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listSpaceRooms = /* GraphQL */ `
+  query ListSpaceRooms(
+    $filter: ModelSpaceRoomFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSpaceRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        imageUri
+        channels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getChannelUser = /* GraphQL */ `
+  query GetChannelUser($id: ID!) {
+    getChannelUser(id: $id) {
+      id
+      userID
+      channelID
+      user {
+        id
+        name
+        imageUri
+        lastSeen
+        status
+        chatRoomUser {
+          nextToken
+        }
+        channelUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      channel {
+        id
+        spaceRoomID
+        name
+        channelUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        spaceRoom {
+          id
+          name
+          imageUri
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listChannelUsers = /* GraphQL */ `
+  query ListChannelUsers(
+    $filter: ModelChannelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listChannelUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        channelID
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        channel {
+          id
+          spaceRoomID
+          name
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getChannel = /* GraphQL */ `
+  query GetChannel($id: ID!) {
+    getChannel(id: $id) {
+      id
+      spaceRoomID
+      name
+      channelUsers {
+        items {
+          id
+          userID
+          channelID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
+        id
+        createdAt
+        content
+        media
+        read
+        userID
+        channelID
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        channel {
+          id
+          spaceRoomID
+          name
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
+      spaceRoom {
+        id
+        name
+        imageUri
+        channels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listChannels = /* GraphQL */ `
+  query ListChannels(
+    $filter: ModelChannelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listChannels(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        spaceRoomID
+        name
+        channelUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        spaceRoom {
+          id
+          name
+          imageUri
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getChannelMessage = /* GraphQL */ `
+  query GetChannelMessage($id: ID!) {
+    getChannelMessage(id: $id) {
+      id
+      createdAt
+      content
+      media
+      read
+      userID
+      channelID
+      user {
+        id
+        name
+        imageUri
+        lastSeen
+        status
+        chatRoomUser {
+          nextToken
+        }
+        channelUser {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      channel {
+        id
+        spaceRoomID
+        name
+        channelUsers {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        lastMessageID
+        lastMessage {
+          id
+          createdAt
+          content
+          media
+          read
+          userID
+          channelID
+          updatedAt
+        }
+        spaceRoom {
+          id
+          name
+          imageUri
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+  }
+`;
+export const listChannelMessages = /* GraphQL */ `
+  query ListChannelMessages(
+    $filter: ModelChannelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listChannelMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        content
+        media
+        read
+        userID
+        channelID
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        channel {
+          id
+          spaceRoomID
+          name
           lastMessageID
           createdAt
           updatedAt
@@ -350,6 +796,7 @@ export const chatRoomsByGroups = /* GraphQL */ `
           userID
           chatRoomID
           read
+          replyMessageID
           updatedAt
         }
         createdAt
@@ -384,10 +831,23 @@ export const messagesByChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
         user {
           id
           name
           imageUri
+          lastSeen
           status
           createdAt
           updatedAt
@@ -397,6 +857,54 @@ export const messagesByChatRoom = /* GraphQL */ `
           group
           name
           imageUri
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const messagesByChannel = /* GraphQL */ `
+  query MessagesByChannel(
+    $channelID: ID
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelChannelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    messagesByChannel(
+      channelID: $channelID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        content
+        media
+        read
+        userID
+        channelID
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        channel {
+          id
+          spaceRoomID
+          name
           lastMessageID
           createdAt
           updatedAt
