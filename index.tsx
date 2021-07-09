@@ -21,6 +21,7 @@ import config from "./src/aws-exports";
 import { Cache } from "aws-amplify";
 import AddProfilePhoto from "./screens/Personal/Shared/AddProfilePhoto";
 
+
 Amplify.configure(config);
 
 function Index() {
@@ -49,6 +50,7 @@ function Index() {
   } else if (currentState.isAuth) {
       return (
         <SafeAreaProvider>
+          
           <NavigationContainer>
             <MainStackNavigator colorScheme={colorScheme} />
           </NavigationContainer>

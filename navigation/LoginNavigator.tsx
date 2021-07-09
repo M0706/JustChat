@@ -27,7 +27,9 @@ import CreateSpace from "../screens/Work/Spaces/CreateSpace";
 
 // Work Tab Screen imports
 import SpaceRoomScreen from "../screens/Work/Spaces/SpaceRoom/SpaceRoomScreen";
-import Drawer from "../screens/Work/Spaces/SpaceRoom/Drawer";
+import Drawer from "../screens/Work/Spaces/SpaceRoom/Channel/Drawer";
+import CreateChannel from "../screens/Work/Spaces/SpaceRoom/CreateChannel";
+import AddMembers from "../screens/Work/Spaces/SpaceRoom/Channel/AddMembers"
 
 const LoginStack = createStackNavigator();
 export default function LoginNavigator() {
@@ -76,6 +78,9 @@ export function MainStackNavigator() {
       <MainStack.Screen name="AddProfilePhoto" component={AddProfilePhoto} />
       <MainStack.Screen name="SpaceRoom" component={Drawer} />
       <MainStack.Screen name="CreateSpace" component={CreateSpace} />
+      <MainStack.Screen name="CreateChannel" component={CreateChannel}
+        options={{ headerShown: true, title: "New Channel" }} />
+      <MainStack.Screen name="AddMembers" component={AddMembers} options={{ headerShown: true, title: "Add Members" }}/>
     </MainStack.Navigator>
   );
 }

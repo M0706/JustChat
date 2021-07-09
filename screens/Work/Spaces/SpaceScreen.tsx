@@ -14,8 +14,6 @@ const Spaces = () => {
   const currentUser = useSelector((state) => state.currentUserInfo);
   const [spaceRooms, setSpaceRooms] = useState([]);
 
-
-
   const fetchSpaceRooms = async () => {
     const currentUserID = currentUser.userID;
     let userData = await API.graphql(

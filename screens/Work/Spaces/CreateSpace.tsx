@@ -51,7 +51,7 @@ const GroupInfo = () => {
         graphqlOperation(createChannel, {
           input: {
             spaceRoomID,
-            name: "#General",
+            name: "General",
             lastMessageID: "null"
           },
         })

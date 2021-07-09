@@ -10,16 +10,24 @@ import {
 import { useSelector } from 'react-redux';
 import { getUser } from "../../../graphqlCustom/queries";
 import { API, graphqlOperation } from "aws-amplify";
-
+import { useRecoilState } from 'recoil';
+import { AntDesign } from '@expo/vector-icons'; 
 import ChannelListItem from "./ChannelListItem"
+import { useNavigation } from '@react-navigation/native';
 
-const ChannelList = ({ changeChannel}) => {
+const ChannelList = ({ changeChannel,channelActions,spaceRoomID}) => {
   const currentUser = useSelector((state) => state.currentUserInfo);
+  const { channels, setChannels } = channelActions;
+  const navigation = useNavigation();
 
-  // const channelss = [{data:{name:"JustChat"}}];
+  const addChannelHandler = ()=>{
+    const newChannel = channels[0];
+    //console.warn(spaceRoomID)
+    navigation.navigate("CreateChannel",{spaceRoomID,channels})
+    //setChannels([...channels,newChannel]);
+  }
 
    const renderChannelListItem = (channel) => {
-     console.log("channel", channel);
     return <ChannelListItem changeChannel = {changeChannel} channel={channel} key={channel.id} />
   };
 
@@ -44,7 +52,7 @@ const ChannelList = ({ changeChannel}) => {
             },
             {
               title: 'Channels',
-              data: [],
+              data: channels||[],
             },
             {
               title: 'Direct Messages',
@@ -53,12 +61,13 @@ const ChannelList = ({ changeChannel}) => {
           ]}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item, section }) => {
-           console.log("item===>",item);
+          //  console.log("item===>",item);
             return renderChannelListItem(item);
           }}
           renderSectionHeader={({section: {title}}) => (
             <View style={styles.groupTitleContainer}>
               <Text style={styles.groupTitle}>{title}</Text>
+              {title!=="Unread" && <AntDesign name="plus" size={20} color="black" onPress={addChannelHandler}/>}
             </View>
           )}
         />
@@ -92,13 +101,14 @@ const styles = StyleSheet.create({
     borderBottomColor: '#995d9a',
     borderBottomWidth: 0.3,
     marginBottom: 7,
-    backgroundColor: '#3F0E40',
+    flexDirection: "row",
+    display: "flex",
+    justifyContent: "space-between",
   },
   groupTitle: {
-    color: 'white',
-    fontWeight: '100',
-    fontSize: 12,
-    // fontFamily: 'Lato-Regular',
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 });
 

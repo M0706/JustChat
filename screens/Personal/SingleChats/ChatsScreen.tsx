@@ -19,6 +19,10 @@ import { Cache } from "aws-amplify";
 import { useSelector, useDispatch } from "react-redux";
 import { AuthDetails } from "../../../store/actions/auth-actions";
 
+// selectors
+// import { useRecoilValue } from 'recoil';
+// import { User } from "../../../recoil/selectors/UserAuth"
+
 function compare_time(a, b) {
   if (moment(a.chatRoom.updatedAt).isBefore(b.chatRoom.updatedAt)) {
     return 1;
@@ -34,6 +38,7 @@ export default function ChatsScreen() {
   const currentUser = useSelector((state) => state.currentUserInfo);
   const [loading,setLoading] = useState(false);
   const dispatch = useDispatch();
+  // const UserDetails = useRecoilValue(User);
 
   useEffect(() => {
     let unmounted = false;
@@ -44,13 +49,16 @@ export default function ChatsScreen() {
 
   }, [dispatch]);
 
+
   const fetchChatRooms = async () => {
     try {
       const currentUserID = currentUser.userID;
-
+      //const currentUserID = UserDetails.userID;
+      // console.log(currentID);
       let userData = await API.graphql(
         graphqlOperation(getUser, { id: currentUserID })
       );
+      
       let tempChatRoomArr: any = [];
       userData.data.getUser.chatRoomUser.items.map((room) => {
         if (room.chatRoom.group === "False") {
@@ -59,7 +67,6 @@ export default function ChatsScreen() {
       });
 
       tempChatRoomArr.sort(compare_time);
-
       setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
 
     } catch (err) {

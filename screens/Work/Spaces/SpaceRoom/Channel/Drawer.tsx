@@ -10,12 +10,12 @@ const Drawer = createDrawerNavigator();
 
 const ChannelDrawer = ({ navigation, route }) => {
   const dimensions = useWindowDimensions();
-  console.log("Route--->",route.params);
+  // console.log("Route--->",route.params);
   return (
     <View style={styles.container}>
       <Drawer.Navigator
         edgeWidth={dimensions.width}
-        drawerContent={ChannelListDrawer}
+        drawerContent={()=><ChannelListDrawer route={route}/>}
           drawerStyle={styles.drawerNavigator}>
           <Drawer.Screen name="ChannelScreen" component={ChannelScreen} />
         </Drawer.Navigator>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   drawerNavigator: {
-    backgroundColor: '#3F0E40',
+    // backgroundColor: '#3F0E40',
     width: 350,
   },
   chatContainer: {

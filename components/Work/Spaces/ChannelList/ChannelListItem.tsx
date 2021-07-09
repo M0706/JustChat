@@ -12,9 +12,8 @@ const ChannelListItem = ({channel,changeChannel}) => {
     ChannelPrefix = <Text style={styles.channelTitlePrefix}>#</Text>;
 
     ChannelTitle = (
-      <Text>
-        {channel.data.name && channel.data.name.toLowerCase().replace(' ', '_')}
-        {/* Hi */}
+      <Text style={{color:"black"}}>
+        {channel.name && channel.name.toLowerCase().replace(' ', '_','#')}
       </Text>
     );
 
@@ -43,7 +42,7 @@ const ChannelListItem = ({channel,changeChannel}) => {
 }
 
 const textStyles = {
-    color: 'white',
+    color: 'black',
     fontSize: 18,
   };
 
