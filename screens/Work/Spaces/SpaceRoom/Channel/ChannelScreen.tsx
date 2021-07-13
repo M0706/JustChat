@@ -7,7 +7,6 @@ import InputBox from "../../../../../components/Work/Spaces/InputBox"
 
 const ChannelScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
   
   useEffect(()=>{
     navigation.dispatch(DrawerActions.openDrawer());

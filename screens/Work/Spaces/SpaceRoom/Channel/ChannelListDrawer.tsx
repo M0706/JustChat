@@ -6,8 +6,8 @@ import ChannelList from '../../../../../components/Work/Spaces/ChannelList';
 
 const ChannelListDrawer = (props) => {
     //console.log("Route in ChannelListDrawer--->",props.route.params.spaceRoomID);
-    const route = props.route;
-    const [channels,setChannels] = useState(route.params.channels);
+  const [channels, setChannels] = useState(props.channels);
+  console.log("props--->",props.channels)
 
     return (
       <SafeAreaView>
@@ -18,7 +18,7 @@ const ChannelListDrawer = (props) => {
           })
         }} 
         channelActions = {{channels,setChannels}}
-        spaceRoomID = {route.params.spaceRoomID}
+        spaceRoomID = {props.spaceRoomID}
         />
       </SafeAreaView>
     );

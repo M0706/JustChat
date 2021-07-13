@@ -10,15 +10,8 @@ import ContactsScreen from "../screens/Personal/SingleChats/ContactsScreen";
 import ChatRoomScreen from "../screens/Personal/SingleChats/ChatRoomScreen";
 import ForgotPassword from "../screens/Authentication/ForgotPassword";
 import ForwardScreen from "../screens/Personal/ForwardScreen";
-import ChatsRoomHeader from "../components/Personal/shared/ChatRoomHeader";
-import {
-  FontAwesome5,
-  Entypo,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+
 import AddContactsScreen from "../screens/Personal/GroupChats/AddContactsScreen";
-import { Overlay } from "react-native-elements";
 import OtherUserInfo from "../screens/Personal/OtherUserInfo";
 import ImageViewer from "../screens/Personal/Shared/ImageViewer";
 import ClickImage from "../screens/CameraScreen/ImageViewer";
@@ -76,7 +69,7 @@ export function MainStackNavigator() {
       <MainStack.Screen name="ImageViewer" component={ImageViewer} />
       <MainStack.Screen name="ClickImage" component={ClickImage} />
       <MainStack.Screen name="AddProfilePhoto" component={AddProfilePhoto} />
-      <MainStack.Screen name="SpaceRoom" component={Drawer} />
+      <MainStack.Screen name="Drawer" component={Drawer} />
       <MainStack.Screen name="CreateSpace" component={CreateSpace} />
       <MainStack.Screen name="CreateChannel" component={CreateChannel}
         options={{ headerShown: true, title: "New Channel" }} />

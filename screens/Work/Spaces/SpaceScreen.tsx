@@ -8,7 +8,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { getUser } from "../../../graphqlCustom/queries";
 import { useSelector } from "react-redux";
 import Space from "../../../types"
-import { onCreateChannel, onUpdateSpaceRoom } from "../../../src/graphql/subscriptions";
+import { onCreateChannel, onCreateChannelUser, onUpdateSpaceRoom } from "../../../src/graphql/subscriptions";
 
 const Spaces = () => {
   const currentUser = useSelector((state) => state.currentUserInfo);
@@ -26,7 +26,6 @@ const Spaces = () => {
     channelData.map((channel) => {
       tempSpaceRoomArr.push(channel);
     })
-    
     setSpaceRooms(tempSpaceRoomArr)
   }
 
@@ -41,9 +40,10 @@ const Spaces = () => {
 
   useEffect(() => {
     const subscription = API.graphql(
-      graphqlOperation(onCreateChannel)
+      graphqlOperation(onCreateChannelUser)
     ).subscribe({
       next: (data) => {
+        // console.log("Channel created subscription called")
         fetchSpaceRooms();
       },
     });

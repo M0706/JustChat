@@ -1,7 +1,9 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import React, { useEffect } from "react";
-import {SafeAreaView, Text, StyleSheet, View,Button, useWindowDimensions} from 'react-native'
-import { DrawerActions, useNavigation } from '@react-navigation/native'
+import { API, graphqlOperation } from "aws-amplify";
+import React, { useEffect, useState } from "react";
+import {StyleSheet, View,useWindowDimensions} from 'react-native'
+import { listChannels } from "../../../../../src/graphql/queries";
+import { onCreateChannel, onCreateChannelUser } from "../../../../../src/graphql/subscriptions";
 // import ChannelList from "../../../../components/Work/Spaces/ChannelDrawer";
 import ChannelListDrawer from "./ChannelListDrawer";
 import ChannelScreen from "./ChannelScreen"
@@ -9,13 +11,48 @@ import ChannelScreen from "./ChannelScreen"
 const Drawer = createDrawerNavigator();
 
 const ChannelDrawer = ({ navigation, route }) => {
+
   const dimensions = useWindowDimensions();
-  // console.log("Route--->",route.params);
+  const [channels, setChannels] = useState([])
+  console.log("Channels--->", channels);
+  //console.log("routes--->",route.params);
+
+  const fetchChannels = async () => {
+    let filter = { spaceRoomID: { eq: route.params.spaceRoomID } }
+    const loadChannels = await API.graphql(graphqlOperation(listChannels, {
+          filter:filter
+      }
+    ))
+    setChannels(loadChannels.data.listChannels.items)
+  }
+  useEffect(() => {
+    let unmounted = false;
+   // console.log(currentUser.isAuth);
+    if (!unmounted) {
+      fetchChannels();
+    }
+    return () => { unmounted = true };
+  }, []);
+
+  useEffect(() => {
+    const subscription = API.graphql(
+      graphqlOperation(onCreateChannelUser)
+    ).subscribe({
+      next: (data: any) => {
+        fetchChannels();
+      },
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Drawer.Navigator
         edgeWidth={dimensions.width}
-        drawerContent={()=><ChannelListDrawer route={route}/>}
+        drawerContent={() => <ChannelListDrawer
+          channels={route.params.channels}
+          spaceRoomID={route.params.spaceRoomID} />
+        }
           drawerStyle={styles.drawerNavigator}>
           <Drawer.Screen name="ChannelScreen" component={ChannelScreen} />
         </Drawer.Navigator>

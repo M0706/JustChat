@@ -1,6 +1,9 @@
 import { NavigationRouteContext, useNavigation } from '@react-navigation/native';
+import { API, graphqlOperation } from 'aws-amplify';
 import React, {useState} from 'react';
 import { Text, TextInput, TouchableOpacity, View, StyleSheet, Alert } from 'react-native';
+import { useSelector } from 'react-redux';
+import { createChannelUser, createChannel } from '../../../../src/graphql/mutations';
 
 
 const CreateChannel = (props) => {
@@ -8,14 +11,47 @@ const CreateChannel = (props) => {
   const [channelName, setChannelName] = useState("");
   const navigation = useNavigation();
   const spaceRoomID = props.route.params.spaceRoomID;
-  console.log(props.route.params);
+  const currentUser = useSelector((state) => state.currentUserInfo);
 
-  const createChannel = () => {
+  //console.log(props.route.params);
+
+  const newChannel = async() => {
+    
     let channel = props.route.params.channels.find((channel)=>channel.name.toLocaleLowerCase()==channelName.toLocaleLowerCase())
     if(channel){
         Alert.alert("This name is already taken by another channel!!");
         return;
     }
+   
+    
+    try {
+      const channel = await API.graphql(
+        graphqlOperation(createChannel, {
+          input: {
+            spaceRoomID,
+            name: channelName,
+            lastMessageID: "null"
+          },
+        })
+      );
+
+      if (!channel && !channel.data) {
+        return;
+      }
+      
+      await API.graphql(
+        graphqlOperation(createChannelUser, {
+          input: {
+            channelID: channel.data.createChannel.id,
+            userID: currentUser.userID,
+          },
+        })
+      );
+      
+    } catch (e) {
+      console.log("Channel not created--->",e)
+    }
+
     navigation.navigate("AddMembers",{spaceRoomID,channelName});
   }
 
@@ -31,7 +67,7 @@ const CreateChannel = (props) => {
       </View>
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={createChannel}
+        onPress={newChannel}
       >
           <Text style={styles.channelText} >Create Channel</Text>
       </TouchableOpacity>

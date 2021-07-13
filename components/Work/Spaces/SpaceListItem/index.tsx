@@ -19,8 +19,8 @@ const SpaceListItem = (props: SpaceListItemProps) => {
   //   const user = space[1];
 
   const onClick = () => {
-    // console.log("space---->",space.channel.spaceRoom.id);
-    navigation.navigate('SpaceRoom', {
+    console.log("space---->",space.channel.spaceRoom.channels.items);
+    navigation.navigate('Drawer', {
       channels :space.channel.spaceRoom.channels.items,
       spaceRoomID: space.channel.spaceRoom.id,
     })

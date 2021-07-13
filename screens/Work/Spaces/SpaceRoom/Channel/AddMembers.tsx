@@ -2,7 +2,8 @@ import React,{useState,useEffect} from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
 
-const AddMembers = () => {
+const AddMembers = (props) => {
+  console.log(props.route.params)
   return (
     <View style={styles.container}>
       <Text>AddMembers</Text>

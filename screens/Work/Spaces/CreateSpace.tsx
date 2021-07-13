@@ -16,8 +16,6 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 import {
   createChannel,
   createChannelUser,
-  createChatRoom,
-  createChatRoomUser,
   createSpaceRoom,
 } from "../../../src/graphql/mutations";
 import { useSelector } from "react-redux";
