@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { getUser } from "../../../graphqlCustom/queries";
 import { API, graphqlOperation } from "aws-amplify";
 import { useRecoilState } from 'recoil';
-import { AntDesign } from '@expo/vector-icons'; 
+import AntDesign from 'react-native-vector-icons/AntDesign'; 
 import ChannelListItem from "./ChannelListItem"
 import { useNavigation } from '@react-navigation/native';
 

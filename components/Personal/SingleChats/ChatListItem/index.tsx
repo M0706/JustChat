@@ -5,7 +5,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { ChatRoom } from "../../../../types";
 import styles from "./style";
 import { Auth } from "aws-amplify";
-import { MaterialIcons, Octicons } from "@expo/vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Octicons from "react-native-vector-icons/Octicons"
 import { useSelector } from "react-redux";
 
 

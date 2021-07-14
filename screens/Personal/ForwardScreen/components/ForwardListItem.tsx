@@ -13,7 +13,9 @@ import { User, Message } from "../../../../types";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../../store/slices/Auth-slice";
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import AntDesign from "react-native-vector-icons/AntDesign"
+import Entypo from "react-native-vector-icons/Entypo"
+
 import Colors from "../../../../constants/Colors";
 
 export type ForwardListItemProps = {

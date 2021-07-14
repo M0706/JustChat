@@ -7,8 +7,9 @@ import { listUsers } from "../../../src/graphql/queries";
 import { User } from "../../../types";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../../../constants/Colors";
-import { MaterialIcons ,Entypo} from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import AntDesign from "react-native-vector-icons/AntDesign"
+import Entypo from "react-native-vector-icons/Entypo"
+
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../store/slices/Auth-slice";

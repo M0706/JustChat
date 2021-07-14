@@ -1,6 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native';
-import { MaterialCommunityIcons, EvilIcons } from '@expo/vector-icons';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
 
 
 export const SpaceHeader = ({navigation, channel, client}) => {

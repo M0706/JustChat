@@ -5,24 +5,17 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { Overlay } from "react-native-elements";
-import {
-  FontAwesome5,
-  Entypo,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  Ionicons,
-} from "@expo/vector-icons";
+
 
 import PersonalCall from "../screens/Personal/CallsScreen/PersonalCall";
 import GroupChatScreen from "../screens/Personal/GroupChats/GroupChatScreen";
 import PersonalStories from "../screens/Personal/StoryScreen/PersonalStories";
 import ChatsScreen from "../screens/Personal/SingleChats/ChatsScreen";
-import OtherUserInfo from "../screens/Personal/OtherUserInfo";
 import AddGroupInfo from "../screens/Personal/GroupChats/AddGroupInfo";
-import WorkProfile from "../screens/Work/Workprofile";
+// import WorkProfile from "../screens/Work/Workprofile";
 
 import Colors from "../constants/Colors";
-import Icon from "react-native-vector-icons/Ionicons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 // stack navigator for chat screen
 
@@ -160,23 +153,12 @@ const PersonalStackNavigator = () => {
                 }}
               >
                 <View style={{ marginHorizontal: 10 }}>
-                  <FontAwesome5
-                    name="search"
-                    size={24}
-                    color="black"
-                    onPress={() => {
-                      console.log("Search");
-                    }}
-                  />
+
+                   <Ionicons name="search" size={30} color="#900" />;
                 </View>
 
                 <View>
-                  <FontAwesome5
-                    name="ellipsis-v"
-                    size={24}
-                    color="black"
-                    onPress={toggleOverlay}
-                  />
+                   <Ionicons name="ellipsis-v" size={30} color="#900" />;
 
                   <CustomMenu
                     visible={visible}
@@ -189,7 +171,7 @@ const PersonalStackNavigator = () => {
           },
         })}
       />
-      <PersonalStack.Screen name="Profile" component={WorkProfile} />
+      {/* <PersonalStack.Screen name="Profile" component={WorkProfile} /> */}
     </PersonalStack.Navigator>
   );
 };

@@ -317,8 +317,9 @@ import {
 	TouchableOpacity
 } from "react-native";
 
-import { Camera as CameraView } from "expo-camera";
-import { Ionicons as Icon } from "@expo/vector-icons";
+// import { Camera as CameraView } from "expo-camera";
+import Icon from "react-native-vector-icons/Ionicons";
+
 import CameraButton from "../../components/Personal/shared/CameraButton";
 import DoubleTapHandler from "./components/DoubleTapHandler";
 import { useNavigation } from "@react-navigation/native";
@@ -425,7 +426,7 @@ const Camera = props => {
 
     return (
 		<DoubleTapHandler useDelta={300} onDoubleTap={rotateCamera}>
-			<CameraView
+			{/* <CameraView
 				ref={ref => {
 					camera = ref;
 				}}
@@ -446,7 +447,7 @@ const Camera = props => {
 					<CameraControls />
 					<CameraFooter />
 				</View>
-			</CameraView>
+			</CameraView> */}
 		</DoubleTapHandler>
 	);
 };

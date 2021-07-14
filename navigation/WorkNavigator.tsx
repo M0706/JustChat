@@ -8,16 +8,11 @@ import Tasks from '../screens/Work/Tasks';
 import Spaces from '../screens/Work/Spaces/SpaceScreen';
 import Notes from '../screens/Work/Notes';
 import DM from '../screens/Work/DM';
-import WorkProfile from "../screens/Work/Workprofile";
+// import WorkProfile from "../screens/Work/Workprofile";
 
 import { Overlay } from "react-native-elements";
-import {
-  FontAwesome5,
-  Entypo,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  Ionicons,
-} from "@expo/vector-icons";
+
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 import Colors from "../constants/Colors";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -156,7 +151,7 @@ const WorkStackNavigator = () => {
           },
         })}
       />
-      <WorkStack.Screen name="Profile" component={WorkProfile} />
+      {/* <WorkStack.Screen name="Profile" component={WorkProfile} /> */}
     </WorkStack.Navigator>
   );
 };

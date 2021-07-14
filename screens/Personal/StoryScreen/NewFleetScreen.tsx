@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
 import { useNavigation } from '@react-navigation/native';
-import * as Permissions from 'expo-permissions';
-import * as ImagePicker from 'expo-image-picker';
+// import * as Permissions from 'expo-permissions';
+// import * as ImagePicker from 'expo-image-picker';
 import { v4 as uuidv4 } from 'uuid';
 
 
 import { Text, View } from '../../components/Themed';
-import { AntDesign } from "@expo/vector-icons";
+import AntDesign from "react-native-vector-icons/AntDesign"
 import Colors from "../../constants/Colors";
 import ProfilePicture from "../../components/ProfilePicture";
 import {createFleet} from '../../graphql/mutations'

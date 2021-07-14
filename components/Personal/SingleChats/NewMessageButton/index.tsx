@@ -1,6 +1,6 @@
 import React from 'react';
 import{ View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import  MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';

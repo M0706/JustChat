@@ -1,8 +1,6 @@
 import React from "react";
 import { StyleSheet, ViewStyle, StyleProp } from "react-native";
-
-import { Ionicons as Icon } from "@expo/vector-icons";
-
+import Icon from "react-native-vector-icons/Ionicons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface ISendButtonProps {

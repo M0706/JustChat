@@ -9,7 +9,7 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 import { listUsers } from "../../../src/graphql/queries";
 import { User } from "../../../types";
 import { Cache } from "aws-amplify";
-import { AntDesign } from "@expo/vector-icons";
+import AntDesign from "react-native-vector-icons/AntDesign"
 import Colors from "../../../constants/Colors";
 import { authActions } from "../../../store/slices/Auth-slice";
 import {

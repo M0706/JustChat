@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons, Feather } from '@expo/vector-icons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../constants/Colors';
 
 export default function ImageViewer(props) {

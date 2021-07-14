@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { AntDesign } from "@expo/vector-icons";
+import AntDesign from "react-native-vector-icons/AntDesign"
 import Colors from "../../../constants/Colors";
 import { ActivityIndicator } from "react-native-paper";
 import { Auth, API, graphqlOperation } from "aws-amplify";

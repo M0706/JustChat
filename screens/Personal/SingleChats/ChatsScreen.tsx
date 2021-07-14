@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { StyleSheet, FlatList, Text, ScrollView, ActivityIndicator } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { View } from "../../../components/Themed";
 import ChatListItem from "../../../components/Personal/SingleChats/ChatListItem";
 import NewMessageButton from "../../../components/Personal/SingleChats/NewMessageButton";

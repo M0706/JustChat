@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView,} from "react-native";
 import styles from './styles';
+import Fontisto from "react-native-vector-icons/Fontisto";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import Entypo from "react-native-vector-icons/Entypo";
 
-import {
-  MaterialCommunityIcons,
-  MaterialIcons,
-  FontAwesome5,
-  Entypo,
-  Fontisto,
-} from '@expo/vector-icons';
 
 const InputBox = () => {
 

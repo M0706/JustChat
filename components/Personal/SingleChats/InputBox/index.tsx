@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-  Entypo,
-  FontAwesome5,
-  MaterialCommunityIcons,
-  Fontisto,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Fontisto from "react-native-vector-icons/Fontisto";
+
 import { View, KeyboardAvoidingView, TextInput, Platform, Alert, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Auth, API, Storage, graphqlOperation } from "aws-amplify";
 import { createMessage, updateChatRoom } from "../../../../src/graphql/mutations";
 import styles from "./styles";
-import * as ImagePicker from 'expo-image-picker';
+// import * as ImagePicker from 'expo-image-picker';
 import uuid from "uuid-random";
 import Microphone from "./microhone";
 
@@ -39,7 +37,7 @@ const InputBox = (props: InputBoxProps) => {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        // const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
           alert('Sorry, we need camera roll permissions to make this work!');
         }

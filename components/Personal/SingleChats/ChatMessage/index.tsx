@@ -9,7 +9,7 @@ import {
 import moment from "moment";
 import styles from "./styles";
 //import Clipboard from '@react-native-community/clipboard';
-import Clipboard from "expo-clipboard";
+// import Clipboard from "expo-clipboard";
 import { Overlay } from "react-native-elements";
 
 import { Message } from "../../../../types";
@@ -99,12 +99,12 @@ const ChatMessage = (props: ChatMessageProps) => {
   };
 
   const copyToClipboard = async () => {
-    Clipboard.setString(message.content);
-    // await fetchCopiedText();
-    const text = await Clipboard.getStringAsync();
+    // Clipboard.setString(message.content);
+    // // await fetchCopiedText();
+    // const text = await Clipboard.getStringAsync();
     pressed(true);
     toggleOverlay();
-    setCopiedText(text);
+    // setCopiedText(text);
   };
 
   const forwardPress = () => {

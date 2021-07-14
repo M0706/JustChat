@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  Entypo,
-  FontAwesome5,
-  MaterialCommunityIcons,
-  Fontisto,
-  MaterialIcons,
-  AntDesign,
-} from "@expo/vector-icons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+
 import { View, Text,Button, KeyboardAvoidingView, TextInput, Platform, Alert, Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";

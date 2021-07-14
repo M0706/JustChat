@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
-import { Audio } from 'expo-av';
+// import { Audio } from 'expo-av';
 
 export default function Microphone(props: { setAudioRecord: any; setAudioURI: any;}) {
   const [recording, setRecording] = useState();
@@ -40,7 +40,7 @@ export default function Microphone(props: { setAudioRecord: any; setAudioURI: an
     <View style={styles.container}>
       <Button
         title={recording ? 'Stop' : 'Start'}
-        onPress={recording ? stopRecording : startRecording}
+        // onPress={recording ? stopRecording : startRecording}
       />
     </View>
   );

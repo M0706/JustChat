@@ -6,11 +6,9 @@ import PersonalNavigator from "./PersonalNavigator";
 import WorkNavigator from "./WorkNavigator";
 import Camera from "../screens/CameraScreen";
 
-import {
-  Entypo,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+
 import Colors from "../constants/Colors";
 
 const MainTab = createMaterialBottomTabNavigator();
@@ -24,11 +22,13 @@ const BottomTabNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                <MaterialIcons
-                  name="people"
-                  size={26}
-                  color={Colors.iconPrimaryColor}
-                />
+                // <MaterialIcons
+                //   name="people"
+                //   size={26}
+                //   color={Colors.iconPrimaryColor}
+                // />
+                <Ionicons name="people" size={30} color="#900" />
+
               );
             },
             tabBarColor: Colors.primaryColor,
@@ -40,11 +40,13 @@ const BottomTabNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                <Entypo
-                  name="camera"
-                  size={25}
-                  color={Colors.iconPrimaryColor}
-                />
+                // <Entypo
+                //   name="camera"
+                //   size={25}
+                //   color={Colors.iconPrimaryColor}
+                // />
+                <Ionicons name="camera-outline" size={30} color="#900" />
+
               );
             },
             tabBarColor: Colors.accentColor,
@@ -56,11 +58,13 @@ const BottomTabNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                <MaterialCommunityIcons
-                  name="professional-hexagon"
-                  size={30}
-                  color={Colors.iconPrimaryColor}
-                />
+                // <MaterialCommunityIcons
+                //   name="professional-hexagon"
+                //   size={30}
+                //   color={Colors.iconPrimaryColor}
+                // />
+                <MaterialIcons name="work" size={30} color="#900" />
+
               );
             },
             tabBarColor: Colors.accentColor,

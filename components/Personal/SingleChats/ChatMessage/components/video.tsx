@@ -1,5 +1,5 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { Video } from 'expo-av';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import { Video } from 'expo-av';
 import React, { useState } from 'react';
 import { View,Text, Dimensions, StyleSheet } from 'react-native';
 
@@ -20,7 +20,7 @@ export default function VideoPlay(props: { uri: any; }) {
     return (
       <View>
           
-          <Video
+          {/* <Video
             source={{ uri: uri }}
             shouldPlay={shouldPlay}
             resizeMode="contain"
@@ -42,7 +42,7 @@ export default function VideoPlay(props: { uri: any; }) {
               color="white" 
               onPress={handlePlayAndPause} 
             />
-          </View>
+          </View> */}
         </View>
     );
 }

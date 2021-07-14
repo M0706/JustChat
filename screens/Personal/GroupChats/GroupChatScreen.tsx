@@ -13,7 +13,7 @@ import {
 } from "../../../src/graphql/subscriptions";
 import { ChatRoom } from "../../../types";
 import { useEffect } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import ChatListItem from "../../../components/Personal/SingleChats/ChatListItem";
 import { Cache } from "aws-amplify";
 import { useSelector } from "react-redux";

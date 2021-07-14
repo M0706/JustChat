@@ -121,34 +121,34 @@ import React, { useEffect, useState } from "react";
 import { AppState, StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-// import useCachedResources from "./hooks/useCachedResources";
-// import useColorScheme from "./hooks/useColorScheme";
+import useCachedResources from "./hooks/useCachedResources";
+import useColorScheme from "./hooks/useColorScheme";
 import LoginNavigator, {
   MainStackNavigator,
 } from "./navigation/LoginNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 
-// import Amplify, { Analytics } from "aws-amplify";
-// import { getUser } from "./graphqlCustom/queries";
-// import { createUser } from "./src/graphql/mutations";
+import Amplify, { Analytics } from "aws-amplify";
+import { getUser } from "./graphqlCustom/queries";
+import { createUser } from "./src/graphql/mutations";
 import { useDispatch, useSelector } from "react-redux";
-// import { AuthDetails } from "./store/actions/auth-actions";
+import { AuthDetails } from "./store/actions/auth-actions";
 
-// import config from "./src/aws-exports";
+import config from "./src/aws-exports";
 
-// import { Cache } from "aws-amplify";
-// import AddProfilePhoto from "./screens/Personal/Shared/AddProfilePhoto";
+import { Cache } from "aws-amplify";
+import AddProfilePhoto from "./screens/Personal/Shared/AddProfilePhoto";
 
 
-// Amplify.configure(config);
+Amplify.configure(config);
 
 function App() {
   // const isLoadingComplete = useCachedResources();
-  // const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();
   const [isAuth, setIsAuth] = useState(false);
   const dispatch = useDispatch();
 
-  // const currentState = useSelector((state) => state.currentUserInfo);
+  const currentState = useSelector((state) => state.currentUserInfo);
 
 
   useEffect(() => {

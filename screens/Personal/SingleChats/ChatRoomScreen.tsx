@@ -21,7 +21,8 @@ import { AuthDetails } from "../../../store/actions/auth-actions";
 import ChatsRoomHeader from "../../../components/Personal/shared/ChatRoomHeader";
 import { updateMessage } from "../../../src/graphql/mutations";
 import ReplyBox from '../../../components/Personal/shared/ReplyBox'
-import { MaterialIcons } from '@expo/vector-icons';
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+
 
 // import styles from "../../Authentication/Login/styles";
 
