@@ -154,17 +154,17 @@ const PersonalStackNavigator = () => {
               >
                 <View style={{ marginHorizontal: 10 }}>
 
-                   <Ionicons name="search" size={30} color="#900" />;
+                   <Ionicons name="search" size={30} color="#900" />
                 </View>
 
                 <View>
-                   <Ionicons name="ellipsis-v" size={30} color="#900" />;
-
+                   <Ionicons name="ellipsis-vertical" size={30} color="#900" />
+{/* 
                   <CustomMenu
                     visible={visible}
                     toggleOverlay={toggleOverlay}
                     navigation={navigation}
-                  />
+                  /> */}
                 </View>
               </View>
             );

@@ -425,7 +425,10 @@ const Camera = props => {
     };
 
     return (
-		<DoubleTapHandler useDelta={300} onDoubleTap={rotateCamera}>
+			<DoubleTapHandler useDelta={300} onDoubleTap={rotateCamera}>
+				<View>
+					<Text>Camera screen</Text>
+				</View>
 			{/* <CameraView
 				ref={ref => {
 					camera = ref;
