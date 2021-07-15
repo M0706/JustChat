@@ -3,7 +3,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Fontisto from "react-native-vector-icons/Fontisto";
-
+import Entypo from "react-native-vector-icons/Entypo";
 import { View, KeyboardAvoidingView, TextInput, Platform, Alert, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Auth, API, Storage, graphqlOperation } from "aws-amplify";

@@ -22,11 +22,7 @@ const BottomTabNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                // <MaterialIcons
-                //   name="people"
-                //   size={26}
-                //   color={Colors.iconPrimaryColor}
-                // />
+             
                 <Ionicons name="people" size={30} color="#900" />
 
               );
@@ -40,11 +36,6 @@ const BottomTabNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                // <Entypo
-                //   name="camera"
-                //   size={25}
-                //   color={Colors.iconPrimaryColor}
-                // />
                 <Ionicons name="camera-outline" size={30} color="#900" />
 
               );
@@ -58,11 +49,7 @@ const BottomTabNavigator = () => {
           options={{
             tabBarIcon: () => {
               return (
-                // <MaterialCommunityIcons
-                //   name="professional-hexagon"
-                //   size={30}
-                //   color={Colors.iconPrimaryColor}
-                // />
+        
                 <MaterialIcons name="work" size={30} color="#900" />
 
               );

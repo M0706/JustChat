@@ -159,12 +159,12 @@ const PersonalStackNavigator = () => {
 
                 <View>
                    <Ionicons name="ellipsis-vertical" size={30} color="#900" />
-{/* 
+
                   <CustomMenu
                     visible={visible}
                     toggleOverlay={toggleOverlay}
                     navigation={navigation}
-                  /> */}
+                  />
                 </View>
               </View>
             );
