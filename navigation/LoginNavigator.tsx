@@ -1,7 +1,6 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
 
-import { createStackNavigator, HeaderTitle } from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import LoginScreen from "../screens/Authentication/Login/login";
 import SignUpScreen from "../screens/Authentication/SignUp/signup";

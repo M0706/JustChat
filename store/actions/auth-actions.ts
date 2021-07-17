@@ -1,9 +1,8 @@
 import { authActions } from '../slices/Auth-slice'
 
-import Amplify, { Auth, API, graphqlOperation, Hub } from "aws-amplify";
+import { Auth, API, graphqlOperation, Hub } from "aws-amplify";
 import { getUser } from '../../graphqlCustom/queries';
-import { createUser, updateUser } from '../../src/graphql/mutations';
-import moment from 'moment';
+import { updateUser } from '../../src/graphql/mutations';
 
 
 export const AuthDetails = () => {

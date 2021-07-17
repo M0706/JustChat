@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const ProfessionalProfile = () => {
+const WorkProfile = () => {
   return (
     <View style={styles.screen}>
-      <Text>This is ProfessionalProfile Screen !!!</Text>
+      <Text>This is WorkProfile Screen !!!</Text>
     </View>
   );
 };
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfessionalProfile;
+export default WorkProfile;

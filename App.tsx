@@ -129,8 +129,6 @@ import LoginNavigator, {
 import { NavigationContainer } from "@react-navigation/native";
 
 import Amplify, { Analytics } from "aws-amplify";
-import { getUser } from "./graphqlCustom/queries";
-import { createUser } from "./src/graphql/mutations";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthDetails } from "./store/actions/auth-actions";
 
@@ -138,7 +136,9 @@ import config from "./src/aws-exports";
 
 import { Cache } from "aws-amplify";
 import AddProfilePhoto from "./screens/Personal/Shared/AddProfilePhoto";
+import { LogBox } from 'react-native';
 
+LogBox.ignoreLogs(['Setting a timer']);
 
 Amplify.configure(config);
 

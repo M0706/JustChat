@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-
 import { Overlay } from "react-native-elements";
-
-
 import PersonalCall from "../screens/Personal/CallsScreen/PersonalCall";
 import GroupChatScreen from "../screens/Personal/GroupChats/GroupChatScreen";
 import PersonalStories from "../screens/Personal/StoryScreen/PersonalStories";
 import ChatsScreen from "../screens/Personal/SingleChats/ChatsScreen";
 import AddGroupInfo from "../screens/Personal/GroupChats/AddGroupInfo";
-// import WorkProfile from "../screens/Work/Workprofile";
+import WorkProfile from "../screens/Work/WorkProfile";
 
 import Colors from "../constants/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -171,7 +167,7 @@ const PersonalStackNavigator = () => {
           },
         })}
       />
-      {/* <PersonalStack.Screen name="Profile" component={WorkProfile} /> */}
+      <PersonalStack.Screen name="Profile" component={WorkProfile} />
     </PersonalStack.Navigator>
   );
 };
