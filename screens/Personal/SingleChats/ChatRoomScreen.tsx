@@ -161,7 +161,12 @@ const ChatRoomScreen = () => {
 
   return (
     <ImageBackground style={{ width: "100%", height: "100%" }} source={BG}>
-      <ChatsRoomHeader Name={route.params.name} isGroup={route.params.group} lastSeen={route.params.lastSeen} />
+      <ChatsRoomHeader
+        Name={route.params.name}
+        isGroup={route.params.group}
+        lastSeen={route.params.lastSeen}
+        chatRoomId={route.params.id}
+      />
       <FlatList
         data={messages}
         onEndReached={HandleScroll}

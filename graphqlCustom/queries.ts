@@ -78,3 +78,87 @@ export const getUser = /* GraphQL */ `
   }
 `;
 
+export const getChatRoom = /* GraphQL */ `
+  query GetChatRoom($id: ID!) {
+    getChatRoom(id: $id) {
+      id
+      group
+      name
+      imageUri
+      chatRoomUsers {
+        items {
+          id
+          userID
+          chatRoomID
+          clearChatTime
+          createdAt
+          updatedAt
+          user {
+            id
+            name
+            imageUri
+            status
+          }
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
+        nextToken
+      }
+      lastMessageID
+      lastMessage {
+        id
+        createdAt
+        content
+        media
+        userID
+        chatRoomID
+        read
+        replyMessageID
+        replyMessage {
+          id
+          createdAt
+          content
+          media
+          userID
+          chatRoomID
+          read
+          replyMessageID
+          updatedAt
+        }
+        user {
+          id
+          name
+          imageUri
+          lastSeen
+          status
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          group
+          name
+          imageUri
+          lastMessageID
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
