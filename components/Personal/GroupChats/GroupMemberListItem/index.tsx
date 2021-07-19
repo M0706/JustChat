@@ -1,5 +1,4 @@
 import React from 'react';
-import {useEffect} from 'react';
 
 import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import styles from './styles';

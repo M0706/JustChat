@@ -9,19 +9,16 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   StyleSheet,
-  FlatList,
-  Pressable,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {createChatRoom, createChatRoomUser} from '../src/graphql/mutations';
-import {authActions} from '../store/slices/Auth-slice';
+import {
+  createChatRoom,
+  createChatRoomUser,
+} from '../../../../src/graphql/mutations';
+import {authActions} from '../../../../store/slices/Auth-slice';
+import { Options } from './Options';
 
 const deviceHeight = Dimensions.get('window').height;
-const data = [
-  {id: 1, name: 'Message'},
-  {id: 2, name: 'Info'},
-  {id: 3, name: 'Make Group Admin'},
-];
 
 const BottomPopup = props => {
   const {show, openModal, closeModal, member, currentUser} = props;
@@ -104,7 +101,7 @@ const BottomPopup = props => {
     }
   };
 
-  //
+  
   const onOutside = onTouch => {
     const view = <View style={{flex: 1, width: '100%'}}></View>;
     if (!onTouch) return view;
@@ -134,6 +131,7 @@ const BottomPopup = props => {
       </View>
     );
   };
+
   return (
     <>
       {member != null ? (
@@ -159,42 +157,7 @@ const BottomPopup = props => {
                 maxHeight: deviceHeight * 0.4,
               }}>
               {displayName(member.name)}
-              <View>
-                <FlatList
-                  style={{marginBottom: 20}}
-                  showsVerticalScrollIndicator={false}
-                  data={data}
-                  renderItem={item => {
-                    return (
-                      <Pressable
-                        style={{height: 50, flex: 1, alignItems: 'flex-start'}}
-                        onPress={() => performAction(item.item)}>
-                        <Text
-                          style={{
-                            fontSize: 18,
-                            fontWeight: 'normal',
-                            color: '#182E44',
-                          }}>
-                          {item.item.name}
-                        </Text>
-                      </Pressable>
-                    );
-                  }}
-                  keyExtractor={(item, index) => index.toString()}
-                  ItemSeparatorComponent={() => (
-                    <View
-                      style={{
-                        opacity: 0.1,
-                        backgroundColor: '#182E44',
-                        height: 1,
-                      }}
-                    />
-                  )}
-                  contentContainerStyle={{
-                    paddingBottom: 40,
-                  }}
-                />
-              </View>
+              <Options performAction={performAction}></Options>
             </View>
           </View>
         </Modal>

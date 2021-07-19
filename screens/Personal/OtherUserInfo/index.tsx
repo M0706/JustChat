@@ -1,21 +1,20 @@
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {useState} from 'react';
 
-import {Text, View, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useSelector} from 'react-redux';
-import BottomPopup from '../../../components/BottomPopup';
-import GroupMemberListItem from '../../../components/Personal/GroupChats/GroupMemberListItem';
+import BottomPopup from '../../../components/Personal/shared/GroupBottomPopUp/BottomPopup';
 import AddMembers from '../../Work/Spaces/SpaceRoom/Channel/AddMembers';
 import styles from './styles';
+import { CheckIsGroup } from './CheckIsGroup';
 
-//import ParallaxView from "react-native-parallax-view";
 const Profile = props => {
   const [show, setShow] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
   const currentUser = useSelector(state => state.currentUserInfo);
+  const navigation = useNavigation();
   const route = useRoute();
 
   const onShowModal = () => {
@@ -32,6 +31,13 @@ const Profile = props => {
     setSelectedMember(member), onShowModal();
   };
 
+  const onAddMember = () => {
+    navigation.navigate("AddContacts", {
+      NewGroup: false,
+      existingMembers: route.params.members
+    });
+  }
+
   return (
     <>
       <View style={styles.card}>
@@ -43,28 +49,14 @@ const Profile = props => {
         </View>
       </View>
       {route.params.isGroup == 'True' ? (
-        <View style={styles.card}>
-          <View style={styles.row}>
-            <Text style={{...styles.green, ...styles.text}}>
-              {route.params.members.length} Members
-            </Text>
+        <View>
+        <Text onPress={onAddMember}>Add members</Text>
+        <CheckIsGroup
+          userID={currentUser.userID}
+          length={route.params.members.length}
+          members={route.params.members}
+            onClickMember={onClickMember} />
           </View>
-
-          <View style={styles.container}>
-            <FlatList
-              data={route.params.members}
-              keyExtractor={item => item.id}
-              renderItem={({item}) => (
-                <TouchableWithoutFeedback
-                  onPress={() => {
-                    if (currentUser.userID != item.id) onClickMember(item);
-                  }}>
-                  <GroupMemberListItem member={item} />
-                </TouchableWithoutFeedback>
-              )}
-            />
-          </View>
-        </View>
       ) : (
         <>{null}</>
       )}
