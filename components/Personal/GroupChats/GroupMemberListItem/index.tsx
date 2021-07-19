@@ -5,6 +5,7 @@ import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import styles from './styles';
 
 const GroupMemberListItem = props => {
+  
   return (
     <View style={styles.card}>
       <View style={styles.userInfo}>
