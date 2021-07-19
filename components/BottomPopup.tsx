@@ -56,8 +56,8 @@ const BottomPopup = props => {
 
       try {
         let newChatRoomData;
+        // console.log("Otheruser--->", otherUser);
         if (!otherUser.previousChatID) {
-          console.log('hi');
           newChatRoomData = await API.graphql(
             graphqlOperation(createChatRoom, {
               input: {lastMessageID: '', group: 'False'},

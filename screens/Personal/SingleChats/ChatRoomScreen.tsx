@@ -22,13 +22,13 @@ import {authActions} from '../../../store/slices/Auth-slice';
 
 const ChatRoomScreen = () => {
   const [messages, setMessages] = useState([]);
-  const [currentUserId, setCurrentUserId] = useState('');
   const [nextToken, setNextToken] = useState(null);
   const [pressed, setPressed] = useState(false);
   const [chatRooms, setChatRooms] = useState([]);
   const [reply, setReply] = useState(null);
   const currentUser = useSelector(state => state.currentUserInfo);
   const dispatch = useDispatch();
+  const [chatRoomID, setChatRoomID] = useState("")
   const flatListRef = useRef();
   const [moveBottom, setMoveBottom] = useState(false);
 
@@ -78,7 +78,7 @@ const ChatRoomScreen = () => {
   const fetchMessages = async (nextToken: null) => {
     const loadmessages = await API.graphql(
       graphqlOperation(messagesByChatRoom, {
-        chatRoomID: route.params.id,
+        chatRoomID: chatRoomID,
         sortDirection: 'DESC',
         limit: 40,
         nextToken,
@@ -111,11 +111,25 @@ const ChatRoomScreen = () => {
     });
   };
 
+//Incase for navigation from groups to some chatroom in single chats
+  useEffect(() => {
+    setMessages([])
+    setChatRoomID(route.params.id)
+  }, [route.params.id]);
+
+  useEffect(() => {
+    fetchMessages(null);
+    setNextToken(null);
+  },[chatRoomID])
+///////////////////////////////////////////////////////////////////////////////////////////// 
+
+  
   useEffect(() => {
     if (currentUser.changed === true) {
       dispatch(AuthDetails());
     }
   }, [dispatch]);
+  
 
   useEffect(() => {
     if (currentUser.changed === false) {
@@ -161,7 +175,7 @@ const ChatRoomScreen = () => {
         Name={route.params.name}
         isGroup={route.params.group}
         lastSeen={route.params.lastSeen}
-        chatRoomId={route.params.id}
+        chatRoomId={chatRoomID}
       />
       <FlatList
         data={messages}
@@ -208,7 +222,7 @@ const ChatRoomScreen = () => {
       )}
 
       <InputBox
-        chatRoomID={route.params.id}
+        chatRoomID={chatRoomID}
         replyMessageID={reply?.id}
         setReply={setReply}
       />
