@@ -1,23 +1,30 @@
 //This is Personal ChatScreen
 
-import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList, Text, ScrollView, ActivityIndicator } from "react-native";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { View } from "../../../components/Themed";
-import ChatListItem from "../../../components/Personal/SingleChats/ChatListItem";
-import NewMessageButton from "../../../components/Personal/SingleChats/NewMessageButton";
-import {  API, graphqlOperation } from "aws-amplify";
-import { getUser } from "../../../graphqlCustom/queries";
+import React, {useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {View} from '../../../components/Themed';
+import ChatListItem from '../../../components/Personal/SingleChats/ChatListItem';
+import NewMessageButton from '../../../components/Personal/SingleChats/NewMessageButton';
+import {API, graphqlOperation} from 'aws-amplify';
+import {getUser} from '../../../graphqlCustom/queries';
 import {
   onUpdateChatRoom,
   onCreateChatRoom,
   onUpdateMessage,
-} from "../../../src/graphql/subscriptions";
-import moment from "moment";
-import { ChatRoom } from "../../../types";
-import { Cache } from "aws-amplify";
-import { useSelector, useDispatch } from "react-redux";
-import { AuthDetails } from "../../../store/actions/auth-actions";
+} from '../../../src/graphql/subscriptions';
+import moment from 'moment';
+import {ChatRoom} from '../../../types';
+import {Cache} from 'aws-amplify';
+import {useSelector, useDispatch} from 'react-redux';
+import {AuthDetails} from '../../../store/actions/auth-actions';
+import {authActions} from '../../../store/slices/Auth-slice';
 
 // selectors
 // import { useRecoilValue } from 'recoil';
@@ -35,8 +42,8 @@ function compare_time(a, b) {
 
 export default function ChatsScreen() {
   const [chatRooms, setChatRooms] = useState([]);
-  const currentUser = useSelector((state) => state.currentUserInfo);
-  const [loading,setLoading] = useState(false);
+  const currentUser = useSelector(state => state.currentUserInfo);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   // const UserDetails = useRecoilValue(User);
 
@@ -45,10 +52,10 @@ export default function ChatsScreen() {
     if (!currentUser.isAuth) {
       dispatch(AuthDetails());
     }
-    return () => { unmounted = true };
-
+    return () => {
+      unmounted = true;
+    };
   }, [dispatch]);
-
 
   const fetchChatRooms = async () => {
     try {
@@ -56,38 +63,45 @@ export default function ChatsScreen() {
       //const currentUserID = UserDetails.userID;
       // console.log(currentID);
       let userData = await API.graphql(
-        graphqlOperation(getUser, { id: currentUserID })
+        graphqlOperation(getUser, {id: currentUserID}),
       );
-      
+
       let tempChatRoomArr: any = [];
-      userData.data.getUser.chatRoomUser.items.map((room) => {
-        if (room.chatRoom.group === "False") {
+      userData.data.getUser.chatRoomUser.items.map(room => {
+        if (room.chatRoom.group === 'False') {
           tempChatRoomArr.push(room);
         }
       });
 
       tempChatRoomArr.sort(compare_time);
-      setChatRooms(tempChatRoomArr.map((i) => ({ ...i.chatRoom })));
+      setChatRooms(tempChatRoomArr.map(i => ({...i.chatRoom})));
 
+      dispatch(
+        authActions.updateChatRooms(
+          tempChatRoomArr.map(i => ({...i.chatRoom})),
+        ),
+      );
     } catch (err) {
-      console.log("Error in chatScreen");
+      console.log('Error in chatScreen');
     }
   };
 
   useEffect(() => {
     let unmounted = false;
-   // console.log(currentUser.isAuth);
+    // console.log(currentUser.isAuth);
     if (!unmounted) {
       fetchChatRooms();
     }
-    return () => { unmounted = true };
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   useEffect(() => {
     const onUpdateMessageSubscription = API.graphql(
-      graphqlOperation(onUpdateMessage)
+      graphqlOperation(onUpdateMessage),
     ).subscribe({
-      next: (data) => {
+      next: data => {
         fetchChatRooms();
       },
     });
@@ -97,9 +111,9 @@ export default function ChatsScreen() {
 
   useEffect(() => {
     const onUpdateChatRoomSubscription = API.graphql(
-      graphqlOperation(onUpdateChatRoom)
+      graphqlOperation(onUpdateChatRoom),
     ).subscribe({
-      next: (data) => {
+      next: data => {
         fetchChatRooms();
       },
     });
@@ -109,9 +123,9 @@ export default function ChatsScreen() {
 
   useEffect(() => {
     const subscription = API.graphql(
-      graphqlOperation(onCreateChatRoom)
+      graphqlOperation(onCreateChatRoom),
     ).subscribe({
-      next: (data) => {
+      next: data => {
         fetchChatRooms();
       },
     });
@@ -120,12 +134,14 @@ export default function ChatsScreen() {
 
   return (
     <View style={styles.container}>
-      {loading ? <ActivityIndicator />:
-      <>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <>
           {chatRooms.length === 0 ? (
             <View>
               <FontAwesome5
-                style={{ textAlign: "center" }}
+                style={{textAlign: 'center'}}
                 name="rocketchat"
                 size={100}
                 color="black"
@@ -137,13 +153,14 @@ export default function ChatsScreen() {
             <FlatList
               style={styles.list}
               data={chatRooms}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <ChatListItem chatRoom={item} group="False" />
               )}
-              keyExtractor={(item: ChatRoom) => item.id}
+              keyExtractor={(item, index) => index.toString()}
             />
           )}
-      </>}
+        </>
+      )}
 
       <NewMessageButton chatRooms={chatRooms} />
     </View>
@@ -153,23 +170,22 @@ export default function ChatsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
   },
   list: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: "white",
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'white',
   },
   mainActionText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 20,
     marginTop: 20,
   },
   subMainActionText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 18,
   },
 });
-

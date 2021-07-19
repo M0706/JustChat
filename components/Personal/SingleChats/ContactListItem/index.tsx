@@ -1,38 +1,40 @@
-import React from "react";
-import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import React from 'react';
+import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Auth, API, graphqlOperation} from 'aws-amplify';
 import {
   createChatRoomUser,
   createChatRoom,
-} from "../../../../src/graphql/mutations";
-import { authActions } from '../../../../store/slices/Auth-slice'
-import { useDispatch, useSelector } from "react-redux";
-import { User } from "../../../../types";
-import styles from "./style";
+} from '../../../../src/graphql/mutations';
+import {authActions} from '../../../../store/slices/Auth-slice';
+import {useDispatch, useSelector} from 'react-redux';
+import {User} from '../../../../types';
+import styles from './style';
 
 export type ContactListItemProps = {
   user: User;
 };
 
 const ContactListItem = (props: ContactListItemProps) => {
-  const { user } = props;
+  const {user} = props;
+
   const navigation = useNavigation();
-  const currentUserID = useSelector((state) => state.currentUserInfo.userID);
+  const currentUserID = useSelector(state => state.currentUserInfo.userID);
   const dispatch = useDispatch();
-  
+
   const onClick = async () => {
+    // console.log('user in contactListItem-->', user);
     try {
       let newChatRoomData;
       if (!user.previousChatID) {
         newChatRoomData = await API.graphql(
           graphqlOperation(createChatRoom, {
-            input: { lastMessageID: "", group: "False" },
-          })
+            input: {lastMessageID: '', group: 'False'},
+          }),
         );
 
         if (!newChatRoomData.data) {
-          console.log("Failed to create chat room");
+          console.log('Failed to create chat room');
           return;
         }
 
@@ -45,7 +47,7 @@ const ContactListItem = (props: ContactListItemProps) => {
               userID: user.id,
               chatRoomID: newChatRoomData.data.createChatRoom.id,
             },
-          })
+          }),
         );
 
         await API.graphql(
@@ -54,18 +56,16 @@ const ContactListItem = (props: ContactListItemProps) => {
               userID: currentUserID,
               chatRoomID: newChatRoomData.data.createChatRoom.id,
             },
-          })
+          }),
         );
-
-        
       }
 
-      navigation.navigate("ChatRoom", {
+      navigation.navigate('ChatRoom', {
         id: user.previousChatID
           ? user.previousChatID
-          : newChatRoomData?.data.createChatRoom.id || "",
+          : newChatRoomData?.data.createChatRoom.id || '',
         name: user.name,
-        group:"False",
+        group: 'False',
       });
     } catch (err) {
       console.warn(err);
@@ -76,7 +76,7 @@ const ContactListItem = (props: ContactListItemProps) => {
     <TouchableWithoutFeedback onPress={onClick}>
       <View style={styles.container}>
         <View style={styles.leftContainer}>
-          <Image style={styles.avatar} source={{ uri: user.imageUri }} />
+          <Image style={styles.avatar} source={{uri: user.imageUri}} />
 
           <View style={styles.midContainer}>
             <Text style={styles.userName}>{user.name}</Text>

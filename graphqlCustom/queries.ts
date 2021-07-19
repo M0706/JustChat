@@ -1,4 +1,3 @@
-
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -52,15 +51,15 @@ export const getUser = /* GraphQL */ `
           channelID
           createdAt
           updatedAt
-          channel{
-            spaceRoom{
+          channel {
+            spaceRoom {
               name
               id
               imageUri
               createdAt
               updatedAt
-              channels{
-                items{
+              channels {
+                items {
                   id
                   name
                   createdAt
@@ -97,7 +96,31 @@ export const getChatRoom = /* GraphQL */ `
             id
             name
             imageUri
+            lastSeen
             status
+            chatRoomUser {
+              items {
+                id
+                userID
+                chatRoomID
+                clearChatTime
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            channelUser {
+              items {
+                id
+                userID
+                channelID
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
           }
         }
         nextToken

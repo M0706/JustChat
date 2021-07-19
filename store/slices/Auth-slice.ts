@@ -1,24 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
-  name: "Auth",
-  initialState: { userData: {}, isAuth: false, userID: "" , changed:false},
+  name: 'Auth',
+  initialState: {
+    userData: {},
+    isAuth: false,
+    userID: '',
+    changed: false,
+    chatRooms: [],
+  },
   reducers: {
     updateAuthInfo(state, action) {
       state.userData = action.payload.userData;
-      state.userID = action.payload.userID
+      state.userID = action.payload.userID;
       state.isAuth = action.payload.isAuth;
       state.changed = action.payload.changed;
     },
-    userInfoChanged(state){
+    userInfoChanged(state) {
       state.changed = true;
     },
-    logout(state){
+    logout(state) {
       state.userData = {};
       state.isAuth = false;
-      state.userID = "";
+      state.userID = '';
       state.changed = false;
-    }
+    },
+    updateChatRooms(state, action) {
+      if (state.chatRooms !== action.payload) state.chatRooms = action.payload;
+    },
   },
 });
 
