@@ -21,6 +21,7 @@ import {authActions} from '../../../store/slices/Auth-slice';
 // import styles from "../../Authentication/Login/styles";
 
 const ChatRoomScreen = () => {
+  const route = useRoute();
   const [messages, setMessages] = useState([]);
   const [nextToken, setNextToken] = useState(null);
   const [pressed, setPressed] = useState(false);
@@ -28,11 +29,10 @@ const ChatRoomScreen = () => {
   const [reply, setReply] = useState(null);
   const currentUser = useSelector(state => state.currentUserInfo);
   const dispatch = useDispatch();
-  const [chatRoomID, setChatRoomID] = useState("")
+  const [chatRoomID, setChatRoomID] = useState('');
   const flatListRef = useRef();
   const [moveBottom, setMoveBottom] = useState(false);
 
-  const route = useRoute();
   //console.log("routes", route);
   const HandleScroll = () => {
     if (nextToken !== null) {
@@ -111,25 +111,23 @@ const ChatRoomScreen = () => {
     });
   };
 
-//Incase for navigation from groups to some chatroom in single chats
+  //Incase for navigation from groups to some chatroom in single chats
   useEffect(() => {
-    setMessages([])
-    setChatRoomID(route.params.id)
+    setMessages([]);
+    setChatRoomID(route.params.id);
   }, [route.params.id]);
 
   useEffect(() => {
     fetchMessages(null);
     setNextToken(null);
-  },[chatRoomID])
-///////////////////////////////////////////////////////////////////////////////////////////// 
+  }, [chatRoomID]);
+  /////////////////////////////////////////////////////////////////////////////////////////////
 
-  
   useEffect(() => {
     if (currentUser.changed === true) {
       dispatch(AuthDetails());
     }
   }, [dispatch]);
-  
 
   useEffect(() => {
     if (currentUser.changed === false) {
@@ -175,7 +173,7 @@ const ChatRoomScreen = () => {
         Name={route.params.name}
         isGroup={route.params.group}
         lastSeen={route.params.lastSeen}
-        chatRoomId={chatRoomID}
+        chatRoomId={route.params.id}
       />
       <FlatList
         data={messages}

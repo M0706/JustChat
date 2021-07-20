@@ -8,14 +8,18 @@ import {useSelector} from 'react-redux';
 import BottomPopup from '../../../components/Personal/shared/GroupBottomPopUp/BottomPopup';
 import AddMembers from '../../Work/Spaces/SpaceRoom/Channel/AddMembers';
 import styles from './styles';
-import { CheckIsGroup } from './CheckIsGroup';
+import {CheckIsGroup} from './CheckIsGroup';
 
 const Profile = props => {
+  const route = useRoute();
   const [show, setShow] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
+  const [groupMembers, setGroupMembers] = useState(
+    route.params.isGroup == 'True' ? route.params.members : null,
+  );
+  console.log(route.params);
   const currentUser = useSelector(state => state.currentUserInfo);
   const navigation = useNavigation();
-  const route = useRoute();
 
   const onShowModal = () => {
     setShow(true);
@@ -32,11 +36,12 @@ const Profile = props => {
   };
 
   const onAddMember = () => {
-    navigation.navigate("AddContacts", {
-      NewGroup: false,
-      existingMembers: route.params.members
+    navigation.navigate('AddContacts', {
+      newGroup: false,
+      existingMembers: route.params.members,
+      chatRoomId: route.params.chatRoomId,
     });
-  }
+  };
 
   return (
     <>
@@ -50,13 +55,13 @@ const Profile = props => {
       </View>
       {route.params.isGroup == 'True' ? (
         <View>
-        <Text onPress={onAddMember}>Add members</Text>
-        <CheckIsGroup
-          userID={currentUser.userID}
-          length={route.params.members.length}
-          members={route.params.members}
-            onClickMember={onClickMember} />
-          </View>
+          <Text onPress={onAddMember}>Add members</Text>
+          <CheckIsGroup
+            userID={currentUser.userID}
+            members={groupMembers ? groupMembers : []}
+            onClickMember={onClickMember}
+          />
+        </View>
       ) : (
         <>{null}</>
       )}

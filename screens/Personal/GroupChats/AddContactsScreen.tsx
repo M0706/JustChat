@@ -13,13 +13,13 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {authActions} from '../../../store/slices/Auth-slice';
-import { ContactsFlatlist } from './ContactsFlatlist';
-
+import {ContactsFlatlist} from './ContactsFlatlist';
+import {createChatRoomUser} from '../../../src/graphql/mutations';
 
 export default function AddContactsScreen() {
   const route = useRoute();
 
-  const [users, setUsers] = useState(route.params.existingMembers);
+  const [users, setUsers] = useState([]);
   const [click, setClick] = useState(0);
   const currentUser = useSelector(state => state.currentUserInfo);
   const dispatch = useDispatch();
@@ -29,6 +29,10 @@ export default function AddContactsScreen() {
 
   const mapUsers = (user: User, currentAuthedUser: string) => {
     if (user.id === currentAuthedUser) {
+      return null;
+    }
+
+    if (route.params.existingMembers.find(member => member.id == user.id)) {
       return null;
     }
 
@@ -43,7 +47,7 @@ export default function AddContactsScreen() {
         const filteredUsers = usersData.data.listUsers.items
           .map((i: User) => mapUsers(i, currentUser.userID))
           .filter(Boolean);
-        
+
         setUsers(filteredUsers);
       } catch (err) {
         console.warn(err);
@@ -84,23 +88,41 @@ export default function AddContactsScreen() {
     });
   };
 
-  const updateExistingGroup = () => {
-    console.log("Members-->", users);
-  }
+  const updateExistingGroup = async () => {
+    // console.log(route.params.chatRoomId);
+    let groupMembers = [route.params.existingMembers];
+    users.map(async user => {
+      if (user.selected == true) {
+        groupMembers.push(user);
+        await API.graphql(
+          graphqlOperation(createChatRoomUser, {
+            input: {
+              userID: user.id,
+              chatRoomID: route.params.chatRoomId,
+            },
+          }),
+        );
+      }
+    });
+
+    navigation.navigate('OtherUserInfo', {
+      isGroup: 'True',
+      chatRoomId: route.params.chatRoomId,
+      members: groupMembers,
+    });
+  };
 
   return (
     <>
       <View style={styles.container}>
-        <ContactsFlatlist
-          users={users}
-          onPressContact={onPressContact}></ContactsFlatlist>
+        <ContactsFlatlist users={users} onPressContact={onPressContact} />
       </View>
       <AntDesign
         name="arrowright"
         size={50}
         color="white"
         style={styles.next}
-        onPress={route.params.NewGroup ? makeGroup : updateExistingGroup}
+        onPress={route.params.newGroup ? makeGroup : updateExistingGroup}
       />
     </>
   );

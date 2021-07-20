@@ -71,7 +71,7 @@ const ChatRoomHeader = props => {
 
     navigation.navigate('OtherUserInfo', {
       isGroup: props.isGroup,
-      chatRoomId: props.id,
+      chatRoomId: props.chatRoomId,
       members: groupMembers,
     });
   };

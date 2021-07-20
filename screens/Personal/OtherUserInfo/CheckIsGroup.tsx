@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View, FlatList } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {Text, View, FlatList} from 'react-native';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import GroupMemberListItem from '../../../components/Personal/GroupChats/GroupMemberListItem';
 import styles from './styles';
 
@@ -9,8 +9,8 @@ export function CheckIsGroup(props) {
   return (
     <View style={styles.card}>
       <View style={styles.row}>
-        <Text style={{ ...styles.green, ...styles.text }}>
-          {props.length} Members
+        <Text style={{...styles.green, ...styles.text}}>
+          {props.members.length} Members
         </Text>
       </View>
 
@@ -18,15 +18,15 @@ export function CheckIsGroup(props) {
         <FlatList
           data={props.members}
           keyExtractor={item => item.id}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <TouchableWithoutFeedback
               onPress={() => {
-                if (props.userID != item.id)
-                  props.onClickMember(item);
+                if (props.userID != item.id) props.onClickMember(item);
               }}>
               <GroupMemberListItem member={item} />
             </TouchableWithoutFeedback>
-          )} />
+          )}
+        />
       </View>
     </View>
   );

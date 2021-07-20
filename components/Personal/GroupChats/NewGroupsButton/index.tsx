@@ -1,17 +1,17 @@
-import React from "react";
-import { TouchableOpacity, View } from "react-native";
-import AntDesign from "react-native-vector-icons/AntDesign"
+import React from 'react';
+import {TouchableOpacity, View} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
+import styles from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 const NewGroupsButton = () => {
   const navigation = useNavigation();
 
   const onPress = () => {
-    navigation.navigate("AddContacts", {
-      NewGroup: true,
-      existingMembers: []
+    navigation.navigate('AddContacts', {
+      newGroup: true,
+      existingMembers: [],
     });
   };
 
