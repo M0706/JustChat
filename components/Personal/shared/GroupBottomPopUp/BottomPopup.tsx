@@ -16,7 +16,7 @@ import {
   createChatRoomUser,
 } from '../../../../src/graphql/mutations';
 import {authActions} from '../../../../store/slices/Auth-slice';
-import { Options } from './Options';
+import {Options} from './Options';
 
 const deviceHeight = Dimensions.get('window').height;
 
@@ -98,10 +98,16 @@ const BottomPopup = props => {
       } catch (err) {
         console.warn(err);
       }
+    } else if (action.name == 'Info') {
+      navigation.navigate('OtherUserInfo', {
+        isGroup: 'False',
+        chatRoomId: props.chatRoomId,
+        members: [],
+        name: props.member.name,
+      });
     }
   };
 
-  
   const onOutside = onTouch => {
     const view = <View style={{flex: 1, width: '100%'}}></View>;
     if (!onTouch) return view;

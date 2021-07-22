@@ -1,5 +1,5 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState} from 'react';
 
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
@@ -14,10 +14,7 @@ const Profile = props => {
   const route = useRoute();
   const [show, setShow] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
-  const [groupMembers, setGroupMembers] = useState(
-    route.params.isGroup == 'True' ? route.params.members : null,
-  );
-  console.log(route.params);
+  const [params, setParams] = useState(route.params);
   const currentUser = useSelector(state => state.currentUserInfo);
   const navigation = useNavigation();
 
@@ -42,6 +39,14 @@ const Profile = props => {
       chatRoomId: route.params.chatRoomId,
     });
   };
+  useEffect(() => {
+    let unmounted = false;
+    setParams(route.params);
+    onCloseModal();
+    return () => {
+      unmounted = true;
+    };
+  }, [route.params]);
 
   return (
     <>
@@ -53,17 +58,21 @@ const Profile = props => {
           <Text style={styles.text}>Custom notifications</Text>
         </View>
       </View>
-      {route.params.isGroup == 'True' ? (
+      {params.isGroup == 'True' ? (
         <View>
           <Text onPress={onAddMember}>Add members</Text>
           <CheckIsGroup
             userID={currentUser.userID}
-            members={groupMembers ? groupMembers : []}
+            members={params.members}
             onClickMember={onClickMember}
           />
         </View>
       ) : (
-        <>{null}</>
+        <View style={styles.card}>
+          <View style={styles.row}>
+            <Text style={styles.text}>{params.name}</Text>
+          </View>
+        </View>
       )}
 
       <View style={styles.card}>
@@ -96,6 +105,7 @@ const Profile = props => {
         closeModal={onCloseModal}
         member={selectedMember}
         currentUser={currentUser}
+        chatRoomId={params.chatRoomId}
       />
     </>
   );

@@ -73,6 +73,7 @@ const ChatRoomHeader = props => {
       isGroup: props.isGroup,
       chatRoomId: props.chatRoomId,
       members: groupMembers,
+      name: props.Name,
     });
   };
 
