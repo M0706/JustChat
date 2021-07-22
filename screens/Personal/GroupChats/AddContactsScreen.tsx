@@ -90,7 +90,7 @@ export default function AddContactsScreen() {
 
   const updateExistingGroup = async () => {
     // console.log(route.params.chatRoomId);
-    let groupMembers = [route.params.existingMembers];
+    let groupMembers = [...route.params.existingMembers];
     users.map(async user => {
       if (user.selected == true) {
         groupMembers.push(user);
@@ -104,7 +104,9 @@ export default function AddContactsScreen() {
         );
       }
     });
-
+    groupMembers.map((member) => {
+      console.log("Name--->",member.name);
+    })
     navigation.navigate('OtherUserInfo', {
       isGroup: 'True',
       chatRoomId: route.params.chatRoomId,

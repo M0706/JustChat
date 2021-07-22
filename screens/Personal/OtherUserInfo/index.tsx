@@ -1,5 +1,5 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useState} from 'react';
 
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
@@ -14,12 +14,22 @@ const Profile = props => {
   const route = useRoute();
   const [show, setShow] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
-  const [groupMembers, setGroupMembers] = useState(
-    route.params.isGroup == 'True' ? route.params.members : null,
-  );
+  const [groupMembers, setGroupMembers] = useState([]);
+    // route.params.isGroup == 'True' ? route.params.members : null,
+  
   console.log(route.params);
   const currentUser = useSelector(state => state.currentUserInfo);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    let unmounted = false;
+    if (route.params.isGroup == 'True' && unmounted === false) {
+      setGroupMembers(route.params.members)
+    }
+    return () => {
+      unmounted = true;
+    }
+  }, [route.params])
 
   const onShowModal = () => {
     setShow(true);
