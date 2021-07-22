@@ -138,8 +138,7 @@ import { Cache } from "aws-amplify";
 import AddProfilePhoto from "./screens/Personal/Shared/AddProfilePhoto";
 import { LogBox } from 'react-native';
 
-LogBox.ignoreLogs(['Setting a timer']);
-
+LogBox.ignoreLogs(['Warning: ...']);
 Amplify.configure(config);
 
 function App() {

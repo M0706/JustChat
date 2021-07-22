@@ -18,6 +18,16 @@ const Profile = props => {
   const currentUser = useSelector(state => state.currentUserInfo);
   const navigation = useNavigation();
 
+  useEffect(() => {
+    let unmounted = false;
+    if (route.params.isGroup == 'True' && unmounted === false) {
+      setGroupMembers(route.params.members);
+    }
+    return () => {
+      unmounted = true;
+    };
+  }, [route.params]);
+
   const onShowModal = () => {
     setShow(true);
     // modalRef.showModal();

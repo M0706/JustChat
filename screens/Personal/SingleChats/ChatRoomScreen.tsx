@@ -76,21 +76,28 @@ const ChatRoomScreen = () => {
   };
 
   const fetchMessages = async (nextToken: null) => {
-    const loadmessages = await API.graphql(
-      graphqlOperation(messagesByChatRoom, {
-        chatRoomID: chatRoomID,
-        sortDirection: 'DESC',
-        limit: 40,
-        nextToken,
-      }),
-    );
-
-    let messageArr = [...messages].concat(
-      loadmessages.data.messagesByChatRoom.items,
-    );
-    setMessages(messageArr);
-    setNextToken(loadmessages.data.messagesByChatRoom.nextToken);
-    updateReadAsync(messageArr);
+    console.log("fetch messages called");
+    try {
+      const loadmessages = await API.graphql(
+        graphqlOperation(messagesByChatRoom, {
+          chatRoomID: route.params.id,
+          sortDirection: 'DESC',
+          limit: 40,
+          nextToken,
+        }),
+      );
+  
+      let messageArr = [...messages].concat(
+        loadmessages.data.messagesByChatRoom.items,
+      );
+      setMessages(messageArr);
+      setNextToken(loadmessages.data.messagesByChatRoom.nextToken);
+      updateReadAsync(messageArr);
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+    
   };
 
   const updateReadAsync = async loadedMessages => {
@@ -113,11 +120,13 @@ const ChatRoomScreen = () => {
 
   //Incase for navigation from groups to some chatroom in single chats
   useEffect(() => {
+    console.log("117 line called")
     setMessages([]);
     setChatRoomID(route.params.id);
   }, [route.params.id]);
 
   useEffect(() => {
+    console.log("line 123")
     fetchMessages(null);
     setNextToken(null);
   }, [chatRoomID]);
@@ -129,13 +138,15 @@ const ChatRoomScreen = () => {
     }
   }, [dispatch]);
 
+  /* 
+  Removed because of upper useEffect 
   useEffect(() => {
     if (currentUser.changed === false) {
       fetchMessages(nextToken);
       fetchChatRooms();
-    }
+    } 
   }, [currentUser, dispatch]);
-
+*/
   useEffect(() => {
     const subscription = API.graphql(
       graphqlOperation(onCreateMessage),
